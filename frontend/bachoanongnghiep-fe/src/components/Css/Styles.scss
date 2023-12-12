@@ -1,0 +1,95 @@
+// Navbar styling
+.bg-body-tertiary {
+    background-color: #f0f0f0; // Set your desired background color
+    padding: 10px;
+  
+    // Left location styling
+    .left_loc {
+      display: flex;
+      align-items: center;
+  
+      .logo {
+        text-decoration: none;
+        color: #333; // Set your desired text color
+  
+        .Brand {
+          font-size: 1.5rem; // Set your desired font size
+          font-weight: bold;
+        }
+      }
+    }
+  
+    // Fill location styling
+    .fill_loc {
+      flex-grow: 1;
+  
+      .search_bar {
+        display: flex;
+        align-items: center;
+  
+        .search_loc {
+          padding: 5px;
+          margin-right: 5px;
+        }
+      }
+    }
+  
+    // Right location styling
+    .right_loc {
+      display: flex;
+      align-items: center;
+  
+      .icont_custom {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        display: flex;
+  
+        .phone_contact {
+          margin-right: 20px;
+        }
+  
+        // Cart button styling
+        .btn_cart {
+          background-color: #007bff; // Set your desired background color
+          color: #fff; // Set your desired text color
+          border: none;
+          padding: 5px 10px;
+          border-radius: 5px;
+          cursor: pointer;
+          display: flex;
+          align-items: center;
+  
+          .total_product_cart {
+            background-color: #fff; // Set your desired background color
+            color: #007bff; // Set your desired text color
+            border-radius: 50%;
+            padding: 5px;
+            margin-left: 5px;
+          }
+        }
+  
+        // Bell button styling
+        .btn_bell {
+          background-color: #28a745; // Set your desired background color
+          color: #fff; // Set your desired text color
+          border: none;
+          padding: 5px 10px;
+          border-radius: 5px;
+          cursor: pointer;
+        }
+  
+        // Custom icon styling
+        .custom_icont {
+          border: none;
+          background-color: transparent;
+          cursor: pointer;
+        }
+  
+        .acount_name {
+          margin-right: 10px;
+        }
+      }
+    }
+  }
+  
