@@ -1,95 +1,434 @@
-// Navbar styling
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
 .bg-body-tertiary {
-    background-color: #f0f0f0; // Set your desired background color
+    background-color: #f0f0f0;
     padding: 10px;
-  
+    display: flex;
+    justify-content: space-between;
+
     // Left location styling
     .left_loc {
-      display: flex;
-      align-items: center;
-  
-      .logo {
-        text-decoration: none;
-        color: #333; // Set your desired text color
-  
-        .Brand {
-          font-size: 1.5rem; // Set your desired font size
-          font-weight: bold;
-        }
-      }
-    }
-  
-    // Fill location styling
-    .fill_loc {
-      flex-grow: 1;
-  
-      .search_bar {
         display: flex;
         align-items: center;
-  
-        .search_loc {
-          padding: 5px;
-          margin-right: 5px;
+
+        .logo {
+            text-decoration: none;
+            color: #333;
+
+            .Brand {
+                font-size: 1.5rem;
+                font-weight: bold;
+                background-image: linear-gradient(-225deg, #ef4018 0%, #44107a 29%, #2d8a2d 67%, #1aaf27 100%);
+                background-size: auto auto;
+                background-clip: border-box;
+                color: #fff;
+                background-clip: text;
+                --text-fill-color: transparent;
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+                animation: textclip 2s linear infinite;
+                display: inline-block;
+
+
+
+            }
+
         }
-      }
+
+        a {
+            text-decoration: none;
+            font-size: 1.5rem;
+        }
     }
-  
+
+    // Fill location styling
+    .fill_loc {
+        width: 500px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        .search_bar {
+            display: flex;
+            align-items: center;
+            height: 40px;
+            padding: 5px;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px #abd379, 0 0 0 1px #105e15eb;
+
+            .search_loc {
+                padding: 5px;
+                margin-right: 5px;
+                width: 350px;
+                border-radius: 15px;
+                border: none;
+                border-radius: 5px;
+                outline: none;
+                transition: width 0.3s ease-in-out;
+                position: relative;
+            }
+
+            .search_loc:focus {
+                width: 450px;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            }
+
+
+
+            .search_loc::placeholder {
+                animation-name: typewrite;
+            }
+
+
+
+            button {
+                background-color: transparent;
+                border: none;
+                border-radius: 50%;
+                padding: 6px;
+                cursor: pointer;
+                background-color: #1aaf27;
+                margin-left: 5px;
+
+                i {
+                    padding: 4px;
+                    color: #fff;
+
+                }
+
+
+            }
+        }
+
+        input {
+            border: none;
+            padding-left: 10px;
+            font-size: 15px;
+            font-family: 'Roboto', sans-serif;
+        }
+    }
+
     // Right location styling
     .right_loc {
-      display: flex;
-      align-items: center;
-  
-      .icont_custom {
-        list-style: none;
-        margin: 0;
-        padding: 0;
         display: flex;
-  
-        .phone_contact {
-          margin-right: 20px;
+        align-items: center;
+
+
+
+
+        ul {
+            .cus_li {
+                display: flex;
+            }
+
+            li {
+                margin: 0px 20px;
+            }
         }
-  
+
+        .icont_custom {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+
+        }
+
         // Cart button styling
         .btn_cart {
-          background-color: #007bff; // Set your desired background color
-          color: #fff; // Set your desired text color
-          border: none;
-          padding: 5px 10px;
-          border-radius: 5px;
-          cursor: pointer;
-          display: flex;
-          align-items: center;
-  
-          .total_product_cart {
-            background-color: #fff; // Set your desired background color
-            color: #007bff; // Set your desired text color
-            border-radius: 50%;
-            padding: 5px;
-            margin-left: 5px;
-          }
+
+            position: relative;
+            padding: 0;
+            background-color: transparent;
+            border: none;
+
+            .total_product_cart {
+                position: absolute;
+                top: 1px;
+                right: -7px;
+                margin: 0 auto;
+                background-color: #1aaf27;
+                padding: 0px 3px 0px 3px;
+                border-radius: 50%;
+                color: #fff;
+                font-size: 12px;
+            }
         }
-  
+
         // Bell button styling
         .btn_bell {
-          background-color: #28a745; // Set your desired background color
-          color: #fff; // Set your desired text color
-          border: none;
-          padding: 5px 10px;
-          border-radius: 5px;
-          cursor: pointer;
+            padding: 0px;
+            color: #fff;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+            margin: 10px;
+            background-color: transparent;
+            position: relative;
+            display: flex;
+
+            .total_notify {
+                position: absolute;
+                top: 1px;
+                right: -4px;
+                margin: 0 auto;
+                background-color: #1aaf27;
+                padding: 0px 3px 0px 3px;
+                border-radius: 50%;
+                font-size: 12px;
+
+
+            }
         }
-  
+
+
+
+
         // Custom icon styling
         .custom_icont {
-          border: none;
-          background-color: transparent;
-          cursor: pointer;
+            border: #ef4018;
+            cursor: pointer;
+            border-radius: 50%;
+            padding: 3px;
+            background-color: transparent;
         }
-  
+
         .acount_name {
-          margin-right: 10px;
+            margin-right: 10px;
+            margin-top: 10px;
+
+            a {
+                text-decoration: none;
+            }
+
         }
-      }
     }
-  }
-  
+
+}
+
+.under_nav {
+
+    background-color: #2d8a2d;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 10px;
+
+
+    .toogle_nav_wrapper button {
+        background-color: #fff;
+        height: 100%;
+        justify-content: center;
+        align-items: center;
+        margin: 0px 100px;
+        border-top-right-radius: 8px;
+        border-top-left-radius: 8px;
+        border: none;
+        padding: 5px;
+
+        i {
+            margin-right: 8px;
+            padding: 6px;
+        }
+    }
+
+
+    ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        overflow: hidden;
+        transition: max-height 0.3s ease-in-out;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        li {
+            display: inline-block;
+            margin: 0px 40px;
+
+            a {
+                i {
+                    margin-right: 5px;
+                }
+
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                text-decoration: none;
+                color: #fff;
+                transition: color 0.3s ease-in-out;
+
+
+            }
+
+
+            a:hover {
+                color: #ffcc00;
+                /* Màu chữ khi hover */
+            }
+        }
+
+    }
+
+
+}
+
+@media screen and (max-width: 768px) {
+
+    // CSS cho màn hình có chiều rộng tối đa 768px
+    .bg-body-tertiary {
+        flex-direction: column; // Đổi layout thành dạng cột
+    }
+
+    .fill_loc {
+        width: 100%; // Đảm bảo fill_loc chiếm toàn bộ chiều rộng
+    }
+
+    // ... (Các điều chỉnh khác bạn muốn thực hiện cho màn hình nhỏ)
+}
+
+footer {
+    background-color: #2d8a2d;
+    color: #e3e3e3;
+}
+
+
+
+.sbmit_area_btn {
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .btn-login {
+        background-color: #29b75c;
+        font-size: 1rem;
+        outline: none;
+        border-radius: 999px;
+        width: 90%;
+    }
+}
+
+
+
+.sidebar {
+    height: 100vh;
+    width: 250px;
+    background-color: #fff;
+    color: white;
+    padding-top: 20px;
+    position: fixed;
+    transition: 0.3s;
+    margin-left: 80px;
+
+    ul {
+        list-style: none;
+        padding: 0;
+
+        li:hover {
+            background-color: #f3f4f6;
+            transform: scale(1.02);
+        }
+
+        li {
+
+            padding: 10px;
+            text-align: center;
+            font-size: 1.05rem;
+            display: flex;
+            justify-content: space-between;
+
+            i {
+                color: #111827;
+            }
+
+            //border-bottom: 1px solid  ;
+            a {
+                font-family: 'Roboto', sans-serif;
+                font-weight: 400;
+                text-decoration: none;
+                color: #111827;
+
+                span {
+                    margin-left: 5px;
+                }
+
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .sidebar {
+        width: 0;
+    }
+
+    .content {
+        margin-left: 0;
+    }
+}
+
+.chat {
+
+    width: 50px;
+    height: 46px;
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #1aaf27;
+    border-radius: 50%;
+    cursor: pointer;
+    animation: bounce 1s infinite alternate;
+
+    @keyframes bounce {
+        to {
+            transform: translateY(7px);
+            /* Di chuyển xuống */
+        }
+    }
+
+    .chat-icont {}
+}
+
+
+.toogle_menu:hover .sidebar {
+    display: block;
+}
+
+
+.baner {
+    height: 400px;
+    width: 600px;
+    flex-basis: 50%;
+  position: relative;
+   // overflow: hidden;
+    margin: auto;
+    padding: 30px;
+   
+
+    .slider_area {
+        opacity: 1;
+        transition: 1s;
+        
+
+         img {
+            height: 100%;
+            width: 100%;
+            object-fit: cover;
+        }
+    
+
+    }
+
+
+    
+
+
+
+}
+
+.wrapper{
+    max-width: 100vw;
+    margin: 0 auto;
+}
