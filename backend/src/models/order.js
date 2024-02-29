@@ -6,21 +6,19 @@ var schema = new mongoose.Schema(
             type: String,
             ref: 'Users'
         },
-        id_payment: {
+        name: String,
+        mail:String,
+        phone:String,
+        note: {
             type: String,
-            ref: 'Payment'
         },
-        id_note: {
-            type: String,
-            ref: 'Note'
-        },
-        address: String,
+
         total: Number,
+        address: String,
         status: String,
-        pay: Boolean,
         feeship: Number,
-        id_coupon: String,
-        create_time: String
+        create_time: String,
+
     }
 );
 

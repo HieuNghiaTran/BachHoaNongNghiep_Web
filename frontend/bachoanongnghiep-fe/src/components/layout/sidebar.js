@@ -6,8 +6,8 @@ const Sidebar = () => {
     return (
 
         <>
-            <div className="sidebar">
-                <ul>
+            <div className="sidebar mx-2"  >
+                <ul className="" style={{width:"20rem"}}>
                     <li>
                         <a href="#">
                             <img src=" https://theme.hstatic.net/200000722083/1001109742/14/menu_icon_1.png?v=22" width="27px" height="27px"></img>

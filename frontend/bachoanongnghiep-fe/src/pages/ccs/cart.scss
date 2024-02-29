@@ -1,0 +1,85 @@
+.top-left-cart {
+    flex-basis: 60%;
+    padding-top: 2rem;
+    padding-right: 2rem;
+    padding-left: 2rem;
+    padding-bottom: none;
+    margin-top: 1rem;
+    border-right: 0.2px solid rgb(204, 201, 201);
+    tr td{
+        align-items: center;
+
+    }
+}
+
+.top-right-cart {
+    flex-basis: 20%;
+    margin-left: 4rem;
+    padding-top: 2rem;
+    padding-right: 2rem;
+    padding-left: 2rem;
+    padding-bottom: none;
+    margin-top: 1rem;
+}
+
+textarea{
+    width: 100%;
+    resize: none;
+}
+
+
+.btn-are{
+
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+.btn_payment {
+
+    background-color: #ff5722;
+    border: none;
+    color: #fff;
+    width: 80%;
+    
+    //margin-left: 3rem;
+}
+}
+
+td{
+    vertical-align: baseline;
+}
+
+.btn-delete:hover{
+color: red;
+}
+
+
+
+.my-cart{
+margin: 0 auto;
+padding: 0 auto;
+}
+
+
+.bg-body-tertiary {
+
+   height: 6rem;
+}
+
+
+
+.back-link {
+    position: relative;
+    text-decoration: none;
+    color: #666666; 
+  }
+  
+  .back-link span {
+    transition: transform 0.3s; }
+
+  
+  .back-link:hover span {
+    color: #ff5722;
+    transform: translateX(-20px); /* Di chuyển mũi tên sang trái khi hover */
+  }
+

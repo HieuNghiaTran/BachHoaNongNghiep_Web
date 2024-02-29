@@ -1,11 +1,11 @@
 html,
 body {
   font-family: 'Amazon Ember';
+  position: relative;
   width: 100%;
   height: 100%;
   margin: 0px;
   padding: 0px;
-  overflow-x: hidden;
 }
 
 /* Scroll Bar */
@@ -26,14 +26,9 @@ body {
   border-radius: 5px;
 }
 
-nav {
-  background-color: #232f3e;
-  padding: 1rem 1rem;
-}
 
-#search_btn {
-  background-color: #1E90FF;
-}
+
+
 
 .input-group {
   width: 90%;
@@ -79,10 +74,6 @@ nav {
   color: #2e2e2e;
 }
 
-.card-title a:hover {
-  color: #fa9c23;
-  text-decoration: none;
-}
 
 .card-body {
   padding-left: 0;
@@ -160,11 +151,13 @@ footer {
 }
 
 #product_price {
-  font-size: 2rem;
+  font-size: 1.7rem;
   font-weight: bold;
+font-family: inherit;
+
 }
 
-#cart_btn,
+
 #review_btn {
   border-radius: 2rem;
   background-color: #fa9c23;
@@ -192,7 +185,7 @@ footer {
 }
 
 #product_image {
-  margin-top: 9rem;
+  
 }
 
 /* Loader */
@@ -278,14 +271,15 @@ footer {
 }
 
 .stockCounter input {
-  border: none;
+  padding: 0.1rem 0.5rem;
   width: 3rem;
   text-align: center;
+  border-radius: none;
 }
 
 .plus,
 .minus {
-  padding: 0.1rem 0.5rem;
+  
 }
 
 .stockCounter input::-webkit-outer-spin-button,
@@ -299,32 +293,11 @@ footer {
   background-color: white;
 }
 
-/* Login & Register */
 
-.wrapper {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-top: 5rem;
 
-  font-weight: 700;
-}
 
-.wrapper form {
-  padding: 2.5rem 3rem;
-}
 
-.wrapper form .btn {
-  background-color: #4169E1;
-  border-color: #4169E1;
-  color: white;
-  margin-top: 2.5rem;
-}
 
-.wrapper form a {
-  font-size: 0.9rem;
-  color: grey;
-}
 
 /* Avatar */
 .avatar {
@@ -489,15 +462,11 @@ footer {
 }
 
 /* Admin Sidebar */
-
 .sidebar-wrapper {
-  display: flex;
   width: 100%;
   align-items: stretch;
   min-height: 100vh;
   font-weight: normal;
-
-  margin-top: 0;
   height: 100%;
   left: 0;
   top: 0;
@@ -542,7 +511,6 @@ footer {
 #sidebar ul li a i {
   margin-right: 0.3rem;
 }
-
 #sidebar ul li.active>a,
 a[aria-expanded='true'] {
   color: #fff;
@@ -594,7 +562,7 @@ ul.CTAs a {
 /* Reviews */
 
 .rating {
-  margin-top: 10rem;
+  margin-top: 1rem;
 }
 
 .stars {
@@ -635,7 +603,7 @@ ul.CTAs a {
 }
 
 .containerr {
-  display: block;
+
   margin-left: auto;
   margin-right: auto;
   margin-top: 20%;

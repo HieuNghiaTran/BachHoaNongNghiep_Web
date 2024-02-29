@@ -1,6 +1,6 @@
-var mongoose = require('mongoose');
+const mongoose = require('mongoose');
 
-var schema = new mongoose.Schema(
+var userschema = new mongoose.Schema(
     {
         id_permission: {
             type: String,
@@ -15,6 +15,6 @@ var schema = new mongoose.Schema(
     }
 );
 
-var Users = mongoose.model('Users', schema, 'user');
+let Users = mongoose.model("user", userschema);
 
 module.exports = Users;

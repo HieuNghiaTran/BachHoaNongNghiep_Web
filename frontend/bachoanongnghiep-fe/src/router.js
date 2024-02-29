@@ -1,34 +1,102 @@
 import { ROUTER } from "./utils/router";
-import Header from '../src/components/layout/header'
-import { Routes,Route } from 'react-router-dom';
-
-import Footer from '../src/components/layout/footer'
-import Chat from '../src/components/layout/chat'
-import Sliders from '../src/components/layout/slider';
-import Sidebar from '../src/components/layout/sidebar';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import HomePage from "./pages/Home";
+import DetailProduct from "./pages/Product_Detail";
+import CartPage from "./pages/Cart";
+import ResultSearch from "./pages/ResultSearch";
+import ProductWithCatoryPage from "./pages/ProductWithCatory";
+import Dashboard from "./admin/pages/dashboard";
+import ProductManagerPage from "./admin/pages/productManager";
+import SubmitOrderPage from "./pages/SubmitOrderPage";
+import Location from "./pages/storeLocation";
+import OrderManager from "./admin/pages/odersManager";
 const renderUserRouter = () => {
-    const userrouter = [
-        {
-            path: ROUTER.USER.Home,
-            component:  <Header />
-        }
-    ];
+  const userrouter = [
+    {
+      path: ROUTER.USER.Home,
+      component: <HomePage />,
+    },
+    {
 
-    return (
-        <Routes>
-            {userrouter.map((item, key) => (
-                <Route
-                    key={key}
-                    path={item.path}
-                    element={item.component}
-                />
-            ))}
-        </Routes>
-    );
-};
+      path: ROUTER.USER.Product,
+      component: <DetailProduct />,
+
+
+    },
+    {
+      path: ROUTER.USER.Cart,
+      component: <CartPage />,
+    },
+
+
+    {
+      path: ROUTER.USER.Result,
+      component: <ResultSearch/>,
+    },
+
+
+    {
+      path: ROUTER.USER.ProductWithCatory,
+      component: <ProductWithCatoryPage/>,
+    },
+
+    
+    {
+      path: ROUTER.USER.SubmitOrder,
+      component: <SubmitOrderPage/>,
+    },
+    {
+      path: ROUTER.USER.Location,
+      component: <Location/>,
+    },
+
+  ];
+
+  return (
+    <Routes>
+      {userrouter.map((item, key) => (
+        <Route key={key} path={item.path} element={item.component} />
+        
+      ))}
+
+    </Routes>
+  );
+}
+
+const renderAdmin = () => {
+  const adminrouter = [
+    {
+      path: ROUTER.ADMIN.Home,
+      component: <Dashboard/>,
+    },
+    {
+      path: ROUTER.ADMIN.Product_Manager,
+      component: <ProductManagerPage/>,
+    },
+
+    {
+      path: ROUTER.ADMIN.Order_Manager,
+      component: <OrderManager/>,
+    },
+  ];
+
+  return (
+    <Routes>
+      {adminrouter.map((item, key) => (
+        <Route key={key} path={item.path} element={item.component} />
+      ))}
+    </Routes>
+  );
+}
 
 const RouterCustom = () => {
-    return renderUserRouter();
+  return renderUserRouter();
 };
 
-export default RouterCustom;
+const RouterAdmin = () => {
+
+return renderAdmin()
+
+};
+
+export {RouterCustom, RouterAdmin};

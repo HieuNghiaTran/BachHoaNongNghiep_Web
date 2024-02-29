@@ -6,16 +6,25 @@ var schema = new mongoose.Schema(
             type: String,
             ref: 'Order'
         },
-        id_product: {
-            type: String,
-            ref: 'Products',
-        },
-        name_product: String,
-        price_product: String,
-        count: Number,
+        product: [
+            {
+                id_product: {
+                    type: String,
+                    ref: 'Products',
+                },
+                name_product: String,
+                price_product: String,
+                count: Number,
+            }
+
+
+        ]
+
     }
 );
 
 var Detail_Order = mongoose.model('Detail_Order', schema, 'detail_order');
 
 module.exports = Detail_Order;
+
+

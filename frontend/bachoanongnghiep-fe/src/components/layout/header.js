@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useContext, useEffect } from "react";
+import { UserContext } from "../../context/userContext";
 import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
@@ -9,108 +10,153 @@ import NavDropdown from 'react-bootstrap/NavDropdown';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../Css/Styles.scss'
 import ModalsLoginForm from "./ModalsLoginForm";
+import { FaRegUserCircle } from "react-icons/fa";
+import Dropdown from 'react-bootstrap/Dropdown';
+import DropdownButton from 'react-bootstrap/DropdownButton';
+import { FaSortDown } from "react-icons/fa";
+import Search from "./search";
+import { FaPhone } from "react-icons/fa6";
+import Cart from "./cart";
+import { Link } from "react-router-dom";
+
+
+
 
 
 const Header = () => {
+  const { user, logout } = useContext(UserContext);
   const [isShowSideBar, setIsShowSideBar] = useState(false)
+  const [isShowDropDown, setIsShowDropDown] = useState(false)
+  const [pageScoll, setPageScoll] = useState()
+  const [isShowHeader, setIsShowHeader] = useState(true);
+  const [isShowModalsLogin, setIsShowModalLogin] = useState(false);
 
-  function toggleSidebar() {
-    const toogle_menu = document.querySelector('.toogle_menu');
-    const sidebar = document.querySelector('.sidebar');
-    toogle_menu.removeEventListener('click', handleToggle);
-    toogle_menu.addEventListener('click', handleToggle);
-  
-    function handleToggle() {
-      setIsShowSideBar(!isShowSideBar);
-    }
-  
-    if (isShowSideBar) {
-      sidebar.style.display = 'block';
-    } else {
-      sidebar.style.display = 'none';
-    }
+
+  const btnsidebar = document.querySelector('.toogle_nav_wrapper')
+  const sb = document.querySelector('.sidebar')
+
+  useEffect(() => {
+
+    window.addEventListener('scroll', handleScroll);
+
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
+  const handleScroll = () => {
+    setPageScoll(window.pageYOffset)
+  };
+
+
+  const handleClose = () => { setIsShowModalLogin(false) }
+  const handleShow = () => {
+    user && user.auth
+      ? (() => {
+        setIsShowModalLogin(false);
+        setIsShowDropDown(!isShowDropDown);
+      })()
+      : setIsShowModalLogin(true);
+
+
+  }
+  const handleSignOut = () => {
+    logout();
+    alert("dang xuat thanh cong")
   }
 
-
-
-  const [isShowModalsLogin, setIsShowModalLogin] = useState(false);
-  const handleClose = () => { setIsShowModalLogin(false) }
-  const handleShow = () => { 
-    
-    setIsShowModalLogin(true) }
   return (
-    <><Navbar expand="lg" className="bg-body-tertiary">
-      <div className="left_loc">
-        <a href="#" className="logo">
-          <Navbar.Brand href="#home" className="Brand">Bách Hoá Nông Nghiệp</Navbar.Brand>
-        </a>
-      </div>
-      <div className="fill_loc">
-        <div className="search_bar">
-          <input type="text" className="search_loc" placeholder="Tìm kiếm sản phẩm" />
+    <>
+      <div className={pageScoll > 300 ? " visible position-fixed w-100" : "sa"} style={{ zIndex: "100" }}  > <Navbar expand="md" className="bg-body-tertiary" >
+        <div className="top_nav">
+          <div className="left_loc col-md-3">
+            <a href="#" className="logo">
+              <Navbar.Brand href="/trang-chu" className="Brand">
+                <img
+                  src={require("../images/logo.png")}
+                  alt=""
+                  width="75%"
 
-          <button>
-            <i className="fa-solid fa-magnifying-glass"></i>
-          </button>
+                />
+
+
+              </Navbar.Brand>
+            </a>
+          </div>
+          <div className="fill_loc">
+            <Search />
+          </div>
+          <div className="right_loc" style={{ margin: "" }}>
+
+            <ul className="icont_custom ">
+              <li className="col-md-5 m-auto">
+                <div className="phone_area d-flex ujstify-content-center align-item-center">
+                  <span className=" mx-2 py-2 px-2" style={{ color: '#1aaf27', fontSize: '1.15rem' }}><FaPhone /></span>
+                  <div className="d-md-flex flex-column">
+                    <div style={{ fontSize: '0.8rem' }}>Hỗ trợ khách hàng</div>
+                    <div style={{ fontSize: '0.8rem', fontWeight: 'bold' }} className="phone">055.9809.019</div>
+                  </div>
+
+
+
+                </div>
+              </li>
+              <li className="cus_li border-none m-auto">
+                <div className="acount_name d-flex" onClick={handleShow}>
+                  <span className="account-icon"><FaRegUserCircle /></span>
+                  {user && user.auth ?
+                    <span className="Account mx-2">{user.username}</span> :
+                    <span className="Account mx-2">
+                      <div style={{ fontSize: '0.8rem', display: "inline-block"}}>Đăng nhập</div>
+                      <div style={{ fontSize: '0.5rem', display: "inline-block" }}>Đăng ký</div>
+                    </span>
+                  }
+
+                  <NavDropdown
+                    showArrow={false}
+                    show={isShowDropDown}
+                    menuVariant="light"
+                    className="nav-dropdown-no-arrow"
+                    style={{ zIndex: '999', right: "3.5rem", top: "0.5rem" }}
+                  >
+                    <NavDropdown.Item href="#action/3.1">Thông tin tài khoản</NavDropdown.Item>
+                    <NavDropdown.Item href="#action/3.2">Đơn mua</NavDropdown.Item>
+                    <NavDropdown.Divider />
+                    <NavDropdown.Item href="#action/3.4" onClick={handleSignOut}>
+                      Đăng xuất
+                    </NavDropdown.Item>
+                  </NavDropdown>
+                </div>
+              </li>
+
+              <li className="m-auto">
+                <Cart />
+              </li>
+            </ul>
+          </div>
+        </div>
+
+
+
+      </Navbar><div className="under_nav">
+          <div className="toogle_nav_wrapper p-0 mx-4">
+            <button className="toogle_menu btn-outline-successc" style={{ width: "20rem" }} >
+              <i className="fa-solid fa-bars"></i>
+              <span>Danh mục sản phẩm</span>
+            </button>
+
+          </div>
+          <ul className="col-3">
+            <li className=""><a href="#"><i className="fa-solid fa-house"></i>Giới thiệu</a></li>
+            <li><a href="#"><i className="fa-regular fa-newspaper"></i>Kỹ thuật</a></li>
+            <li><a href="#"><i className="fa-solid fa-shop"></i>Kiểm tra đơn hàng</a></li>
+            <li><Link to={"/page/location"}><i className="fa-solid fa-location-dot fa-flip"></i>Hệ thống cửa hàng </Link></li>
+            <li><a href="#"><i className="fa-solid fa-phone"></i>Liên hệ</a></li>
+           
+          </ul>
         </div>
       </div>
-      <div className="right_loc">
-        <ul className="icont_custom">
-          <li className="cus_li">
-            <div className="acount_name">
-              <a  onClick={handleShow}>Tài Khoản</a> <br />
-              <a onClick={handleShow}>Đăng nhập</a>
-            </div>
-
-            <button className="custom_icont">
-              <img src={"https://theme.hstatic.net/200000722083/1001109742/14/account-icon.png?v=22"} alt="" width="35px" height="35px" />
-              <NavDropdown title="Acount" id="basic-nav-dropdown">
-                <NavDropdown.Item href="#action/3.1">Thông tin tài khoản</NavDropdown.Item>
-                <NavDropdown.Item href="#action/3.2">
-                  Đơn mua
-                </NavDropdown.Item>
-                <NavDropdown.Item href="#action/3.3">Đăng xuất</NavDropdown.Item>
-                <NavDropdown.Divider />
-              </NavDropdown>
-            </button>
-          </li>
-          <li>
-            <button className="btn_cart">
-
-              <img src={require("../images/cart-icon-transparent-18.jpg")} alt="" width="55px" height="55px" />
-              <div className="total_product_cart">11</div>
-            </button>
-          </li>
-          <li>
-            <button className="btn_bell">
-              <img src={"https://cdn1.concung.com/themes/desktop4.1/image/v40/icon/notify-top.png"} alt="" width="35px" height="35px" />
-              <div className="total_notify">12</div>
-            </button>
-          </li>
-
-        </ul>
-      </div>
-     
-
-
-
-    </Navbar><div className="under_nav">
-        <div className="toogle_nav_wrapper  mr-2  p-0 d-inline-flex">
-          <button className="toogle_menu" onClick={toggleSidebar}>
-            <i className="fa-solid fa-bars"></i>
-            <span>Danh mục sản phẩm</span>
-          </button>
-
-        </div>
-        <ul>
-          <li><a href="#"><i className="fa-solid fa-house"></i>Giới thiệu</a></li>
-          <li><a href="#"><i className="fa-regular fa-newspaper"></i>Kỹ thuật</a></li>
-          <li><a href="#"><i className="fa-solid fa-shop"></i>Kiểm tra đơn hàng</a></li>
-          <li><a href="#"><i className="fa-solid fa-location-dot fa-flip"></i>Hệ thống cửa hàng</a></li>
-          <li><a href="#"><i className="fa-solid fa-phone"></i>Liên hệ</a></li>
-        </ul>
-      </div>
-
       <ModalsLoginForm
         show={isShowModalsLogin}
         handleClose={handleClose}
