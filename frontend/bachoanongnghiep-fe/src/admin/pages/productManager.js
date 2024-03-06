@@ -34,7 +34,8 @@ const ProductManagerPage = () => {
         let res = await getProductWithSearch(value)
         setProduct(res.data)
 
-       }else{
+       }
+       else{
     
         fetchData(1, perPage);
 

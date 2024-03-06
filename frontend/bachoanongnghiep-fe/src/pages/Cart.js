@@ -71,7 +71,7 @@ const CartPage = (props) => {
     return (
         <>
             <Header />
-            <History />
+            <div><History data={"Trang chủ / "} last_item={`Giỏ hàng (${productItem1.length})`}/></div>
             <MetaData title={"My-oder"} />
             <div className='my-cart'>
 

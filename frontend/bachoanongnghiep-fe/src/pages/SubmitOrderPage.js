@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import MetaData from "../services/setHead";
 import { UserContext } from "../context/userContext";
 import { submitDetail, submitOrder } from "../services/orderServies"
-
+import { Radio, Space } from 'antd';
 const SubmitOrderPage = () => {
     const { user } = useContext(UserContext)
     const [currentDateTime, setCurrentDateTime] = useState(new Date());
@@ -21,6 +21,10 @@ const SubmitOrderPage = () => {
     const [total, setTotal] = useState()
     const [feeship, setFeeship] = useState(25000)
     const [note, setNote] = useState('')
+    const [value, setValue] = useState('')
+
+
+    const [orderID,setOrderID]=useState()
 
     useEffect(() => {
         const interval = setInterval(() => {
@@ -49,32 +53,45 @@ const SubmitOrderPage = () => {
         console.log('Failed:', errorInfo);
     };
 
+  
+
     const submitMyOrder = async () => {
         try {
-            let data = new FormData()
-            data = {
-                username: user.username,
-                name: name,
-                email: email,
-                note: note,
-                address: address,
-                phone: phone,
-                total: total,
-                status: "Đã đặt hàng",
-                feeship: feeship,
-                create_time: currentDateTime,
-            }
-            let data2 = new FormData();
-            data2 = {
-                name:name,
-                phone: phone,
-                time: currentDateTime,
-                product: product
-            }
+            if(value===1){
+                let data = new FormData()
+                data = {
+                    username: user.username,
+                    name: name,
+                    email: email,
+                    note: note,
+                    address: address,
+                    phone: phone,
+                    total: total,
+                    status: "Chưa Thanh Toán",
+                    feeship: feeship,
+                    create_time: currentDateTime,
+                }
+                let data2 = new FormData();
+                data2 = {
+                    name: name,
+                    phone: phone,
+                    time: currentDateTime,
+                    product: product
+                }
+    
+                let res = await submitOrder(data)
+                let rs = await submitDetail(data2)
+                toast.success("Thanh Cong")
 
-            let res = await submitOrder(data)
-            let rs = await submitDetail(data2)
-            toast.success("Thanh Cong")
+
+            }else{
+
+
+
+
+
+            }
+            
 
         } catch (err) {
             console.log(err)
@@ -227,6 +244,26 @@ const SubmitOrderPage = () => {
                                 >
                                     <Checkbox>Tôi đã đọc kỹ thông tin</Checkbox>
                                 </Form.Item>
+                                <Form.Item
+                                    wrapperCol={{
+                                        offset: 8,
+                                        span: 10,
+                                    }}
+                                >
+                                    <label style={{fontWeight:"bold"}} className="mb-2">Chọn Phương Thức Thanh Toán</label>
+                                    <Radio.Group onChange={(e)=>{setValue(e.target.value)}} value={value}>
+                                        <Space direction="vertical">
+                                            <Radio value={1}><span ><img className="mx-2" width={"32rem"}  src={require("../components/images/thanhtoankhinhanhang.png")}></img></span>Thanh toán khi nhận hàng</Radio>
+                                            <Radio value={2}><span ><img className="mx-2" width={"30rem"}  src={require("../components/images/VNPAY.png")}></img></span>Ví điện tử VNPAY</Radio>
+                                           
+                                            
+                                        </Space>
+                                    </Radio.Group>
+
+
+                                </Form.Item>
+
+
 
                                 <Form.Item
                                     wrapperCol={{

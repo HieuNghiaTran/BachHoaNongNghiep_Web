@@ -23,13 +23,24 @@ const ProductWithCatoryPage = () => {
     const [product, setProduct] = useState([]);
     const [listColection, setListCollection] = useState([]);
     const [pageCount, setPageCount] = useState(5);
+    const [nameCategory, setNameCategory] = useState('')
     const handlePageClick = () => {
     }
 
-    useEffect( async() => {
+    useEffect(async () => {
 
         fetchDataColection();
         fetchProductColection();
+        switch (category_id) {
+            case '658d71c7bdf16aee6ce16344':{setNameCategory("Thuốc bảo vệ thực vật")}
+            case '658d7164bdf16aee6ce1633c':{setNameCategory("Gạo")}
+            case '658d7192bdf16aee6ce16342':{setNameCategory("Hạt giống")}
+            case '658d7170bdf16aee6ce1633e':{setNameCategory("Phân bón")}
+            case '658d7182bdf16aee6ce16340':{setNameCategory("Linh kiện Drone")}
+
+
+
+    }
     }, []);
 
 
@@ -38,6 +49,7 @@ const ProductWithCatoryPage = () => {
     const fetchDataColection = async () => {
         try {
             let res = await getAllColecion(category_id);
+
             setListCollection(res.data);
         } catch (err) {
             console.log(err);
@@ -49,6 +61,7 @@ const ProductWithCatoryPage = () => {
     const fetchProductColection = async () => {
         try {
             let res = await getProductWithCatory(category_id);
+
             setProduct(res.data)
 
         } catch (err) {
@@ -60,9 +73,9 @@ const ProductWithCatoryPage = () => {
             <MetaData title={"Sản Phẩm"} />
             <Header />
             <div className="main">
-                <History />
-                <div className="h4  mb-3">Mô tả</div>
-                <div className="px-3 mx-3 mb-3">Thuốc bảo vệ thực vật</div>
+                <div><History data={"Trang chủ / Danh Mục /"} last_item={nameCategory} /></div>
+                <div className="h3  mb-3 px-5 my-3" style={{ fontFamily: "'Roboto', sans-serif" }}>Mô tả</div>
+                <div className="mb-3 px-5" style={{ fontFamily: "'Roboto', sans-serif" }}>Thuốc bảo vệ thực vật</div>
                 <div className="container d-flex">
                     <div className="colections-container-left px-3 mx-3 col-md-2">
                         <div className="colections-container-left-top">
@@ -131,7 +144,7 @@ const ProductWithCatoryPage = () => {
                         </div>
                     </div>
                     <div className="colections-container-right px-3 col-md-10">
-                        <div className='h3' >Thuốc bảo vệ thực vật</div>
+                        <div className='h2' style={{ fontFamily: "'Roboto', sans-serif" }} >Thuốc bảo vệ thực vật</div>
 
 
                         <div className='d-flex colections-container-right-header pb-2'>
