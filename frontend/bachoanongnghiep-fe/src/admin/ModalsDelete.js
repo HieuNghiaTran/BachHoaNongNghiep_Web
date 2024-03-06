@@ -17,12 +17,6 @@ const ModalDelete = (props) => {
         toast.success("Delete Success")
     }
 
-    useEffect(()=>{
-
-
-
-    },[product])
-
 
     return (
         <>

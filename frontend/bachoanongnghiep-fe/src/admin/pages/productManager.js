@@ -1,31 +1,54 @@
-import React, { Fragment, useEffect, useState } from "react"; // Import React and Fragment
+import React, { Fragment, useEffect, useState } from "react";
 import Sidebar from "../sidebar"; // Import Sidebar component
 import MetaData from "../../services/setHead"; // Import MetaData component (assuming it sets head data)
 import TableProduct from "../tableProduct";
-import { getAllProduct, getProductWithPage } from "../../services/productSevices";
+import { getAllProduct, getProductWithPage, getProductWithSearch } from "../../services/productSevices";
 import { FaPlusCircle } from "react-icons/fa";
 import ModalAddNewProduct from "../ModalsAddNewProduct";
-
-
-
+import { AudioOutlined } from '@ant-design/icons';
+import { Input, Space } from 'antd';
 import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
 import { FaPagelines } from 'react-icons/fa';
-
+const { Search } = Input;
+const suffix = (
+    <AudioOutlined
+        style={{
+            fontSize: 16,
+            color: '#1677ff',
+        }}
+    />
+);
 
 const ProductManagerPage = () => {
     const [product, setProduct] = useState([])
     const [isShowModal, setIsShowModal] = useState(false)
     const [totalPages, setTotalPages] = useState(0);
-    const [pageCount, setPageCount] = useState(5)
-    
     const [currentPage, setCurrentPage] = useState(0);
     const { perPage, setPerPage } = useState(5)
+    const [value, setValue] = useState('')
+
+
+    const onSearch = async () => {
+       if(value!==''){
+        let res = await getProductWithSearch(value)
+        setProduct(res.data)
+
+       }else{
+    
+        fetchData(1, perPage);
+
+
+       }
+       
+
+
+    }
+
+
     const handlePageClick = async (e) => {
         const currentPage = e.target.textContent;
-            fetchData(currentPage,5);
-
-
+        fetchData(currentPage, perPage);
     }
 
     const CloseModal = () => {
@@ -34,8 +57,8 @@ const ProductManagerPage = () => {
 
     }
     useEffect(() => {
-        fetchData(1, 5);
-    }, []);
+        fetchData(1, perPage);
+    }, [perPage]);
 
     const fetchData = async (page, perPage) => {
         try {
@@ -59,7 +82,23 @@ const ProductManagerPage = () => {
                         <div className=" col-12 col-md-9">
                             <div className="d-flex justify-content-between">
                                 <h1 className="">Quản lý sản phẩm</h1>
-                                <div >
+                                <div className="m-auto" style={{ flexBasis: "40%" }}><Search
+                                    placeholder="Nhập tên sản phẩm"
+                                    allowClear
+                                    enterButton="Search"
+                                    size="large"
+                                    value={value}
+                                    onChange={(e) => { setValue(e.target.value) 
+                                        onSearch() }}
+                                    width={400}
+                                    onSearch={onSearch}
+                                />
+
+
+                                </div>
+
+
+                                <div style={{ marginBottom: "auto", marginTop: "auto" }}>
                                     <button type="button" class="btn btn-danger " style={{ margin: "auto" }}
 
                                         onClick={() => {
@@ -95,7 +134,7 @@ const ProductManagerPage = () => {
             </div>
             <div className='pageginate'>
                 <Stack spacing={2}>
-                    <Pagination count={pageCount} color="success"
+                    <Pagination count={totalPages} color="success"
 
                         onChange={handlePageClick}
                         pageCount={totalPages}
@@ -108,6 +147,7 @@ const ProductManagerPage = () => {
             <ModalAddNewProduct
                 isModalVisible={isShowModal}
                 handleCloseModal={CloseModal}
+
 
             />
 

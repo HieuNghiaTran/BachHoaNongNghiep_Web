@@ -154,12 +154,12 @@ const productController = {
                     value.price_product.toUpperCase().indexOf(keyWord.toUpperCase()) !== -1
 
             });
-            res.json(newData)
+            res.status(200).json(newData)
 
 
         } catch (err) {
             console.log(err)
-            res.status(500)
+            res.status(500).json(err)
         }
     },
     PageginateProduct: async (req, res) => {
@@ -180,6 +180,25 @@ const productController = {
 
 
     },
+
+
+    PageginateProductWithCategory: async (req, res) => {
+        try {
+            const page = parseInt(req.query.page) || 1;
+            const perPage = parseInt(req.query.perPage) || 10;
+            const id = req.query.id;
+            const result = await Products.paginate(
+                { id_category: id },
+                { page, limit: perPage, sort: { _id: -1 } }
+            );
+            res.json(result);
+            console.log(result); 
+        } catch (err) {
+            res.status(500).json(err);
+        }
+    },
+
+
     deleteProduct: async (req, res, next) => {
 
         try {

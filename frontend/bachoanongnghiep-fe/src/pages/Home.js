@@ -6,7 +6,7 @@ import Header from "../components/layout/header";
 import ListCatory from "../components/layout/listCatory";
 import Products from "../components/layout/products";
 import { useContext, useEffect, useState } from "react";
-import { getAllProduct, getProductDetail, getProductWithCatory } from "../services/productSevices";
+import { getAllProduct, getProductDetail, getProductWithCategoryPageginate, getProductWithCatory } from "../services/productSevices";
 import './ccs/home.scss'
 import { UserContext } from "../context/userContext";
 import { HisProvider, historyContext } from "../context/historyContext";
@@ -33,16 +33,17 @@ const HomePage = () => {
 
   const fetchData = async () => {
     try {
-      let res1 = await getProductWithCatory("658d71c7bdf16aee6ce16344");
-      setProducts1(res1.data);
-      let res2 = await getProductWithCatory("658d7164bdf16aee6ce1633c");
-      setProducts2(res2.data);
-      let res3 = await getProductWithCatory("658d7170bdf16aee6ce1633e");
-      setProducts3(res3.data);
-      let res4 = await getProductWithCatory("658d7192bdf16aee6ce16342");
-      setProducts4(res4.data);
-      let res5 = await getProductWithCatory("658d7182bdf16aee6ce16340");
-      setProducts5(res5.data);
+      let res1 = await getProductWithCategoryPageginate(1, 6,"658d71c7bdf16aee6ce16344");
+      setProducts1(res1.data.docs);
+
+      let res2 = await getProductWithCategoryPageginate(1,5,"658d7164bdf16aee6ce1633c");
+      setProducts2(res2.data.docs);
+      let res3 = await getProductWithCategoryPageginate(1,5,"658d7170bdf16aee6ce1633e");
+      setProducts3(res3.data.docs);
+      let res4 = await getProductWithCategoryPageginate(1,5,"658d7192bdf16aee6ce16342");
+      setProducts4(res4.data.docs);
+      let res5 = await getProductWithCategoryPageginate(1,5,"658d7182bdf16aee6ce16340");
+      setProducts5(res5.data.docs);
 
 
     } catch (err) {

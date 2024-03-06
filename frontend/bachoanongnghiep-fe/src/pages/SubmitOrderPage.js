@@ -66,6 +66,7 @@ const SubmitOrderPage = () => {
             }
             let data2 = new FormData();
             data2 = {
+                name:name,
                 phone: phone,
                 time: currentDateTime,
                 product: product

@@ -7,7 +7,7 @@ import getAllColecion from "../services/collectionsServices";
 import { addNewProduct } from "../services/productSevices";
 import { toast } from 'react-toastify';
 const ModalAddNewProduct = (props) => {
-    const { isModalVisible, handleCloseModal, product } = props
+    const { isModalVisible, handleCloseModal, product, fetch } = props
     const [listcatogary, setListCategory] = useState([])
     const [imagesPreview, setImagesPreview] = useState([])
     const [describe, setDescirbe] = useState()
@@ -31,7 +31,12 @@ const ModalAddNewProduct = (props) => {
 
 
     useEffect(() => {
-        fetchData()
+        if(isModalVisible){ 
+            
+            fetchData()
+        
+        }
+       
     }, [])
 
     const handleSubmit = async () => {
@@ -52,6 +57,7 @@ const ModalAddNewProduct = (props) => {
         console.log(img)
         handleCloseModal()
         toast.success("Add Product Success");
+        
 
     }
 

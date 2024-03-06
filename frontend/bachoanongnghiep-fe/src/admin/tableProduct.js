@@ -39,7 +39,7 @@ const TableProduct = (props) => {
             <td style={{ color: "red", fontWeight: "bolder" }}>{item.price_product}đ</td>
             <td>{item.stock}</td>
             <td>
-              <button type="button" class="btn btn-outline-success mx-1" onClick={()=>{
+              <button type="button" class="btn btn-success mx-2" onClick={()=>{
                 
                 setTemp(item)
                 setIsShowModalEdit(true)}}
@@ -50,7 +50,7 @@ const TableProduct = (props) => {
                 Sửa</button>
 
 
-              <button type="button" class="btn btn-outline-danger"
+              <button type="button" class="btn btn-danger"
               onClick={()=>{
 
                 setTemp(item)

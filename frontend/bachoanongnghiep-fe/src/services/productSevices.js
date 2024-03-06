@@ -42,6 +42,12 @@ const getProductWithPage=(page, perpage)=>{
 return axios.get(`http://localhost:8001/product/getwithpage?page=${page}&perPage=${perpage}`)
 }
 
+
+const getProductWithCategoryPageginate=(page, perpage, id)=>{
+    return axios.get(`http://localhost:8001/pageginateProductCategory?id=${id}&page=${page}&perPage=${perpage}`)
+    }
+
+
 const postReview=(data)=>{
     const config = {
         headers: {
@@ -55,4 +61,4 @@ return axios.put("http://localhost:8001/products/review",data, config)
 
 
 
-export { addNewProduct, getAllProduct , getProductDetail, getProductWithSearch, getProductWithCatory,deleteProduct, updateProduct, getProductWithPage, postReview }
+export { getProductWithCategoryPageginate, addNewProduct, getAllProduct , getProductDetail, getProductWithSearch, getProductWithCatory,deleteProduct, updateProduct, getProductWithPage, postReview }

@@ -59,6 +59,8 @@ const Products = ({ product, col }) => {
                                 add();
 
                             }}><MdOutlineAddShoppingCart /><span>&nbsp;</span>Chọn Mua</div>
+
+
                         </div>
                     </div>
 

@@ -15,6 +15,7 @@ router.get("/user", userController.getAllUser);
 router.get("/user/detail/login", userController.getDetailUser);
 
 router.get("/product", productController.getAllProducts);
+router.get("/pageginateProductCategory", productController.PageginateProductWithCategory);
 router.get("/product/getwithpage", productController.PageginateProduct);
 router.get("/product/:id", productController.detailProduct);
 router.post("/product", productController.newProductAdmin);
@@ -41,7 +42,7 @@ router.post("/order",OrderController.submitOrder)
 router.get("/order",OrderController.getAllOrder)
 
 
-router.get("/order_detail",Detail_order.detail)
+router.get("/order_detail/:id",Detail_order.detail)
 router.get("/All_order_detail",Detail_order.getAlldetail)
 router.post("/order_detail",Detail_order.post_detail_order)
 
