@@ -6,6 +6,7 @@ const CategoryController = require('../controllers/categoryController');
 const ColectionController = require('../controllers/colectionController');
 const OrderController = require('../controllers/orderController');
 const Detail_order = require('../controllers/detail_orderController');
+const PaymentCotroller = require('../controllers/paymentController');
 const router= express.Router();
 
 
@@ -45,6 +46,12 @@ router.get("/order",OrderController.getAllOrder)
 router.get("/order_detail/:id",Detail_order.detail)
 router.get("/All_order_detail",Detail_order.getAlldetail)
 router.post("/order_detail",Detail_order.post_detail_order)
+
+
+
+
+router.post('/create_payment_url', PaymentCotroller.createPaymentUrl)
+router.get('payment/get_result', PaymentCotroller.vnpayReturn)
 
 
 module.exports = router

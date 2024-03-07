@@ -8,6 +8,11 @@ import MetaData from "../services/setHead";
 import { UserContext } from "../context/userContext";
 import { submitDetail, submitOrder } from "../services/orderServies"
 import { Radio, Space } from 'antd';
+import { paymentVNPay } from "../services/paymentServices";
+
+
+
+
 const SubmitOrderPage = () => {
     const { user } = useContext(UserContext)
     const [currentDateTime, setCurrentDateTime] = useState(new Date());
@@ -24,7 +29,7 @@ const SubmitOrderPage = () => {
     const [value, setValue] = useState('')
 
 
-    const [orderID,setOrderID]=useState()
+    const [orderID, setOrderID] = useState()
 
     useEffect(() => {
         const interval = setInterval(() => {
@@ -53,11 +58,12 @@ const SubmitOrderPage = () => {
         console.log('Failed:', errorInfo);
     };
 
-  
+
 
     const submitMyOrder = async () => {
         try {
-            if(value===1){
+            if (value === 1) {
+                alert("1")
                 let data = new FormData()
                 data = {
                     username: user.username,
@@ -78,20 +84,30 @@ const SubmitOrderPage = () => {
                     time: currentDateTime,
                     product: product
                 }
-    
+
                 let res = await submitOrder(data)
                 let rs = await submitDetail(data2)
                 toast.success("Thanh Cong")
 
 
-            }else{
+            } else {
+                alert("2")
+                try {
 
+                    let data = new FormData();
+                    data = {
+                        amount: total,
+                        language:""
 
+                    }
+                    let res = await paymentVNPay(data)
+                    window.location.replace(res.data);
+                } catch (err) {
+                    console.log(err)
 
-
-
+                }
             }
-            
+
 
         } catch (err) {
             console.log(err)
@@ -250,13 +266,13 @@ const SubmitOrderPage = () => {
                                         span: 10,
                                     }}
                                 >
-                                    <label style={{fontWeight:"bold"}} className="mb-2">Chọn Phương Thức Thanh Toán</label>
-                                    <Radio.Group onChange={(e)=>{setValue(e.target.value)}} value={value}>
+                                    <label style={{ fontWeight: "bold" }} className="mb-2">Chọn Phương Thức Thanh Toán</label>
+                                    <Radio.Group onChange={(e) => { setValue(e.target.value) }} value={value}>
                                         <Space direction="vertical">
-                                            <Radio value={1}><span ><img className="mx-2" width={"32rem"}  src={require("../components/images/thanhtoankhinhanhang.png")}></img></span>Thanh toán khi nhận hàng</Radio>
-                                            <Radio value={2}><span ><img className="mx-2" width={"30rem"}  src={require("../components/images/VNPAY.png")}></img></span>Ví điện tử VNPAY</Radio>
-                                           
-                                            
+                                            <Radio value={1}><span ><img className="mx-2" width={"32rem"} src={require("../components/images/thanhtoankhinhanhang.png")}></img></span>Thanh toán khi nhận hàng</Radio>
+                                            <Radio value={2}><span ><img className="mx-2" width={"30rem"} src={require("../components/images/VNPAY.png")}></img></span>Ví điện tử VNPAY</Radio>
+
+
                                         </Space>
                                     </Radio.Group>
 
