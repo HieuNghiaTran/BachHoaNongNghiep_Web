@@ -90,8 +90,6 @@ const PaymentCotroller = {
             delete vnp_Params['vnp_SecureHashType'];
 
             vnp_Params = sortObject(vnp_Params);
-
-            let secretKey = "JKNZFYHSFFLICTLJDSOIAYPKBYVAHAPP";
             let querystring = require('qs');
             let signData = querystring.stringify(vnp_Params, { encode: false });
             let crypto = require("crypto");

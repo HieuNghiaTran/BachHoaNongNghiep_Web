@@ -10,13 +10,13 @@ const OrderController = {
             const id_user = Users.findOne({ username: req.body.username });
             let data = {
                 id_user: id_user._id,
-                name:req.body.name,
-                mail:req.body.email,
+                name: req.body.name,
+                mail: req.body.email,
                 note: req.body.note,
                 total: req.body.total,
                 address: req.body.address,
                 status: req.body.status,
-                feeship:req.body.feeship,
+                feeship: req.body.feeship,
                 create_time: req.body.create_time
 
             }
@@ -37,17 +37,6 @@ const OrderController = {
             return res.status(500).json(err);
         }
     },
-
-    get_order: async (req, res) => {
-
-        const id_user = req.params.id
-
-        const order = await Order.find({ id_user }).populate(['id_user'])
-
-        res.json(order)
-
-    },
-
     get_detail: async (req, res) => {
 
         const id_order = req.params.id
@@ -57,6 +46,18 @@ const OrderController = {
         res.json(order)
 
     }
+
+    , delete_Order: async (req, res) => {
+        try {
+            const id = req.params.id
+            const resul = await Order.deleteOne({ id_order: id });
+
+            res.status(200).json(resul)
+        } catch (err) {
+            res.status(500).json(err)
+        }
+
+    },
 
 };
 

@@ -22,18 +22,18 @@ const TableProduct = (props) => {
     <Table striped bordered hover>
       <thead>
         <tr>
-          <th>Mã sản phẩm</th>
-          <th>Ảnh sản phẩm</th>
-          <th>Tên sản phẩm</th>
-          <th>Giá</th>
-          <th>Số lượng còn lại</th>
-          <th>Thao tác</th>
+          <th className="text-center">Mã sản phẩm</th>
+          <th className="text-center">Ảnh sản phẩm</th>
+          <th className="text-center">Tên sản phẩm</th>
+          <th className="text-center">Giá</th>
+          <th className="text-center">Số lượng còn lại</th>
+          <th className="text-center">Thao tác</th>
         </tr>
       </thead>
       <tbody>
         {product && product.length > 0 && product.map((item, index) => (
           <tr key={index}>
-            <td>{item.product_id}</td>
+            <td className="text-center">{item.product_id}</td>
             <td>{<img src={item.images[0].url} className="" style={{ width: '6rem' }}></img>}</td>
             <td>{item.name_product}</td>
             <td style={{ color: "red", fontWeight: "bolder" }}>{item.price_product}đ</td>

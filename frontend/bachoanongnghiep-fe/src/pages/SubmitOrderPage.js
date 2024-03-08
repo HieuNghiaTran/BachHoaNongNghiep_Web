@@ -63,7 +63,7 @@ const SubmitOrderPage = () => {
     const submitMyOrder = async () => {
         try {
             if (value === 1) {
-                alert("1")
+
                 let data = new FormData()
                 data = {
                     username: user.username,
@@ -91,17 +91,59 @@ const SubmitOrderPage = () => {
 
 
             } else {
-                alert("2")
+
                 try {
 
-                    let data = new FormData();
-                    data = {
+                    let data_pay = new FormData();
+                    data_pay = {
                         amount: total,
-                        language:""
+                        language: ""
+                    }
+
+
+
+
+                    let res = await paymentVNPay(data_pay)
+                    window.location.replace(res.data);
+                    let resulpayment;
+                    if (resulpayment) {
+
+
+                        let data = new FormData()
+                        data = {
+                            username: user.username,
+                            name: name,
+                            email: email,
+                            note: note,
+                            address: address,
+                            phone: phone,
+                            total: total,
+                            status: "Đã thanh toán",
+                            feeship: feeship,
+                            create_time: currentDateTime,
+                        }
+                        let data2 = new FormData();
+                        data2 = {
+                            name: name,
+                            phone: phone,
+                            time: currentDateTime,
+                            product: product
+                        }
+
+                        let res = await submitOrder(data)
+                        let rs = await submitDetail(data2)
+                        toast.success("Thanh Cong")
+
+
+
+
 
                     }
-                    let res = await paymentVNPay(data)
-                    window.location.replace(res.data);
+
+
+
+
+
                 } catch (err) {
                     console.log(err)
 

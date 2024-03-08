@@ -21,6 +21,13 @@ const getaAllOrder =()=>{
 return axios.get ("http://localhost:8001/order")
 }
 
-export  {submitDetail,submitOrder, getaAllOrder, getDetailOrder}
+
+const deleteOrder =(id )=>{
+    return axios.delete(`http://localhost:8001/order/:${id}`)
+    }
+
+
+
+export  {submitDetail,submitOrder, getaAllOrder, getDetailOrder, deleteOrder}
 
 

@@ -41,11 +41,12 @@ router.post("/collection", ColectionController.addCollection);
 
 router.post("/order",OrderController.submitOrder)
 router.get("/order",OrderController.getAllOrder)
-
+router.delete("/order/:id", OrderController.delete_Order)
 
 router.get("/order_detail/:id",Detail_order.detail)
 router.get("/All_order_detail",Detail_order.getAlldetail)
 router.post("/order_detail",Detail_order.post_detail_order)
+
 
 
 

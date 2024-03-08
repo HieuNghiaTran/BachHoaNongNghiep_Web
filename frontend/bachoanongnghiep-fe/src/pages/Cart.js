@@ -108,7 +108,7 @@ const CartPage = (props) => {
                     <div className="top-right-cart col-md-6">
                         <p>Số lượng:  <span className="order-summary-values">{productItem1.reduce((acc, item) => (acc + Number(item.quantity)), 0)} (Sản phẩm)</span></p>
                         <div className='total d-flex justify-content-between'>Tổng tiền là:<span style={{ color: 'red', fontWeight: 'bold' }}>{productItem1.reduce((acc, item) => (acc + item.price_product * item.quantity), 0)} đ</span></div>
-                        <div className='btn-are mt-3'><button className="btn_payment btn" onClick={handleaSubmit}><Link to={"/checkouts/:id"} style={{ color: "#fff" }}>Tiến hành đặt hàng</Link></button></div>
+                        <div className='btn-are mt-3'><button className="btn_payment btn" onClick={handleaSubmit}><Link to={`/checkouts/${Math.random()}`} style={{ color: "#fff" }}>Tiến hành đặt hàng</Link></button></div>
                         <div className='mt-2 back-top-buy text-center'><button className="btn"><Link to={"/trang-chu"} style={{ color: "#666666" }} className='back-link'><span><IoIosArrowRoundBack /></span>Tiếp tục mua hàng</Link></button></div>
                     </div>
                 </div>
