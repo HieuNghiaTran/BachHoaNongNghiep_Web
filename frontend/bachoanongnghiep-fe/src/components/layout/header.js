@@ -121,7 +121,7 @@ const Header = () => {
                     style={{ zIndex: '999', right: "3.5rem", top: "0.5rem" }}
                   >
                     <NavDropdown.Item href="#action/3.1">Thông tin tài khoản</NavDropdown.Item>
-                    <NavDropdown.Item href="#action/3.2">Đơn mua</NavDropdown.Item>
+                   <NavDropdown.Item> <Link to={"/my-order"}>Đơn mua</Link></NavDropdown.Item>
                     <NavDropdown.Divider />
                     <NavDropdown.Item href="#action/3.4" onClick={handleSignOut}>
                       Đăng xuất

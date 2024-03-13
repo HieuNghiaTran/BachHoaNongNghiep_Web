@@ -1,6 +1,7 @@
 export const ROUTER = {
     USER: {
         Home: "/trang-chu",
+        My_Order:"/my-order",
         Product: "/product/:id",
         Cart: "/cart",
         Result: '/search/:value',

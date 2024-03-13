@@ -18,7 +18,8 @@ var schema = new mongoose.Schema(
         status: String,
         feeship: Number,
         create_time: String,
-        payment_id:String
+        payment_id:String,
+        payment_status:String
 
     }
 );

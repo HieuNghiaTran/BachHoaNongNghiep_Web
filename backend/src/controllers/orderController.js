@@ -6,13 +6,19 @@ const OrderController = {
     submitOrder: async (req, res) => {
         try {
 
-            console.log("aafsdas")
-            const id_user = Users.findOne({ username: req.body.username });
+
+            const user = await Users.findOne({ username: req.body.username });
+            console.log(user);
+            if (!user) {
+                return res.status(404).json({ message: "User not found" });
+            }
+    
             let data = {
-                id_user: id_user._id,
+                id_user: user.id,
                 name: req.body.name,
                 mail: req.body.email,
                 note: req.body.note,
+                phone: req.body.phone,
                 total: req.body.total,
                 address: req.body.address,
                 status: req.body.status,
@@ -45,12 +51,21 @@ const OrderController = {
 
         res.json(order)
 
+    },
+    getOrderWithPhoneNumber: async (req, res) => {
+
+        const phone = req.query.phone
+
+        const order = await Order.find({ phone: phone })
+
+        res.json(order);
+
     }
 
     , delete_Order: async (req, res) => {
         try {
             const id = req.params.id
-            const resul = await Order.deleteOne({ id_order: id });
+            const resul = await Order.deleteOne({ _id: id });
 
             res.status(200).json(resul)
         } catch (err) {
@@ -58,6 +73,23 @@ const OrderController = {
         }
 
     },
+
+
+    getOrderCustormer: async (req, res) => {
+        try {
+            const user = await Users.findOne({username:req.query.username});
+            console.log(user)
+            let order = await Order.find({ id_user: user.id })
+            res.status(200).json(order)
+        } catch (err) {
+            res.status(500).json(err)
+
+
+        }
+
+
+
+    }
 
 };
 

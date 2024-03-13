@@ -40,7 +40,9 @@ router.post("/collection", ColectionController.addCollection);
 
 
 router.post("/order",OrderController.submitOrder)
+router.get("/myorder",OrderController.getOrderCustormer)
 router.get("/order",OrderController.getAllOrder)
+router.get("/orderwithphone",OrderController.getOrderWithPhoneNumber)
 router.delete("/order/:id", OrderController.delete_Order)
 
 router.get("/order_detail/:id",Detail_order.detail)

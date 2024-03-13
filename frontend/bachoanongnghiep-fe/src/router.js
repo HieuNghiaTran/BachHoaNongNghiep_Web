@@ -10,6 +10,7 @@ import ProductManagerPage from "./admin/pages/productManager";
 import SubmitOrderPage from "./pages/SubmitOrderPage";
 import Location from "./pages/storeLocation";
 import OrderManager from "./admin/pages/odersManager";
+import MyOrder from "./pages/MyOrders";
 const renderUserRouter = () => {
   const userrouter = [
     {
@@ -48,6 +49,11 @@ const renderUserRouter = () => {
     {
       path: ROUTER.USER.Location,
       component: <Location/>,
+    },
+
+    {
+      path: ROUTER.USER.My_Order,
+      component: <MyOrder/>,
     },
 
   ];

@@ -15,13 +15,18 @@ import { IoDocumentText } from "react-icons/io5";
 import { MdLocalPrintshop } from "react-icons/md";
 import { MdDelete } from "react-icons/md";
 import { FaPencil } from "react-icons/fa6";
-const TableOrders = () => {
+import ModalDelete from "./ModalsDelete";
+const TableOrders = ({ order }) => {
 
     const [listOrders, setListOrders] = useState([])
     const [product, setProduct] = useState([])
     const [billTotal, setBillTotal] = useState()
     const [isShowModal, setIsShowModal] = useState(false)
-    const CloseModal = () => { setIsShowModal(false) }
+    const CloseModal = () => {
+        setIsShowModal(false)
+        setIsShowModalDelete(false)
+
+    }
     const [dataModal, setDataModal] = useState([])
     const [feeship, setFeeship] = useState()
     const [id, setID] = useState('')
@@ -31,12 +36,17 @@ const TableOrders = () => {
     const [email, setEmail] = useState()
     const [phone, setPhone] = useState()
     const [address, setAddress] = useState()
+    const [isShowModalDelete, setIsShowModalDelete] = useState(false);
 
 
     useEffect(() => {
-        fetchData()
-
-    }, [])
+        if (order && order.length > 0) {
+            setListOrders(order);
+        } else {
+            fetchData();
+        }
+    }, [order]);
+    
 
     const fetchDataPrint = async (id) => {
         try {
@@ -56,41 +66,45 @@ const TableOrders = () => {
         for (let i = 0; i < product.length; i++) {
             newArray.push([i + 1, product[i].name_product, product[i].price_product, product[i].count, product[i].price_product * product[i].count]);
         }
-    
+
         doc.addImage("https://res.cloudinary.com/dofj1px4t/image/upload/v1709280860/products/M2RyLi9k_u9k4n7.png", 'PNG', 60, 10, 80, 40);
-    
+
         let today = new Date();
         let dd = String(today.getDate()).padStart(2, '0');
         let mm = String(today.getMonth() + 1).padStart(2, '0');
         let yyyy = today.getFullYear();
         today = dd + '/' + mm + '/' + yyyy;
-    
+
         doc.text(`Date: ${today}`, 20, 60); // Căn lề trái cho ngày
         doc.text(`Customer : ${name}`, 20, 65); // Căn lề trái cho thông tin khách hàng
         doc.text(`Address : ${address}`, 20, 70); // Căn lề trái cho thông tin địa chỉ
         doc.text(`Phone Number : ${phone}`, 20, 75); // Căn lề trái cho thông tin số điện thoại
         doc.text(`Email : ${email}`, 20, 80); // Căn lề trái cho thông tin email
-    
+
         autoTable(doc, {
             head: [['STT', 'Name Product', 'Price', 'Quantity', 'Total']],
             body: newArray,
             startY: 90,
-        }); 
-    
+        });
+
         let finalY = doc.previousAutoTable.finalY;
         doc.text(`Tổng cộng hoá đơn: ${billTotal}`, 12, finalY + 10);
-    
+
         doc.save(`Bill_KH_${name}.pdf`);
     }
-    
+
 
     const fetchData = async () => {
-        try {
-            let res = await getaAllOrder()
-            setListOrders(res.data)
-        } catch (err) {
-            console.log(err)
-        }
+        
+            try {
+                let res = await getaAllOrder()
+                setListOrders(res.data)
+            } catch (err) {
+                console.log(err)
+            }
+
+
+        
     }
 
     return (
@@ -125,7 +139,7 @@ const TableOrders = () => {
                                     setFeeship(item.feeship)
                                     setIsShowModal(true)
                                 }}>
-                                    <span className="" style={{marginRight:"0.2rem"}}><IoDocumentText /></span>
+                                    <span className="" style={{ marginRight: "0.2rem" }}><IoDocumentText /></span>
                                     Chi tiết
                                 </button>
                                 <button type="button" className="btn btn-success mx-1" onClick={() => {
@@ -136,15 +150,22 @@ const TableOrders = () => {
                                     fetchDataPrint(item._id)
                                     handlePrint()
                                 }}>
-                                    <MdLocalPrintshop style={{marginRight:"0.2rem"}}/>
+                                    <MdLocalPrintshop style={{ marginRight: "0.2rem" }} />
                                     In hoá đơn
                                 </button>
                                 <button type="button" className="btn btn-secondary">
-                                <FaPencil style={{marginRight:"0.2rem"}}/>
+                                    <FaPencil style={{ marginRight: "0.2rem" }} />
                                     Cập nhật
                                 </button>
-                                <button type="button" className="mx-2 btn btn-danger">
-                                <MdDelete style={{marginRight:"0.2rem"}}/>
+                                <button type="button" className="mx-2 btn btn-danger"
+
+                                    onClick={() => {
+                                        setID(item._id)
+                                        setIsShowModalDelete(true)
+                                    }}
+
+                                >
+                                    <MdDelete style={{ marginRight: "0.2rem" }} />
                                     Xoá
                                 </button>
                             </td>
@@ -157,6 +178,13 @@ const TableOrders = () => {
                 handleCloseModal={CloseModal}
                 id_order={id}
                 ship={feeship}
+            />
+
+            <ModalDelete
+                isModalVisible={isShowModalDelete}
+                handleCloseModal={CloseModal}
+                order={id}
+
             />
         </>
     )

@@ -17,7 +17,7 @@ const Sidebar = () => {
             <nav id="sidebar">
                 <ul className="list-unstyled components">
                     <li>
-                        <Link to="admin/dashboard"><MdDashboard /><span className='mx-2'> Tổng quan</span></Link>
+                        <Link to="/admin/dashboard"><MdDashboard /><span className='mx-2'> Tổng quan</span></Link>
                     </li>
                     <li>
                         <Link to="/admin/products">  <i class="fa fa-th-large mr-1 text-primary fa-fw"></i> Quản lý sản phẩm</Link>

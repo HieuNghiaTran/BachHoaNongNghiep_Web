@@ -77,10 +77,10 @@ const ProductManagerPage = () => {
             <div className="grid-bg ba-grid anim">
                 <div className="inner">
                     <div className="row">
-                        <div className="col-12 col-md-3">
+                        <div className="col-12 col-md-2">
                             <Sidebar />
                         </div>
-                        <div className=" col-12 col-md-9">
+                        <div className=" col-12 col-md-10 text-center">
                             <div className="d-flex justify-content-between">
                                 <h1 className="">Quản lý sản phẩm</h1>
                                 <div className="m-auto" style={{ flexBasis: "40%" }}><Search

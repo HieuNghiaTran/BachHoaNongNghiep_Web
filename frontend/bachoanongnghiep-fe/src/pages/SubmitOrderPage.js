@@ -45,10 +45,11 @@ const SubmitOrderPage = () => {
 
 
         setProduct(pt.listCart)
-        setTotal(product.reduce((acc, item) => (acc + item.price_product * item.quantity), 0) + feeship)
+        let count= product.reduce((acc, item) => (acc + item.price_product * item.quantity), 0)
+        setTotal(count + feeship)
 
 
-    }, [pt.listCart])
+    }, [])
 
 
     const onFinish = (values) => {
@@ -63,6 +64,7 @@ const SubmitOrderPage = () => {
     const submitMyOrder = async () => {
         try {
             if (value === 1) {
+                
 
                 let data = new FormData()
                 data = {
@@ -73,9 +75,10 @@ const SubmitOrderPage = () => {
                     address: address,
                     phone: phone,
                     total: total,
-                    status: "Chưa Thanh Toán",
+                    status: "Đã đặt hàng",
                     feeship: feeship,
                     create_time: currentDateTime,
+                    payment_status:"Chưa thanh toán"
                 }
                 let data2 = new FormData();
                 data2 = {
@@ -84,6 +87,7 @@ const SubmitOrderPage = () => {
                     time: currentDateTime,
                     product: product
                 }
+            console.log(data)
 
                 let res = await submitOrder(data)
                 let rs = await submitDetail(data2)
@@ -118,9 +122,11 @@ const SubmitOrderPage = () => {
                             address: address,
                             phone: phone,
                             total: total,
-                            status: "Đã thanh toán",
+                            status: "Đã đặt hàng",
                             feeship: feeship,
                             create_time: currentDateTime,
+                            payment_id: "",
+                            payment_status:"Chưa thanh toán",
                         }
                         let data2 = new FormData();
                         data2 = {
