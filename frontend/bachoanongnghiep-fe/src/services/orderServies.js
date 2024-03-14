@@ -27,14 +27,13 @@ const getaAllOrder = () => {
     return axios.get("http://localhost:8001/order")
 }
 
-
 const deleteOrder = (id) => {
     return axios.delete(`http://localhost:8001/order/${id}`)
 }
+
+
 const getMyOrder=(username)=>{
-
 return axios.get(`http://localhost:8001/myorder?username=${username}`)
-
 
 }
 

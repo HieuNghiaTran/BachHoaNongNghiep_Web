@@ -1,5 +1,5 @@
 const express = require('express');
-const userController = require('../controllers/userController');
+const {userController, AdminUserController} = require('../controllers/userController');
 const productController = require('../controllers/productsController');
 const cartController = require('../controllers/cardController');
 const CategoryController = require('../controllers/categoryController');
@@ -7,6 +7,7 @@ const ColectionController = require('../controllers/colectionController');
 const OrderController = require('../controllers/orderController');
 const Detail_order = require('../controllers/detail_orderController');
 const PaymentCotroller = require('../controllers/paymentController');
+const PermissionController = require('../controllers/permissionController');
 const router= express.Router();
 
 
@@ -14,6 +15,11 @@ const router= express.Router();
 router.post("/user", userController.addUser);
 router.get("/user", userController.getAllUser);
 router.get("/user/detail/login", userController.getDetailUser);
+
+router.post("/admin/user",AdminUserController.create);
+router.get("/admin/login",AdminUserController.login);
+
+
 
 router.get("/product", productController.getAllProducts);
 router.get("/pageginateProductCategory", productController.PageginateProductWithCategory);
@@ -50,6 +56,10 @@ router.get("/All_order_detail",Detail_order.getAlldetail)
 router.post("/order_detail",Detail_order.post_detail_order)
 
 
+
+
+router.post("/permission",PermissionController.create)
+router.get("/permission",PermissionController.getAll)
 
 
 

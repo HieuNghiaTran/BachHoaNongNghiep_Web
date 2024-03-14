@@ -12,6 +12,7 @@ import { UserProvider } from './context/userContext';
 import '../src/components/Css/App.css'
 import { CartProvider } from './context/cartContext';
 import { HisProvider } from './context/historyContext';
+import AuthContextProvider from './admin/context/authContext';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
@@ -20,7 +21,9 @@ root.render(
     <UserProvider>
       <CartProvider>
         <HisProvider>
-          <App />
+          <AuthContextProvider>
+            <App />
+          </AuthContextProvider>
         </HisProvider>
       </CartProvider>
     </UserProvider>

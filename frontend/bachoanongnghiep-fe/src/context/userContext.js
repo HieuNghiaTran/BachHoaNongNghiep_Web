@@ -1,27 +1,46 @@
-import React, { useContext, useState } from 'react';
+import React, { createContext, useContext, useEffect, useState } from 'react';
 
-const UserContext = React.createContext({ username: '', auth: false });
+export const UserContext = createContext();
 
 const UserProvider = ({ children }) => {
-  const [user, setUser] = React.useState({ username: '', auth: false });
+  const [jwt, setJWT] = useState();
+  const [user, setUser] = useState();
 
-  const loginContext = (username) => {
-    setUser((user) => ({
-      username: username,
-      auth: true,
-    }));
-  };
 
-  const logout = () => {
-    setUser((user) => ({
-      username: '',
-      auth: false,
-    }));
-  };
+
+  useEffect(() => {
+    localStorage.getItem('jwt') && setJWT(JSON.parse(localStorage.getItem('jwt')));
+    localStorage.getItem('user_cus') && setUser(JSON.parse(localStorage.getItem('user_cus')));
+  }, [])
+
+  const login = (jwt, user) => {
+
+    localStorage.setItem("jwt", JSON.stringify(jwt))
+    localStorage.setItem("user_cus", JSON.stringify(user))
+    setJWT(jwt);
+    setUser(user);
+
+  }
+
+  const logOut = () => {
+    localStorage.removeItem("jwt")
+    localStorage.removeItem("user_cus")
+    setJWT();
+    setUser();
+    window.location.reload()
+
+  }
+
 
   return (
-    <UserContext.Provider value={{ user, loginContext, logout }}>
+    <UserContext.Provider value={{
+      jwt,
+      user,
+      login,
+      logOut
+    }}>
       {children}
+
     </UserContext.Provider>
 
 
@@ -29,4 +48,4 @@ const UserProvider = ({ children }) => {
   );
 };
 
-export { UserContext, UserProvider}
+export { UserProvider }

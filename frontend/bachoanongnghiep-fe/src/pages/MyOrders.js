@@ -10,7 +10,7 @@ import { UserContext } from "../context/userContext";
 import { FaRegAddressBook, FaPhone, FaUser } from "react-icons/fa";
 
 const MyOrder = () => {
-  const { user, logout } = useContext(UserContext);
+  const { user} = useContext(UserContext);
   const [listOrder, setListOrder] = useState([]);
 
   useEffect(() => {

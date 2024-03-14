@@ -7,24 +7,31 @@ import getAllColecion from "../services/collectionsServices";
 import { addNewProduct, deleteProduct } from "../services/productSevices";
 import { toast } from "react-toastify";
 import { deleteOrder } from "../services/orderServies";
+import Loader from "../components/layout/Loader";
 
 const ModalDelete = (props) => {
+    const [loading,setLoading]=useState(false)
     const { isModalVisible, handleCloseModal, product, order } = props
     
     const handleSubmit = async () => {
         if(product){
+            setLoading(true)
             let res =await deleteProduct(product._id)
             handleCloseModal()
             toast.success("Delete Success")
+            window.location.reload()
+            setLoading(false)
 
 
 
         }else{
+            setLoading(true)
             let res =await deleteOrder(order);
             console.log(res)
             handleCloseModal()
             toast.success("Delete Success")
             window.location.reload()
+            setLoading(false)
 
         }
     }
@@ -34,7 +41,7 @@ const ModalDelete = (props) => {
         <>
 
 
-            <Modal
+           {loading?<Loader/>: <Modal
                 title=""
                 visible={isModalVisible}
                 onClose={handleCloseModal}
@@ -48,6 +55,7 @@ const ModalDelete = (props) => {
                 </div>
             </Modal>
 
+}
 
         </>
 

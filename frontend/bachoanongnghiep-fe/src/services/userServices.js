@@ -2,9 +2,13 @@ import axios from 'axios';
 
 const addNewUser =(data) => {
 
-   return axios.post('http://localhost:8001/user/',data);
+   return axios.post('http://localhost:8001/user',data);
   
 };
+
+const LoginAdminUser = (email,pass) => {
+  return axios.get(`http://localhost:8001/admin/login?email=${email}&password=${pass}`);
+}
 
 
 const getAllUser =async ()=>{
@@ -20,4 +24,4 @@ const getDetailUser = async (query) => {
   }
 };
 
-export { addNewUser, getDetailUser, getAllUser };
+export { addNewUser, getDetailUser, getAllUser,LoginAdminUser  };

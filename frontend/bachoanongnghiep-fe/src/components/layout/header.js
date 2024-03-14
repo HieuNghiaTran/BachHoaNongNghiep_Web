@@ -24,7 +24,7 @@ import { Link } from "react-router-dom";
 
 
 const Header = () => {
-  const { user, logout } = useContext(UserContext);
+  const { user, logOut, jwt } = useContext(UserContext);
   const [isShowSideBar, setIsShowSideBar] = useState(false)
   const [isShowDropDown, setIsShowDropDown] = useState(false)
   const [pageScoll, setPageScoll] = useState()
@@ -40,6 +40,7 @@ const Header = () => {
     window.addEventListener('scroll', handleScroll);
 
 
+
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
@@ -52,7 +53,7 @@ const Header = () => {
 
   const handleClose = () => { setIsShowModalLogin(false) }
   const handleShow = () => {
-    user && user.auth
+    jwt && user
       ? (() => {
         setIsShowModalLogin(false);
         setIsShowDropDown(!isShowDropDown);
@@ -62,7 +63,7 @@ const Header = () => {
 
   }
   const handleSignOut = () => {
-    logout();
+    logOut();
     alert("dang xuat thanh cong")
   }
 
@@ -105,7 +106,7 @@ const Header = () => {
               <li className="cus_li border-none m-auto">
                 <div className="acount_name d-flex" onClick={handleShow}>
                   <span className="account-icon"><FaRegUserCircle /></span>
-                  {user && user.auth ?
+                  {jwt && user ?
                     <span className="Account mx-2">{user.username}</span> :
                     <span className="Account mx-2">
                       <div style={{ fontSize: '0.8rem', display: "inline-block"}}>Đăng nhập</div>

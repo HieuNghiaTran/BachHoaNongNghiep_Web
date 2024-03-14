@@ -1,0 +1,21 @@
+.auth-wrapper {
+  min-height: 100vh
+}
+
+.auth-wrapper .auth-box {
+  box-shadow: 0 3px 9px 0 rgba(162, 176, 190, .15);
+  min-width: 1200px;
+  margin: 5% 0;
+  position: relative
+}
+
+.auth-wrapper .auth-box .modal-bg-img {
+  background-size: cover;
+  background-position: center center;
+  min-height: 400px;
+  object-fit: cover;
+}
+
+.auth-wrapper #recoverform {
+  display: none
+}

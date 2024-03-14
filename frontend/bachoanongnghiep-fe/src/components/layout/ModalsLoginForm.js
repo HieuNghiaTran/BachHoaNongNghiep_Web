@@ -10,18 +10,21 @@ import { addSession, deleteSession } from '../actions/actionSection'
 import { UserContext } from "../../context/userContext";
 import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';
-
+import { FcCancel } from "react-icons/fc";
 import { Button, Checkbox, Form, Input, Table } from 'antd';
 const ModalsLoginForm = (props) => {
     const { show, handleClose } = props;
 
-    const { loginContext } = useContext(UserContext);
+    const { login } = useContext(UserContext);
     const [isShowModalsSign, setIsShowModalSign] = useState(false);
     const [username, setUsername] = useState('');
     const [pass, setPass] = useState('');
     const [error_username, set_error_username] = useState(false)
     const [error_password, set_error_password] = useState(false)
     const [redirect, set_redirect] = useState(false)
+    const [errorMessages, setErroMessege] = useState('')
+    const [statusMessages, setStatusMessages] = useState(false)
+
     const [boldTitle, setBoldTitle] = useState(false)
 
 
@@ -43,46 +46,46 @@ const ModalsLoginForm = (props) => {
     const dispatch = useDispatch();
     //const count_change = useSelector(state => state.Count.isLoad);
     const handleLogin = async () => {
-   
+
         const params = { username, pass };
         const query = "?" + querystring.stringify(params);
+       
 
         try {
             let res = await getDetailUser(query);
+            console.log(res)
+            if (res.msg === "Không Tìm Thấy Users") {
+                setStatusMessages(true)
+                setErroMessege("Tài  khoản hoặc mật khẩu chưa chính xác")
 
-            if (res === "Khong Tìm Thấy User") {
-                set_error_username(true)
-                handleClose();
             } else {
-                if (res === "Sai Mat Khau") {
-                    set_error_username(false)
-                    set_error_password(true)
-                    //console.log(res)
+                if (res.msg === "Sai Mat Khau") {
+                    setStatusMessages(true)
+                    setErroMessege("Tài  khoản hoặc mật khẩu chưa chính xác")
+
                 } else {
 
-                    loginContext(res.username)
+                    login(res.jwt, res.user)
                     const action = addSession(res._id)
                     dispatch(action)
-                    sessionStorage.setItem('id_user', res._id)
-
                     //const action_count_change = changeCount(count_change)
                     //dispatch(action_count_change)
-
-                    set_redirect(true)
+                    handleClose()
+                    alert("Đăng nhập thành công! Xin chào,"+" "+username)
 
                 }
             }
 
 
 
-            toast.success("Login Success!!");
+            
 
 
         } catch (err) {
-            toast.error("Tài khoản hoặc mật khẩu sai !!");
+            ///toast.error("Tài khoản hoặc mật khẩu sai !!");
         }
 
-        handleClose()
+       
         setUsername('');
         setPass('')
     }
@@ -99,25 +102,41 @@ const ModalsLoginForm = (props) => {
         let data = new FormData()
         data = {
             username: username,
+            id_permission: "65f19bd476bbf06b0c946ce8",
             password: pass,
             fullname: fullname,
             email: Email,
             phone: phone,
-        };
 
+        };
         try {
             let res = await addNewUser(data);
-            handleClose();
-            toast.success("Add User Success!!");
+
+            if (res.data.msg === "Bạn đã thêm thành công") {
+                toast.success("Add User Success!!");
+                handleClose();
+            }
+            else {
+                setStatusMessages(true)
+                setErroMessege("Username hoặc Email tồn tại")
+
+
+
+            }
         } catch (err) {
+
             toast.error("Error add new!!");
+            handleClose();
             console.log(err)
         }
+
+
         setEmail('')
         setPass();
         setFullname('')
         setPhone('')
         setUsername('')
+        setStatusMessages(false)
     }
 
 
@@ -142,78 +161,86 @@ const ModalsLoginForm = (props) => {
                         }}
                     >
                         <Tab eventKey="home" tabIndex={1} title={<span className={'bold-title h4'}>Đăng nhập</span>} >
-                           <div className="py-4">
-                           <Form
-                                name="basic"
-                                labelCol={{
-                                    span: 8,
-                                }}
-                                wrapperCol={{
-                                    span: 16,
-                                }}
-                                style={{
-                                    maxWidth: 600,
-                                }}
-                                initialValues={{
-                                    remember: true,
-                                }}
-                                onFinish={handleLogin}
-                                onFinishFailed={onFinishFailed}
-                                autoComplete="off"
-                            >
-                                <Form.Item
-                                    label="Tên đăng nhập"
-                                    name="username"
-                                    rules={[
-                                        {
-                                            required: true,
-                                            message: 'Vui long',
-                                        },
-                                    ]}
-                                >
-                                    <Input
-                                        value={username}
-                                        onChange={(e) => setUsername(e.target.value)} />
-
-                                </Form.Item>
-                                <Form.Item
-                                    label="Mật Khẩu"
-                                    name="address"
-                                    rules={[
-                                        {
-                                            required: true,
-                                            message: 'Vui lòng nhập mật khẩu',
-                                        },
-                                    ]}
-                                >
-                                    <Input.Password 
-                                    value={pass}
-                                        onChange={(e) => setPass(e.target.value)}/>
-                                </Form.Item>
-
-                                <Form.Item
-                                    name="remember"
-                                    valuePropName="checked"
+                            <div className="py-4">
+                                <Form
+                                    name="basic"
+                                    labelCol={{
+                                        span: 8,
+                                    }}
                                     wrapperCol={{
-                                        offset: 8,
                                         span: 16,
                                     }}
-                                >
-                                    <Checkbox>Ghi nhớ thông tin</Checkbox>
-                                </Form.Item>
-
-                                <Form.Item
-                                    wrapperCol={{
-                                        offset: 8,
-                                        span: 16,
+                                    style={{
+                                        maxWidth: 600,
                                     }}
+                                    initialValues={{
+                                        remember: true,
+                                    }}
+                                    onFinish={handleLogin}
+                                    onFinishFailed={onFinishFailed}
+                                    autoComplete="off"
                                 >
-                                    <Button type="primary" htmlType="submit">
-                                        Đăng nhập
-                                    </Button>
-                                </Form.Item>
-                            </Form>
-                           </div>
+                                    <Form.Item
+                                        label="Tên đăng nhập"
+                                        name="username"
+                                        rules={[
+                                            {
+                                                required: true,
+                                                message: 'Vui long',
+                                            },
+                                        ]}
+                                    >
+                                        <Input
+                                            value={username}
+                                            onChange={(e) => setUsername(e.target.value)} />
+
+                                    </Form.Item>
+                                    <Form.Item
+                                        label="Mật Khẩu"
+                                        name="address"
+                                        rules={[
+                                            {
+                                                required: true,
+                                                message: 'Vui lòng nhập mật khẩu',
+                                            },
+                                        ]}
+                                    >
+                                        <Input.Password
+                                            value={pass}
+                                            onChange={(e) => setPass(e.target.value)} />
+                                    </Form.Item>
+
+                                    <Form.Item
+                                        name="remember"
+                                        valuePropName="checked"
+                                        wrapperCol={{
+                                            offset: 8,
+                                            span: 16,
+                                        }}
+                                    >
+                                        <Checkbox>Ghi nhớ thông tin</Checkbox>
+
+
+
+
+                                    </Form.Item>
+                                    {statusMessages ? (<div className="bold text-center mb-4" style={{ color: "red", fontWeight: "bold" }}><span className="m-2"><FcCancel style={{ color: "red", fontWeight: "bold" }} /></span>{errorMessages}</div>) : <></>}
+
+
+                                    <Form.Item
+                                        wrapperCol={{
+                                            offset: 8,
+                                            span: 16,
+                                        }}
+                                    >
+
+
+                                        <Button type="primary" htmlType="submit">
+                                            Đăng nhập
+                                        </Button>
+                                    </Form.Item>
+                                </Form>
+                            </div>
                         </Tab>
                         <Tab eventKey="profile" tabIndex={2} title={<span className={'bold-title h4'}>Đăng ký</span>}>
                             <Form
@@ -245,7 +272,7 @@ const ModalsLoginForm = (props) => {
                                     ]}
                                 >
                                     <Input value={username}
-                                        onChange={(e) => setUsername(e.target.value)}/>
+                                        onChange={(e) => setUsername(e.target.value)} />
                                 </Form.Item>
 
                                 <Form.Item
@@ -259,7 +286,7 @@ const ModalsLoginForm = (props) => {
                                     ]}
                                 >
                                     <Input value={fullname}
-                                        onChange={(e) => setFullname(e.target.value)}/>
+                                        onChange={(e) => setFullname(e.target.value)} />
                                 </Form.Item>
                                 <Form.Item
                                     label="Số điện thoại"
@@ -271,8 +298,8 @@ const ModalsLoginForm = (props) => {
                                         },
                                     ]}
                                 >
-                                    <Input  value={phone}
-                                        onChange={(e) => setPhone(e.target.value)}/>
+                                    <Input value={phone}
+                                        onChange={(e) => setPhone(e.target.value)} />
                                 </Form.Item>
 
 
@@ -287,7 +314,7 @@ const ModalsLoginForm = (props) => {
                                     ]}
                                 >
                                     <Input value={Email}
-                                        onChange={(e) => setEmail(e.target.value)}/>
+                                        onChange={(e) => setEmail(e.target.value)} />
                                 </Form.Item>
                                 <Form.Item
                                     label="Mật Khẩu"
@@ -299,9 +326,9 @@ const ModalsLoginForm = (props) => {
                                         },
                                     ]}
                                 >
-                                    <Input.Password 
-                                    value={pass}
-                                        onChange={(e) => setPass(e.target.value)}/>
+                                    <Input.Password
+                                        value={pass}
+                                        onChange={(e) => setPass(e.target.value)} />
                                 </Form.Item>
 
                                 <Form.Item
@@ -314,6 +341,7 @@ const ModalsLoginForm = (props) => {
                                 >
                                     <Checkbox>Tôi đã đọc kỹ thông tin</Checkbox>
                                 </Form.Item>
+                                {statusMessages ? (<div className="bold text-center mb-4" style={{ color: "red", fontWeight: "bold" }}><span className="m-2"><FcCancel style={{ color: "red", fontWeight: "bold" }} /></span>{errorMessages}</div>) : <></>}
 
                                 <Form.Item
                                     wrapperCol={{

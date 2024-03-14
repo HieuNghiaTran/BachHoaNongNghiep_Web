@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useState } from "react";
+import React, { Fragment, useContext, useEffect, useState } from "react";
 import Sidebar from "../sidebar"; // Import Sidebar component
 import MetaData from "../../services/setHead"; // Import MetaData component (assuming it sets head data)
 import TableProduct from "../tableProduct";
@@ -9,8 +9,10 @@ import { AudioOutlined } from '@ant-design/icons';
 import { Input, Space } from 'antd';
 import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
-import { FaPagelines } from 'react-icons/fa';
+import { AuthContext } from '../context/authContext';
+import { Navigate } from 'react-router-dom';
 const { Search } = Input;
+
 const suffix = (
     <AudioOutlined
         style={{
@@ -27,7 +29,7 @@ const ProductManagerPage = () => {
     const [currentPage, setCurrentPage] = useState(0);
     const { perPage, setPerPage } = useState(5)
     const [value, setValue] = useState('')
-
+    const {  jwt, user } = useContext(AuthContext);
 
     const onSearch = async () => {
        if(value!==''){
@@ -58,6 +60,7 @@ const ProductManagerPage = () => {
 
     }
     useEffect(() => {
+
         fetchData(1, perPage);
     }, [perPage]);
 
@@ -69,6 +72,14 @@ const ProductManagerPage = () => {
         } catch (error) {
             console.error(error);
         }
+    }
+
+
+
+
+    if (!jwt && !user) {
+       alert("Bạn không có quyền truy cập.")
+        return <Navigate to="/admin/login" replace />;
     }
 
 

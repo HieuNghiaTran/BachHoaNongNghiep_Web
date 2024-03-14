@@ -11,6 +11,7 @@ import SubmitOrderPage from "./pages/SubmitOrderPage";
 import Location from "./pages/storeLocation";
 import OrderManager from "./admin/pages/odersManager";
 import MyOrder from "./pages/MyOrders";
+import Login from "./admin/pages/login";
 const renderUserRouter = () => {
   const userrouter = [
     {
@@ -83,6 +84,10 @@ const renderAdmin = () => {
     {
       path: ROUTER.ADMIN.Order_Manager,
       component: <OrderManager/>,
+    },
+    {
+      path: ROUTER.ADMIN.Login,
+      component: <Login/>,
     },
   ];
 

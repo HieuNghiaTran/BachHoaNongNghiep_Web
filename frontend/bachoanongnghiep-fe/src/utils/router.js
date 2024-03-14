@@ -13,7 +13,8 @@ export const ROUTER = {
     ADMIN: {
         Home: "/admin/dashboard",
         Product_Manager: "/admin/products",
-        Order_Manager: "/admin/orders"
+        Order_Manager: "/admin/orders",
+        Login:"/admin/login"
 
 
     }

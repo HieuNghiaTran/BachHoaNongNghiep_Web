@@ -4,7 +4,7 @@ import { Doughnut, Line, Radar } from "react-chartjs-2";
 import Sidebar from "../sidebar"
 import { Link } from "react-router-dom";
 import MetaData from "../../services/setHead";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { useDispatch } from "react-redux";
 import { getAllUser } from "../../services/userServices";
 import { getAllProduct } from "../../services/productSevices";
@@ -12,7 +12,8 @@ import { getaAllOrder } from "../../services/orderServies";
 import Loader from "../../components/layout/Loader";
 import { getAllCategory } from "../../services/categoryServices";
 import Footer from "../../components/layout/footer";
-
+import { AuthContext } from '../context/authContext';
+import { Navigate } from 'react-router-dom';
 
 const DashBoard = () => {
     ChartJS.register(ArcElement, Tooltip, Legend);
@@ -21,10 +22,10 @@ const DashBoard = () => {
     ChartJS.register(PointElement);
     ChartJS.register(LineElement);
     ChartJS.register(RadialLinearScale);
+    const { addLocal, jwt, user } = useContext(AuthContext);
     const [users, setUser] = useState([])
     const [products, setProducts] = useState([])
     const [orders, setOrders] = useState([])
-    const [totalAmount, setTotalAmount] = useState(453000)
     const [listCategory, setListCategoty] = useState([])
     const [loading, setLoading] = useState(false);
     const data = {
@@ -41,10 +42,6 @@ const DashBoard = () => {
             pointHoverBorderColor: 'rgb(54, 162, 235)'
         }]
     };
-    //const dispatch = useDispatch();
-
-    //const { users } = useSelector(state => state.allUsers)
-    //const { orders, totalAmount, loading } = useSelector(state => state.allOrders)
 
     let outOfStock = 0;
     products.forEach(product => {
@@ -52,7 +49,6 @@ const DashBoard = () => {
             outOfStock += 1;
         }
     })
-    // status order    let da_dat_hang = 0;
     let dang_van_chuyen = 0;
     let da_giao_hang = 0;
     let da_dat_hang = 0;
@@ -69,20 +65,14 @@ const DashBoard = () => {
             }
         });
 
-   
-
-
-
-
-
 
 
     let totalAmountall = 0;
     orders &&
-    orders.forEach((product) => {
-      totalAmountall += product.total;
-    });
-    // Chart Line tính tổng doanh thu
+        orders.forEach((product) => {
+            totalAmountall += product.total;
+        });
+
     const lineState = {
         labels: ["Số tiền ban đầu", "Tổng danh thu hiện tại"],
         datasets: [
@@ -94,7 +84,7 @@ const DashBoard = () => {
             },
         ],
     };
-    // Doughnut tính số lượng hàng còn và hết hàng
+
     const doughnutState = {
         labels: ["Hết hàng", "Còn hàng"],
         datasets: [
@@ -105,7 +95,7 @@ const DashBoard = () => {
             },
         ],
     };
-    // Doughnut thống kê trạng thái đơn hàng
+
     const doughnutStateOrder = {
         labels: ["Đã đặt hàng", "Đang vận chuyển", "Đã giao hàng"],
         datasets: [
@@ -116,33 +106,61 @@ const DashBoard = () => {
             },
         ],
     };
-    useEffect(async () => {
-        setLoading(false);
-        let category = await getAllCategory();
-        category.data.forEach((element) => {
-          listCategory.push(element.category);
-        });
-      
-        let user = await getAllUser();
-        setUser(user.data);
-      
-        let product = await getAllProduct();
-        setProducts(product.data);
-      
-        let order = await getaAllOrder();
-        setOrders(order.data);
-      
-        setLoading(false);
-        return () => {};
-      }, []);
-      
+    useEffect(() => {
+        let isMounted = true; // Đánh dấu component có đang mounted hay không
+    
+        const fetchData = async () => {
+            setLoading(true);
+            try {
+                let category = await getAllCategory();
+                const categoryData = category.data.map(element => element.category);
+                if (isMounted) {
+                    setListCategoty(categoryData);
+                }
+    
+                let userData = await getAllUser();
+                if (isMounted) {
+                    setUser(userData.data);
+                }
+    
+                let productData = await getAllProduct();
+                if (isMounted) {
+                    setProducts(productData.data);
+                }
+    
+                let orderData = await getaAllOrder();
+                if (isMounted) {
+                    setOrders(orderData.data);
+                }
+    
+                setLoading(false);
+            } catch (error) {
+                // Xử lý lỗi nếu cần
+                console.error("Error fetching data:", error);
+                setLoading(false);
+            }
+        };
+    
+        fetchData();
+    
+        // Clean up: unmounting effect
+        return () => {
+            isMounted = false;
+        };
+    }, []);
+    
+
+    if (!jwt && !user) {
+        alert("Bạn không có quyền truy cập.")
+        return <Navigate to="/admin/login" replace />;
+    }
 
 
 
 
     return (
 
-       
+
         <>
 
             <div class="grid-bg ba-grid anim">
@@ -282,7 +300,7 @@ const DashBoard = () => {
                     </div>
                 </div>
             </div>
-<Footer/>
+            <Footer />
 
         </ >
 
