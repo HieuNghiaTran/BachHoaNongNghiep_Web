@@ -87,11 +87,11 @@ const SubmitOrderPage = () => {
                     time: currentDateTime,
                     product: product
                 }
-            console.log(data)
-
+       
                 let res = await submitOrder(data)
                 let rs = await submitDetail(data2)
-                toast.success("Thanh Cong")
+                window.location.href="/order/success"
+                
 
 
             } else {

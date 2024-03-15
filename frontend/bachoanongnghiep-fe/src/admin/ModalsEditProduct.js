@@ -1,4 +1,5 @@
-
+import { PlusOutlined } from '@ant-design/icons';
+import { Upload } from 'antd';
 import { Modal } from "antd";
 import { Editor } from "draft-js";
 import { useEffect, useState } from "react";
@@ -6,7 +7,13 @@ import { getAllCategory } from "../services/categoryServices";
 import getAllColecion from "../services/collectionsServices";
 import { addNewProduct, updateProduct } from "../services/productSevices";
 import { toast } from "react-toastify";
-
+const getBase64 = (file) =>
+    new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = (error) => reject(error);
+    });
 const ModalEditProduct = (props) => {
     const { isModalVisible, handleCloseModal, product } = props
     const [listcatogary, setListCategory] = useState([])
@@ -21,6 +28,18 @@ const ModalEditProduct = (props) => {
     const [selected2, setSelected2] = useState()
     const [img, setImg] = useState([])
     const [listColection, setListColection] = useState([])
+ 
+
+
+    const [previewOpen, setPreviewOpen] = useState(false);
+    const [previewImage, setPreviewImage] = useState('');
+    const [previewTitle, setPreviewTitle] = useState('');
+    const [fileList, setFileList] = useState([]);
+   
+
+
+
+    const handleCancel = () => setPreviewOpen(false);
 
 
     const fetchData = async () => {
@@ -33,7 +52,15 @@ const ModalEditProduct = (props) => {
         fetchData()
     }, [])
 
-
+    useEffect(() => {
+        if (product && product.images) {
+            setFileList(product.images.map(item => ({
+                uid: item.public_id,
+                status: 'done',
+                url: item.url
+            })));
+        }
+    }, [product]);
 
     useEffect(() => {
         if (isModalVisible) {
@@ -52,6 +79,38 @@ const ModalEditProduct = (props) => {
 
         }
     }, [product]);
+
+
+
+    const handlePreview = async (file) => {
+        if (!file.url && !file.preview) {
+            file.preview = await getBase64(file.originFileObj);
+        }
+        setPreviewImage(file.url || file.preview);
+        setPreviewOpen(true);
+        setPreviewTitle(file.name || file.url.substring(file.url.lastIndexOf('/') + 1));
+    };
+    const handleChange = ({ fileList: newFileList }) => setFileList(newFileList);
+    const uploadButton = (
+        <button
+            style={{
+                border: 0,
+                background: 'none',
+            }}
+            type="button"
+
+        >
+            <PlusOutlined />
+            <div
+                style={{
+                    marginTop: 8,
+                }}
+            >
+                Upload
+            </div>
+        </button>
+    );
+
 
 
     const handleSubmit = async () => {
@@ -83,7 +142,7 @@ const ModalEditProduct = (props) => {
     const handleImageChange = (e) => {
         const files = Array.from(e.target.files)
 
-       
+
         setImg([])
 
         files.forEach(file => {
@@ -239,68 +298,26 @@ const ModalEditProduct = (props) => {
                                     </div>
                                     <div className="form-group col-md-6 mb-2">
                                         <label for="image">Thêm Ảnh Sản Phẩm: </label>
-                                        <input type="file" className="form-control-file btn-outline-info" id="image"
-                                            onChange={handleImageChange}
-                                            multiple
-                                        />
 
 
-                                    <div className="col-md-12">
-                                    {imagesPreview && imagesPreview.map((img, index) => (
+                                        <Upload
 
-<>
-    <div className="image-container mt-2">
-        <img
-            src={img.url}
-            key={index}
-            alt="Images Preview"
-            className="mt-3 mr-2 mx-2 position-relative "
-            width="55"
-            height="53"
-        />
-
-        <button onClick={() => handleDeleteImg(index)} className="close-button">
-            &times;
-        </button>
-    </div >
-
-</>
-
-
-))}
-<span>
-{img && img.map((img, index) => (
-
-    <>
-        <div className="image-container mt-2">
-            <img
-                src={img}
-                key={index}
-                alt="Images Preview"
-                className="mt-3 mr-2 mx-2 position-relative "
-                width="55"
-                height="53"
-            />
-
-            <button onClick={() => handleDeleteImg(index)} className="close-button">
-                &times;
-            </button>
-        </div >
-
-    </>
-
-
-))}
-</span>
-                                    </div>
-
-
-
-
-
-
-
-
+                                            listType="picture-card"
+                                            fileList={fileList}
+                                            onPreview={handlePreview}
+                                            onChange={handleChange}
+                                        >
+                                            {fileList.length >= 8 ? null : uploadButton}
+                                        </Upload>
+                                        <Modal open={previewOpen} title={previewTitle} footer={null} onCancel={handleCancel}>
+                                            <img
+                                                alt="example"
+                                                style={{
+                                                    width: '100%',
+                                                }}
+                                                src={previewImage}
+                                            />
+                                        </Modal>
 
                                     </div>
 

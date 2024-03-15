@@ -9,8 +9,6 @@ import { format } from 'date-fns';
 import { jsPDF } from "jspdf";
 import autoTable from 'jspdf-autotable'
 import ModalDetailOrder from "./ModalDetailOrder";
-import { Font } from '@react-pdf/renderer';
-import ArialUnicodeMS from './css/Arial-Unicode-Regular.ttf'
 import { IoDocumentText } from "react-icons/io5";
 import { MdLocalPrintshop } from "react-icons/md";
 import { MdDelete } from "react-icons/md";

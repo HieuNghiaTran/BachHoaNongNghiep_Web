@@ -13,9 +13,11 @@ const Search = () => {
     const [products, setProducts] = useState([]);
     const [status, setStatus] = useState(false)
     const [isShowResult, setIsShowResult] = useState(false);
-    const rseult = document.querySelector('.result')
-    const history = useNavigate();
 
+    const [temp,setTemp]=useState(false)
+  
+    const history = useNavigate();
+    
     const fetchData = async () => {
         try {
             let res = await getAllProduct();
@@ -31,44 +33,25 @@ const Search = () => {
 
 
     }
-    const Dispath = async (value) => {
-        try {
 
-
-
-
-
-
-        } catch (err) {
-
-
-        }
-
-
-
-
-
-
-    }
-
-
-
+   
     const handleSearch = debounce(async (e) => {
         try {
             fetchData();
             setValueSearch(e.target.value)
             let value = e.target.value;
-            console.log(value)
             let cloneListUser = _.cloneDeep(products);
             if (Array.isArray(cloneListUser)) {
                 cloneListUser = cloneListUser.filter(item => item.name_product.toLowerCase().includes(value.toLowerCase()));
                 setListResults(cloneListUser);
                 setListResults.length === 0 ? setStatus(false) : setStatus(true);
-
+                setIsShowResult(true);
+                setTemp(true)
 
             } else {
                 console.error("Cloned data is not an array:", cloneListUser);
             }
+            if(!e.target.value) setListResults([])
         } catch (error) {
             console.error("Error fetching products:", error);
         }
@@ -83,21 +66,17 @@ const Search = () => {
             <div className="d-flex flex-column ">
                 <div className="search_bar">
                     <input type="text" className="search_loc" placeholder="Tìm kiếm sản phẩm"
-                        onChange={(e) => { handleSearch(e); handleShowResult(); }}
-                        //onBlur={() => { setIsShowResult(false) }}
+                    onBlur={()=>{ listResults.length>0?setTemp(true):setTemp(false)}}
+                        onChange={(e) => { 
+                            
+                            handleSearch(e); handleShowResult(); }}
                         onKeyPress={(e) => {
 
-
                             if (e.key === 'Enter') {
-
                                 localStorage.setItem("search-value", e.target.value)
                                 history(`/search/${e.target.value}`);
 
-
                             }
-
-
-
                         }}
                     />
                     <button onClick={()=>{history(`/search/${valueSearch}`);}}>
@@ -106,16 +85,16 @@ const Search = () => {
                 </div>
 
 
-                {isShowResult && (
-                    <div className="result mt-3">
+                {isShowResult && temp && (
+                    <div className="result mt-3"  onClick={()=>{setIsShowResult(true)}}>
                         <div className="title" style={{ color: '#A0A0A0' }}>Kết quả tìm kiếm cho <span style={{ color: 'red' }}>"{valueSearch}"</span> </div>
                        <div className="list-result overflow-auto">
                        {listResults && listResults.length > 0 && status && listResults.map((item) => (
                             <Link to={`/product/${item._id}`}>
-                                <div key={item.id}> {/* Assuming each item has a unique identifier like 'id' */}
+                                <div key={item.id}> 
 
                                     <div className="result-item d-flex">
-                                        <div className="w-48 relative left">
+                                        <div className="w-48 relative left" style={{border:"none"}}>
                                             <img src={item.images[0].url} alt="" className="object-fill absolute inset-0 w-full h-full object-cover" width="67px" height="90px" loading="lazy" />
                                         </div>
                                         <div className="mx-3 right">

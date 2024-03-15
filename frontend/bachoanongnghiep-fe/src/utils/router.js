@@ -7,7 +7,8 @@ export const ROUTER = {
         Result: '/search/:value',
         ProductWithCatory: "/collections/:category_id",
         SubmitOrder: "/checkouts/:id",
-        Location: "/page/location"
+        Location: "/page/location",
+        SuccessOrder:"/order/success"
     },
 
     ADMIN: {

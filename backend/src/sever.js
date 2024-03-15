@@ -23,9 +23,9 @@ mongoose.connect(con_string)
     console.error('Error connecting to database:', error);
   });
 app.use(express.json({ extended: false }));
-app.use(express.json({ extended: false, limit: "90mb" }));
+app.use(express.json({ extended: false, limit: "100mb" }));
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
+app.use(bodyParser.json({ limit: '100mb' }));
 app.use(morgan('common'));
 app.use(cors());
 

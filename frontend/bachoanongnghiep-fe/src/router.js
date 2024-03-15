@@ -12,6 +12,7 @@ import Location from "./pages/storeLocation";
 import OrderManager from "./admin/pages/odersManager";
 import MyOrder from "./pages/MyOrders";
 import Login from "./admin/pages/login";
+import SuccessOrder from "./pages/succesOrder";
 const renderUserRouter = () => {
   const userrouter = [
     {
@@ -55,6 +56,11 @@ const renderUserRouter = () => {
     {
       path: ROUTER.USER.My_Order,
       component: <MyOrder/>,
+    },
+    
+    {
+      path: ROUTER.USER.SuccessOrder,
+      component: <SuccessOrder/>,
     },
 
   ];
