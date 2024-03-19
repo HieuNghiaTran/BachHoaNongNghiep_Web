@@ -62,6 +62,11 @@ var schema = new mongoose.Schema(
         ],
         describe: String,
 
+        soldQuantity: {
+            type: Number,
+            default: 0
+        }
+
     }
 );
 schema.plugin(paginate);

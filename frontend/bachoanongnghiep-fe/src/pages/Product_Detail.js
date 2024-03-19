@@ -13,18 +13,18 @@ import { UserContext } from "../context/userContext";
 import CommentModal from "../components/layout/ModalsComment"
 import { addCart } from "../redux/actions/cartActions";
 import ListReviews from "../components/layout/listReview";
+import History from "../components/layout/history";
 
 const DetailProduct = (props) => {
     const dispatch = useDispatch();
     const [product, setProducts] = useState({});
     const [sale, setSale] = useState()
     const { id } = useParams();
-    const { user } = useContext(UserContext)
     const [comment, setComment] = useState()
     const [count, setCount] = useState(1);
     const [rating, setRating] = useState()
     const [isShowModal, setIsShowModal] = useState(false)
-
+    const { user, logOut, jwt } = useContext(UserContext);
     useEffect(() => {
         fetData(id);
 
@@ -124,7 +124,7 @@ const DetailProduct = (props) => {
     return (
         <>
             <Header />
-
+            <div><History data={"Trang chủ / "} last_item={`Sản phẩm`}/></div>
             <MetaData title={product.name_product} />
             <div className="row d-flex justify-content-around">
                 <div className="col-12 col-lg-4 img-fluid p-4" id="product_image">
@@ -168,7 +168,7 @@ const DetailProduct = (props) => {
                     <p>{product.describe}</p>
                     <hr />
 
-                    {user.auth ? <button id="review_btn" type="button" className="btn btn-primary mt-4" data-toggle="modal" data-target="#ratingModal" onClick={() => {
+                    {jwt && user? <button id="review_btn" type="button" className="btn btn-primary mt-4" data-toggle="modal" data-target="#ratingModal" onClick={() => {
                         setIsShowModal(true)
 
                         setUserRatings()

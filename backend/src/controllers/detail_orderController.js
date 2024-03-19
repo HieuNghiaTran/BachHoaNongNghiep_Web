@@ -1,5 +1,6 @@
 const Detail_Order = require("../models/details_order");
 const Order = require("../models/order");
+const Products = require("../models/products");
 const Detail_order = {
     detail: async (req, res) => {
         const id_order = req.params.id;
@@ -36,6 +37,12 @@ const Detail_order = {
                 id_order: order._id,
                 product: product,
             };
+            for (let item of product) {
+                await Products.findByIdAndUpdate(item.id_product, {
+                    $inc: { soldQuantity: stock-item.count}
+                });
+            }
+
             const detail_order = await Detail_Order.create(data);
             res.status(200).json(detail_order);
         } catch (error) {

@@ -10,6 +10,8 @@ import { historyContext } from '../context/historyContext';
 import { addCart, deleteCart, downItem } from '../redux/actions/cartActions';
 import { Link } from 'react-router-dom';
 import { IoIosArrowRoundBack } from "react-icons/io";
+import HotDeal from '../components/layout/hotDeals';
+
 const CartPage = (props) => {
     const pt = useSelector(state => state.cartProvider)
     const [total, setTotal] = useState(0);
@@ -113,6 +115,10 @@ const CartPage = (props) => {
                     </div>
                 </div>
             </div>
+
+   
+         
+
         </>
     );
 }

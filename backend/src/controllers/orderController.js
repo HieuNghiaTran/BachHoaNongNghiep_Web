@@ -8,7 +8,7 @@ const OrderController = {
 
 
             const user = await Users.findOne({ username: req.body.username });
-            console.log(user);
+           
             if (!user) {
                 return res.status(404).json({ message: "User not found" });
             }

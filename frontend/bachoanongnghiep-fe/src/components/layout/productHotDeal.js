@@ -2,16 +2,19 @@
 import { Link } from 'react-router-dom'
 import { MdOutlineAddShoppingCart } from "react-icons/md";
 import { useContext, useState } from 'react';
+import { CartContext } from '../../context/cartContext';
 import { toast } from 'react-toastify';
 import { addCart } from '../../redux/actions/cartActions';
 import { useDispatch, useSelector } from 'react-redux';
-const Products = ({ product, col }) => {
+import ProgressBar from "@ramonak/react-progress-bar";
+const ProductsHot = ({ product, col }) => {
+
 
     const [pr, setpr] = useState([])
     const dispatch = useDispatch();
     const pt = useSelector(state => state.cartProvider)
     const add = () => {
-    let data = new FormData();
+        let data = new FormData();
 
         data = {
             id: product._id,
@@ -23,8 +26,6 @@ const Products = ({ product, col }) => {
         }
         const a = addCart(data)
         dispatch(a)
-     
-       
 
         toast.success("Đã thêm vào giỏ hàng !");
     }
@@ -57,11 +58,19 @@ const Products = ({ product, col }) => {
                     </div>
 
                 </div>
+                <div>
+                    <div className="my-2">{product.soldQuantity} sản phẩm được bán</div>
+                    <ProgressBar completed={product.soldQuantity/product.stock} bgColor="#dc3545" height="10px" isLabelVisible={false} />
+
+                </div>
             </div>
+
+
+
         </div>
     );
 
 
 }
 
-export default Products;
+export default ProductsHot;

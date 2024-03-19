@@ -192,7 +192,7 @@ const productController = {
                 { page, limit: perPage, sort: { _id: -1 } }
             );
             res.json(result);
-            console.log(result); 
+          
         } catch (err) {
             res.status(500).json(err);
         }
@@ -270,7 +270,24 @@ const productController = {
 
         }
 
-    }
+    },
+    getProductHotDeal: async(req,res)=>{
+
+
+        try {
+        
+            const page = 1;
+            const perPage =6;
+            const result = await Products.paginate({}, { page, limit: perPage, sort: { stock: -1 }  });
+            res.json(result);
+
+        } catch (err) {
+            res.status(500).json(err)
+
+
+        }
+
+    },
 
 
 

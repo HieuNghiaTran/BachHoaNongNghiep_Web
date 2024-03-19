@@ -16,6 +16,8 @@ import MetaData from "../services/setHead";
 import ScrollToTop from "../components/layout/scollToTop";
 
 import Slider from "react-slick";
+import HotDeal from "../components/layout/hotDeals";
+
 
 const HomePage = () => {
   const [products1, setProducts1] = useState([]);
@@ -33,16 +35,16 @@ const HomePage = () => {
 
   const fetchData = async () => {
     try {
-      let res1 = await getProductWithCategoryPageginate(1, 6,"658d71c7bdf16aee6ce16344");
+      let res1 = await getProductWithCategoryPageginate(1, 6, "658d71c7bdf16aee6ce16344");
       setProducts1(res1.data.docs);
 
-      let res2 = await getProductWithCategoryPageginate(1,5,"658d7164bdf16aee6ce1633c");
+      let res2 = await getProductWithCategoryPageginate(1, 5, "658d7164bdf16aee6ce1633c");
       setProducts2(res2.data.docs);
-      let res3 = await getProductWithCategoryPageginate(1,5,"658d7170bdf16aee6ce1633e");
+      let res3 = await getProductWithCategoryPageginate(1, 5, "658d7170bdf16aee6ce1633e");
       setProducts3(res3.data.docs);
-      let res4 = await getProductWithCategoryPageginate(1,5,"658d7192bdf16aee6ce16342");
+      let res4 = await getProductWithCategoryPageginate(1, 5, "658d7192bdf16aee6ce16342");
       setProducts4(res4.data.docs);
-      let res5 = await getProductWithCategoryPageginate(1,5,"658d7182bdf16aee6ce16340");
+      let res5 = await getProductWithCategoryPageginate(1, 5, "658d7182bdf16aee6ce16340");
       setProducts5(res5.data.docs);
 
 
@@ -58,37 +60,38 @@ const HomePage = () => {
     slidesToShow: 6,
     initialSlide: 0,
     responsive: [
-        {
-            breakpoint: 1024,
-            settings: {
-                slidesToShow: 3,
-                slidesToScroll: 3,
-                infinite: true,
-                dots: false
-            }
-        },
-        {
-            breakpoint: 600,
-            settings: {
-                slidesToShow: 2,
-                slidesToScroll: 2,
-                initialSlide: 2
-            }
-        },
-        {
-            breakpoint: 480,
-            settings: {
-                slidesToShow: 1,
-                slidesToScroll: 1
-            }
+      {
+        breakpoint: 1024,
+        settings: {
+          slidesToShow: 3,
+          slidesToScroll: 3,
+          infinite: true,
+          dots: false
         }
+      },
+      {
+        breakpoint: 600,
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 2,
+          initialSlide: 2
+        }
+      },
+      {
+        breakpoint: 480,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1
+        }
+      }
     ]
-};
+  };
 
 
   return (
 
     <div className='wrapper position-relative'>
+       
       <MetaData title={"Trang chủ"}></MetaData>
       <Header />
       <main className="">
@@ -97,11 +100,14 @@ const HomePage = () => {
           <Sliders />
           <div className="col-md-3 mx-3 mb-3" style={{ height: "100%" }}>
             <div className="row"> <Link to={"/trang-chu"} ><img className="mb-1 mt-1 w-100" src="https://theme.hstatic.net/1000269461/1000985512/14/bottom_banner_1_large.jpg?v=1678"></img></Link></div>
-
             <div className="row"> <Link to={"/trang-chu"}><img className="w-100" src="https://theme.hstatic.net/1000269461/1000985512/14/bottom_banner_3_large.jpg?v=1678"></img></Link></div>
+
           </div>
         </div>
         <ListCatory />
+
+     
+        <div><HotDeal/></div>
         <h4 className="sub-title">THUỐC BẢO VỆ THỰC VẬT</h4>
 
         <div className="tbvtv_are d-flex flex-wrap p-0">
@@ -113,11 +119,11 @@ const HomePage = () => {
           ))}
         </div>
 
-       
+
         <div className=" d-flex justify-content-center align-item-center"><Link to="/collections/658d71c7bdf16aee6ce16344"><button className="btn btn-outline-success">Xem tất cả</button></Link></div>
         <div className="text-center p-4" ><Link><img className="w-100" src={"https://theme.hstatic.net/200000722083/1001109742/14/section_hot_banner.png?v=22"}></img></Link></div>
-        
-        
+
+
         <h4 className="sub-title">GẠO</h4>
         <div className="tbvtv_are d-flex flex-wrap">
           <div><Link><img src="//theme.hstatic.net/200000692099/1001033556/14/section_hot.jpg?v=30"></img></Link></div>
@@ -167,20 +173,20 @@ const HomePage = () => {
           <h4 className="sub-title">ĐỐI TÁC CỦA CHÚNG TÔI</h4>
           <div className="px-5">
 
-          <Slider {...settings}>
+            <Slider {...settings}>
 
 
-            <img className="w-80 h-80" src="https://theme.hstatic.net/200000722083/1001109742/14/brand_1.jpg?v=22"></img>
-            <img src="https://theme.hstatic.net/200000722083/1001109742/14/brand_3.jpg?v=22"></img>
-            <img src="https://theme.hstatic.net/200000722083/1001109742/14/brand_4.jpg?v=22"></img>
-            <img src="https://theme.hstatic.net/200000722083/1001109742/14/brand_2.jpg?v=22"></img>
-            <img src="https://theme.hstatic.net/200000722083/1001109742/14/brand_5.jpg?v=22"></img>
-            <img src="https://theme.hstatic.net/200000722083/1001109742/14/brand_6.jpg?v=22"></img>
-            <img src="https://theme.hstatic.net/200000722083/1001109742/14/brand_7.jpg?v=22"></img>
-            <img src="https://theme.hstatic.net/200000722083/1001109742/14/brand_8.jpg?v=22"></img>
-            <img src="https://theme.hstatic.net/200000722083/1001109742/14/brand_9.jpg?v=22"></img>
+              <img className="w-80 h-80" src="https://theme.hstatic.net/200000722083/1001109742/14/brand_1.jpg?v=22"></img>
+              <img src="https://theme.hstatic.net/200000722083/1001109742/14/brand_3.jpg?v=22"></img>
+              <img src="https://theme.hstatic.net/200000722083/1001109742/14/brand_4.jpg?v=22"></img>
+              <img src="https://theme.hstatic.net/200000722083/1001109742/14/brand_2.jpg?v=22"></img>
+              <img src="https://theme.hstatic.net/200000722083/1001109742/14/brand_5.jpg?v=22"></img>
+              <img src="https://theme.hstatic.net/200000722083/1001109742/14/brand_6.jpg?v=22"></img>
+              <img src="https://theme.hstatic.net/200000722083/1001109742/14/brand_7.jpg?v=22"></img>
+              <img src="https://theme.hstatic.net/200000722083/1001109742/14/brand_8.jpg?v=22"></img>
+              <img src="https://theme.hstatic.net/200000722083/1001109742/14/brand_9.jpg?v=22"></img>
 
-</Slider>
+            </Slider>
 
           </div>
 
@@ -188,9 +194,13 @@ const HomePage = () => {
         </div>
         <ScrollToTop />
         <Chat />
-
+      
       </main>
+
+
       <Footer />
+
+      
     </div>
   );
 };

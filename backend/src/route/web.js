@@ -31,6 +31,7 @@ router.get("/products/:id_category", productController.getWithCategory);
 router.delete("/product/:id", productController.deleteProduct);
 router.put("/product/:id", productController.updateProduct);
 router.put("/products/review", productController.createProductReview);
+router.get("/productsHodeal", productController.getProductHotDeal)
 
 
 router.post("/cart", cartController.addCart);
