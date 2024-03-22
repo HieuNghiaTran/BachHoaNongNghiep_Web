@@ -2,18 +2,28 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { BrowserRouter, Router, Routes, Route } from 'react-router-dom';
 import HomePage from './pages/Home';
-import {RouterCustom, RouterAdmin } from './router';
+import { RouterCustom, RouterAdmin } from './router';
 import ScrollToTop from "./components/layout/scollToTop";
 import { ToastContainer } from 'react-toastify';
-import React, { useContext, useEffect, useRef  } from 'react';
-import { UserContext } from "./context/userContext";
-import { CartContext } from "./context/cartContext";
-import { HttpStatusCode } from "axios";
+import React, { useContext, useEffect, useRef } from 'react';
+
+import socketIOClient from "socket.io-client";
 
 function App() {
- 
+  
+  try {
+    const socket = socketIOClient("http://localhost:8001");
+  } catch (err) {
+    console.log(err)
+
+  }
+
   return (
+
+
     <BrowserRouter>
+
+
       <ScrollToTop />
       <RouterCustom />
       <RouterAdmin />

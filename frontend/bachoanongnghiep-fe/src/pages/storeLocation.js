@@ -31,7 +31,7 @@ const Location = () => {
         <>
             <MetaData title={"Hệ thống cửa hàng"}></MetaData>
             <Header />
-            <History />
+            <div><History data={"Trang chủ / "} last_item={`Hệ thông cửa hàng`}/></div>
 
 
             <div className="text-center h2 p-2">DANH SÁCH CỬA HÀNG</div>

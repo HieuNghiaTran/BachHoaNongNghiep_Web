@@ -2,7 +2,6 @@
 import { Link } from 'react-router-dom'
 import { MdOutlineAddShoppingCart } from "react-icons/md";
 import { useContext, useState } from 'react';
-import { CartContext } from '../../context/cartContext';
 import { toast } from 'react-toastify';
 import { addCart } from '../../redux/actions/cartActions';
 import { useDispatch, useSelector } from 'react-redux';

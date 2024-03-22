@@ -11,6 +11,7 @@ import { addCart, deleteCart, downItem } from '../redux/actions/cartActions';
 import { Link } from 'react-router-dom';
 import { IoIosArrowRoundBack } from "react-icons/io";
 import HotDeal from '../components/layout/hotDeals';
+import Footer from '../components/layout/footer';
 
 const CartPage = (props) => {
     const pt = useSelector(state => state.cartProvider)
@@ -116,7 +117,7 @@ const CartPage = (props) => {
                 </div>
             </div>
 
-   
+   <Footer/>
          
 
         </>

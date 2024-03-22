@@ -13,7 +13,13 @@ const cors = require('cors')
 const cloudinary = require('cloudinary')
 const con_string = process.env.CONNECTION_STRING;
 
-
+const http = require('http').createServer(app);
+const io = require('socket.io')(http, {
+  cors: {
+    origin: "http://localhost:3000",
+    methods: ["GET", "POST"]
+  }
+});
 
 mongoose.connect(con_string)
   .then(() => {
@@ -22,17 +28,17 @@ mongoose.connect(con_string)
   .catch((error) => {
     console.error('Error connecting to database:', error);
   });
+
 app.use(express.json({ extended: false }));
 app.use(express.json({ extended: false, limit: "100mb" }));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json({ limit: '100mb' }));
 app.use(morgan('common'));
+
 app.use(cors());
 
 app.use('/', Router)
-
 configViewEngine(app);
-
 
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
@@ -40,6 +46,20 @@ cloudinary.config({
   api_secret: process.env.CLOUDINARY_API_SECRET
 })
 
-app.listen(port, hostname, () => {
-  console.log(`Example app listening on port ${port}`);
+http.listen(port, () => {
+  console.log(`Server is running on port ${port}`);
+});
+
+let comments = [];
+io.on('connection', (socket) => {
+  console.log('Client connected'+ " "+ socket.id);
+
+  socket.on('comment', (comment) => {
+   
+      comments.push(comment);
+      io.emit('newComment', comment);
+    }
+  );
+
+  socket.emit('comments', comments);
 });

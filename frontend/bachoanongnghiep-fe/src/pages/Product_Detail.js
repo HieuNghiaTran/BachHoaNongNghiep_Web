@@ -6,29 +6,50 @@ import { useParams } from "react-router-dom";
 import MetaData from "../services/setHead";
 import Carousel from 'react-bootstrap/Carousel';
 import './ccs/product_detail.scss'
-import { CartContext } from "../context/cartContext";
 import { toast } from 'react-toastify';
 import { UserContext } from "../context/userContext";
-
 import CommentModal from "../components/layout/ModalsComment"
 import { addCart } from "../redux/actions/cartActions";
 import ListReviews from "../components/layout/listReview";
 import History from "../components/layout/history";
-
+import Footer from "../components/layout/footer";
+import { SubmitContext } from "../context/submitContext";
+import io from 'socket.io-client';
 const DetailProduct = (props) => {
     const dispatch = useDispatch();
+
+    const { submit, onSubmit, offSubmit } = useContext(SubmitContext)
     const [product, setProducts] = useState({});
-    const [sale, setSale] = useState()
     const { id } = useParams();
-    const [comment, setComment] = useState()
     const [count, setCount] = useState(1);
-    const [rating, setRating] = useState()
     const [isShowModal, setIsShowModal] = useState(false)
     const { user, logOut, jwt } = useContext(UserContext);
+
+    let [Review, setReview] = useState([])
+
     useEffect(() => {
+
         fetData(id);
 
-    }, [])
+
+    }, [id])
+    useEffect(() => {
+
+        if (submit === true) {
+            const socket = io('http://localhost:8001');
+            socket.on('comments', (initialComments) => {
+                setReview(initialComments);
+            });
+            offSubmit()
+            
+            return () => {
+         
+                socket.disconnect();
+            };
+
+
+        }
+    }, [submit]);
 
     const fetData = async (id) => {
         try {
@@ -57,8 +78,6 @@ const DetailProduct = (props) => {
         if (count > 1) setCount(count - 1)
     }
 
-
-
     const addToCart = () => {
 
         let data = new FormData()
@@ -76,47 +95,10 @@ const DetailProduct = (props) => {
 
     }
 
-    const setUserRatings = () => {
-
-        const stars = document.querySelectorAll('.star');
-
-        stars.forEach((star, index) => {
-            star.starValue = index + 1;
-
-            ['click', 'mouseover', 'mouseout'].forEach(function (e) {
-                star.addEventListener(e, showRatings);
-            })
-        })
-
-        function showRatings(e) {
-            stars.forEach((star, index) => {
-                if (e.type === 'click') {
-                    if (index < this.starValue) {
-                        star.classList.add('orange');
-
-                        setRating(this.starValue)
-                    } else {
-                        star.classList.remove('orange')
-                    }
-                }
-
-                if (e.type === 'mouseover') {
-                    if (index < this.starValue) {
-                        star.classList.add('yellow');
-                    } else {
-                        star.classList.remove('yellow')
-                    }
-                }
-
-                if (e.type === 'mouseout') {
-                    star.classList.remove('yellow')
-                }
-            })
-        }
-    }
 
 
-    
+
+
 
 
 
@@ -124,7 +106,7 @@ const DetailProduct = (props) => {
     return (
         <>
             <Header />
-            <div><History data={"Trang chủ / "} last_item={`Sản phẩm`}/></div>
+            <div><History data={"Trang chủ / "} last_item={`Sản phẩm`} /></div>
             <MetaData title={product.name_product} />
             <div className="row d-flex justify-content-around">
                 <div className="col-12 col-lg-4 img-fluid p-4" id="product_image">
@@ -168,11 +150,8 @@ const DetailProduct = (props) => {
                     <p>{product.describe}</p>
                     <hr />
 
-                    {jwt && user? <button id="review_btn" type="button" className="btn btn-primary mt-4" data-toggle="modal" data-target="#ratingModal" onClick={() => {
+                    {jwt && user ? <button id="review_btn" type="button" className="btn btn-primary mt-4" data-toggle="modal" data-target="#ratingModal" onClick={() => {
                         setIsShowModal(true)
-
-                        setUserRatings()
-
 
                     }}>
                         Bình luận sản phẩm
@@ -186,7 +165,7 @@ const DetailProduct = (props) => {
                         isModalVisible={isShowModal}
                         handleCloseModal={CloseModal}
                         product={product}
-                        
+
 
                     />
                 </div>
@@ -208,11 +187,13 @@ const DetailProduct = (props) => {
             </div>
             <div className='container'>
                 {product.reviews && product.reviews.length > 0 && (
-                    <ListReviews reviews={product.reviews} />
+                    <ListReviews reviews={product.reviews}
+                        newReview={Review}
+                    />
 
                 )}
             </div>
-
+            <Footer />
 
 
 

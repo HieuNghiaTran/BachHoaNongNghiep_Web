@@ -13,16 +13,21 @@ import '../src/components/Css/App.css'
 import { CartProvider } from './context/cartContext';
 import { HisProvider } from './context/historyContext';
 import AuthContextProvider from './admin/context/authContext';
+import { SubmitProvider } from './context/submitContext';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
 root.render(
+
+
   <Provider store={store}>
     <UserProvider>
       <CartProvider>
         <HisProvider>
           <AuthContextProvider>
+          <SubmitProvider>
             <App />
+            </SubmitProvider>
           </AuthContextProvider>
         </HisProvider>
       </CartProvider>
