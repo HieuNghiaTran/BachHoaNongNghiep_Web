@@ -5,7 +5,7 @@ const Users = require("../models/user");
 const userController = {
     addUser: async (req, res) => {
         try {
-           
+
 
             const user = await Users.find();
 
@@ -76,30 +76,30 @@ const userController = {
 
     getDetailUser: async (req, res) => {
         try {
-           
+
             const username = req.query.username
 
             const password = req.query.pass
-        
-            
-        console.log(password)
-        const query = [{ username: username }]
-
-        const user = await Users.findOne({ $or: query })
 
 
-        if (user === null) {
-            res.json({ msg: "Không Tìm Thấy Users" })
-        }
-        else {
-            const auth = await bcrypt.compare(password, user.password)
-            if (auth) {
-                var token = jwt.sign(user._id.toJSON(), 'gfdgfd');
-                res.json({ msg: "Đăng nhập thành công", user: user, jwt: token })
-            } else {
-                res.json({ msg: "Sai mật khẩu" })
+
+            const query = [{ username: username }]
+
+            const user = await Users.findOne({ $or: query })
+
+
+            if (user === null) {
+                res.json({ msg: "Không Tìm Thấy Users" })
             }
-        }
+            else {
+                const auth = await bcrypt.compare(password, user.password)
+                if (auth) {
+                    var token = jwt.sign(user._id.toJSON(), 'gfdgfd');
+                    res.json({ msg: "Đăng nhập thành công", user: user, jwt: token })
+                } else {
+                    res.json({ msg: "Sai mật khẩu" })
+                }
+            }
 
         } catch (err) {
             console.error(err);
@@ -114,6 +114,25 @@ const userController = {
 
 
     },
+    getAUser: async (req, res) => {
+        try {
+            let username = req.query;
+            let user = Users.findOne({ username: username })
+            res.status(200).json(user)
+
+
+
+        } catch (err) {
+            res.status(500)
+
+
+        }
+
+
+
+
+
+    }
 
 
 

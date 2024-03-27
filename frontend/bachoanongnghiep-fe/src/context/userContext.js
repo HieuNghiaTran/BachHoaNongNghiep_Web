@@ -20,6 +20,7 @@ const UserProvider = ({ children }) => {
     setJWT(jwt);
     setUser(user);
 
+
   }
 
   const logOut = () => {

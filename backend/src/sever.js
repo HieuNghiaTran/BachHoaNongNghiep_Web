@@ -50,16 +50,29 @@ http.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
 
-let comments = [];
+//let comments = [];
+let conversation=[]
 io.on('connection', (socket) => {
   console.log('Client connected'+ " "+ socket.id);
 
   socket.on('comment', (comment) => {
    
-      comments.push(comment);
+      //comments.push(comment);
+
+      console.log(comment)
       io.emit('newComment', comment);
     }
   );
 
-  socket.emit('comments', comments);
+  //socket.emit('comments', comments);
+
+
+
+socket.on("sendDataClient", function(data) {
+
+  io.emit("sendDataServer", { data });
+})
+
+socket.emit('response_room', conversation ) 
+
 });

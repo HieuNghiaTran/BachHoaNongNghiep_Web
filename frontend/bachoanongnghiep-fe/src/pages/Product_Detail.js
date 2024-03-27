@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import Header from "../components/layout/header";
 import { getAllProduct, getProductDetail, postReview } from "../services/productSevices";
 import { useDispatch } from "react-redux";
@@ -9,12 +9,12 @@ import './ccs/product_detail.scss'
 import { toast } from 'react-toastify';
 import { UserContext } from "../context/userContext";
 import CommentModal from "../components/layout/ModalsComment"
-import { addCart } from "../redux/actions/cartActions";
+import { addCart, updateCart } from "../redux/actions/cartActions";
 import ListReviews from "../components/layout/listReview";
 import History from "../components/layout/history";
 import Footer from "../components/layout/footer";
 import { SubmitContext } from "../context/submitContext";
-import io from 'socket.io-client';
+import socketIOClient from "socket.io-client";
 const DetailProduct = (props) => {
     const dispatch = useDispatch();
 
@@ -24,6 +24,9 @@ const DetailProduct = (props) => {
     const [count, setCount] = useState(1);
     const [isShowModal, setIsShowModal] = useState(false)
     const { user, logOut, jwt } = useContext(UserContext);
+    
+
+    const socketRef = useRef();
 
     let [Review, setReview] = useState([])
 
@@ -35,21 +38,20 @@ const DetailProduct = (props) => {
     }, [id])
     useEffect(() => {
 
-        if (submit === true) {
-            const socket = io('http://localhost:8001');
-            socket.on('comments', (initialComments) => {
-                setReview(initialComments);
-            });
-            offSubmit()
-            
+            socketRef.current = socketIOClient.connect("http://localhost:8001")
+
+            socketRef.current.on('newComment', dataGot => {
+                Review.unshift(dataGot)        
+    
+            })
+    
             return () => {
-         
-                socket.disconnect();
+                socketRef.current.disconnect();
             };
 
 
-        }
-    }, [submit]);
+        
+    }, []);
 
     const fetData = async (id) => {
         try {
@@ -86,20 +88,24 @@ const DetailProduct = (props) => {
             id_category: product.id_category,
             name_product: product.name_product,
             price_product: product.price_product,
-            images: product.images
+            images: product.images,
 
         }
+
+      if(count>1){
+        for(let i=0;i<count;i++){
+            dispatch(addCart(data))
+
+            
+        }
+      }else{
         dispatch(addCart(data))
+}
+        
         toast.success("Đã thêm vào giỏ hàng!");
-        console.log(user)
+   
 
     }
-
-
-
-
-
-
 
 
 

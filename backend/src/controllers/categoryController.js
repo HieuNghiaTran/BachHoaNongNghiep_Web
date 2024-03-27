@@ -1,5 +1,5 @@
 const Category = require("../models/category");
-
+const Products = require('../models/products')
 const CategoryController = {
     getAllCategory: async (req, res) => {
         try {
@@ -42,7 +42,10 @@ const CategoryController = {
 
 
 
-    }
+    },
+    getStockValueCategory: async(req, res)=>{
+
+    },
 
 
 }

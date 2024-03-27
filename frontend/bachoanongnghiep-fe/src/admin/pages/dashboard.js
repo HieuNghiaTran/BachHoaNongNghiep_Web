@@ -1,6 +1,6 @@
-import { Chart as ChartJS, ArcElement, Tooltip, Legend, CategoryScale, LinearScale, PointElement, LineElement, RadialLinearScale } from "chart.js";
+import { Chart as ChartJS, ArcElement, Tooltip, Legend, CategoryScale,BarElement, LinearScale, PointElement, LineElement, RadialLinearScale } from "chart.js";
 
-import { Doughnut, Line, Radar } from "react-chartjs-2";
+import { Bar, Doughnut, Line, Radar } from "react-chartjs-2";
 import Sidebar from "../sidebar"
 import { Link } from "react-router-dom";
 import MetaData from "../../services/setHead";
@@ -21,6 +21,8 @@ const DashBoard = () => {
     ChartJS.register(LinearScale);
     ChartJS.register(PointElement);
     ChartJS.register(LineElement);
+    ChartJS.register(BarElement);
+    //ChartJS.register(Bar);
     ChartJS.register(RadialLinearScale);
     const { addLocal, jwt, user } = useContext(AuthContext);
     const [users, setUser] = useState([])
@@ -28,19 +30,79 @@ const DashBoard = () => {
     const [orders, setOrders] = useState([])
     const [listCategory, setListCategoty] = useState([])
     const [loading, setLoading] = useState(false);
+
+
+let dataStockCategory=[]  
+let gao=0;
+let phanbon=0;
+let lk=0;
+let hatgiong=0;
+let tbvtt=0;
+  products.forEach(product => {
+        if (product.id_category === "658d7164bdf16aee6ce1633c" ) {
+           gao+=product.stock
+           
+        }  
+    })
+    dataStockCategory.push(gao)
+
+    products.forEach(product => {
+        if (product.id_category === "658d7170bdf16aee6ce1633e" ) {
+            phanbon+=product.stock 
+           
+        } 
+       
+    })
+    dataStockCategory.push(phanbon)
+    products.forEach(product => {
+        if (product.id_category === "658d7182bdf16aee6ce16340" ) {
+         lk+=product.stock  
+          
+           
+        } 
+        
+    })
+    dataStockCategory.push(lk)
+
+    products.forEach(product => {
+        if (product.id_category === "658d7192bdf16aee6ce16342" ) {
+         hatgiong+=product.stock  
+          
+           
+        } 
+        
+    })
+    dataStockCategory.push(hatgiong)
+
+    products.forEach(product => {
+        if (product.id_category === "658d71c7bdf16aee6ce16344" ) {
+           tbvtt+=product.stock
+           
+        }  
+    })
+    dataStockCategory.push(tbvtt)
+
     const data = {
         labels: listCategory,
         datasets: [{
-            label: 'Danh mục sản phẩm',
-            data: [],
-            fill: true,
-            backgroundColor: 'rgba(54, 162, 235, 0.2)',
-            borderColor: 'rgb(54, 162, 235)',
-            pointBackgroundColor: 'rgb(54, 162, 235)',
-            pointBorderColor: '#fff',
-            pointHoverBackgroundColor: '#fff',
-            pointHoverBorderColor: 'rgb(54, 162, 235)'
-        }]
+            
+            label: "Số lượng sản phẩm bán được",
+            backgroundColor: ["#009432"],
+            hoverBackgroundColor: ["rgb(197, 72, 49)"],
+            data: "0",
+        },
+
+
+        {
+            
+            label: "Số lượng còn lại trong kho",
+            backgroundColor: ["#EA2027"],
+            hoverBackgroundColor: ["rgb(197, 72, 49)"],
+            data: dataStockCategory,
+        },
+
+
+        ]
     };
 
     let outOfStock = 0;
@@ -54,6 +116,9 @@ const DashBoard = () => {
     let da_dat_hang = 0;
     orders &&
         orders.forEach((order) => {
+    
+    
+    
             if (order.status === "Đã đặt hàng") {
                 da_dat_hang += 1;
             }
@@ -107,8 +172,8 @@ const DashBoard = () => {
         ],
     };
     useEffect(() => {
-        let isMounted = true; // Đánh dấu component có đang mounted hay không
-    
+        let isMounted = true;
+
         const fetchData = async () => {
             setLoading(true);
             try {
@@ -117,38 +182,38 @@ const DashBoard = () => {
                 if (isMounted) {
                     setListCategoty(categoryData);
                 }
-    
+
                 let userData = await getAllUser();
                 if (isMounted) {
                     setUser(userData.data);
                 }
-    
+
                 let productData = await getAllProduct();
                 if (isMounted) {
                     setProducts(productData.data);
                 }
-    
+
                 let orderData = await getaAllOrder();
                 if (isMounted) {
                     setOrders(orderData.data);
                 }
-    
+
                 setLoading(false);
             } catch (error) {
-                // Xử lý lỗi nếu cần
+
                 console.error("Error fetching data:", error);
                 setLoading(false);
             }
         };
-    
+
         fetchData();
-    
-        // Clean up: unmounting effect
+        console.log(products)
+
         return () => {
             isMounted = false;
         };
     }, []);
-    
+
 
     if (!jwt && !user) {
         alert("Bạn không có quyền truy cập.")
@@ -239,8 +304,8 @@ const DashBoard = () => {
                                         <div className="col-xl-3 col-sm-6 mb-3">
                                             <div className="card text-white bg-light o-hidden h-100">
                                                 <div className="card-body">
-                                                    {/* Doughnut Chart */}
-                                                    <h6 className='text-dark'>Tình trạng số lượng hàng</h6>
+
+                                                    <h6 className='text-dark text-center mb-2' style={{ fontWeight: "bold" }}>Tình trạng số lượng hàng</h6>
                                                     <div className="doughnutChart">
                                                         <Doughnut data={doughnutState} />
                                                     </div>
@@ -252,7 +317,7 @@ const DashBoard = () => {
                                             <div className="card text-white bg-light o-hidden h-100">
                                                 <div className="card-body">
 
-                                                    <h6 className='text-dark'>Tình trạng đơn hàng</h6>
+                                                    <h6 className='text-dark text-center mb-2' style={{ fontWeight: "bold" }}>Tình trạng đơn hàng</h6>
 
                                                     <div className="doughnutChart">
                                                         <Doughnut data={doughnutStateOrder} />
@@ -264,7 +329,7 @@ const DashBoard = () => {
                                         <div className="col-xl-6 col-sm-12 mb-3">
                                             <div className="card text-white bg-light o-hidden h-100">
                                                 <div className="card-body">
-                                                    <h6 className='text-dark'>Tổng doanh thu</h6>
+                                                    <h6 className='text-dark text-center mb-2' style={{ fontWeight: "bold" }}>Tổng doanh thu</h6>
 
                                                     <div className="lineChart">
                                                         <Line
@@ -281,16 +346,13 @@ const DashBoard = () => {
 
                             <div className='row'>
 
-                                <div className='col-md-6'>
-                                </div>
+                               
 
-
-                                <div className='radar col-md-5 card text-white bg-light'>
+                                <div className='cod-md-9 card text-white bg-light'>
 
                                     <div className="lineChart">
-                                        <Radar
-                                            data={data}
-                                        />
+                                        <h4 className='text-dark text-center m-4' style={{ fontWeight: "bold" }}>Thống kê từng loại mặt hàng</h4>
+                                        <Bar data={data} />
                                     </div>
 
                                 </div>

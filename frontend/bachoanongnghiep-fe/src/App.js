@@ -8,6 +8,7 @@ import { ToastContainer } from 'react-toastify';
 import React, { useContext, useEffect, useRef } from 'react';
 
 import socketIOClient from "socket.io-client";
+import AppChat from "./components/layout/appchat";
 
 function App() {
   
@@ -23,7 +24,7 @@ function App() {
 
     <BrowserRouter>
 
-
+<AppChat/>
       <ScrollToTop />
       <RouterCustom />
       <RouterAdmin />

@@ -3,25 +3,21 @@ import { SubmitContext } from '../../context/submitContext';
 
 const ListReviews = ({ reviews, newReview }) => {
 const [isShowBackgroud,setShowBackground]=useState(true)
-const {submit, offSubmit}=useContext(SubmitContext)
 
     useEffect(() => {
-        if(submit){
+        
             const timer = setTimeout(() => {
-                setShowBackground(false);
+            setShowBackground(false);
             }, 8000);
-            offSubmit()
             return () => clearTimeout(timer);
         }
-    }, [submit]);
+    , [newReview]);
     return (
-        <div class="reviews w-75">
+        <div className="reviews w-75">
             <h3>ĐÁNH GIÁ SẢN PHẨM:</h3>
             <hr />
-
-
             {newReview && newReview.map(review => (
-                <div key={review._id} class={isShowBackgroud? "review-card my-3 isShowBackground": "review-card my-3"}>
+                <div key={review._id} className={isShowBackgroud? "review-card my-3 isShowBackground": "review-card my-3"}>
                     <p class="review_user">
                         <figure className="avatar avatar-nav">
                             <img
@@ -46,7 +42,7 @@ const {submit, offSubmit}=useContext(SubmitContext)
 
 
             {reviews && reviews.map(review => (
-                <div key={review._id} class="review-card my-3">
+                <div key={review._id} className="review-card my-3">
                     <p class="review_user">
                         <figure className="avatar avatar-nav">
                             <img

@@ -15,7 +15,8 @@ export const ROUTER = {
         Home: "/admin/dashboard",
         Product_Manager: "/admin/products",
         Order_Manager: "/admin/orders",
-        Login:"/admin/login"
+        Login:"/admin/login",
+        Chat:"/admin/chat"
 
 
     }

@@ -15,6 +15,10 @@ const router= express.Router();
 router.post("/user", userController.addUser);
 router.get("/user", userController.getAllUser);
 router.get("/user/detail/login", userController.getDetailUser);
+router.get("/user/detail", userController.getAUser);
+
+
+
 
 router.post("/admin/user",AdminUserController.create);
 router.get("/admin/login",AdminUserController.login);
@@ -65,7 +69,7 @@ router.get("/permission",PermissionController.getAll)
 
 
 router.post('/create_payment_url', PaymentCotroller.createPaymentUrl)
-router.get('payment/get_result', PaymentCotroller.vnpayReturn)
+router.get('/payment/get_result', PaymentCotroller.vnpayReturn)
 
 
 module.exports = router

@@ -45,10 +45,7 @@ const CommentModal = (props) => {
             await postReview(data);
             toast.success('Đã thực hiện đánh giá');
             handleCloseModal();
-            if(submit===false)onSubmit();
-            alert("3"+submit)
         } catch (error) {
-            // Handle error
             console.error(error);
         }
     };

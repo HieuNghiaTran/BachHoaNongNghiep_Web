@@ -13,6 +13,7 @@ import OrderManager from "./admin/pages/odersManager";
 import MyOrder from "./pages/MyOrders";
 import Login from "./admin/pages/login";
 import SuccessOrder from "./pages/succesOrder";
+import ChatPage from "./admin/pages/chatPage";
 const renderUserRouter = () => {
   const userrouter = [
     {
@@ -95,6 +96,12 @@ const renderAdmin = () => {
       path: ROUTER.ADMIN.Login,
       component: <Login/>,
     },
+
+    {
+      path: ROUTER.ADMIN.Chat,
+      component: <ChatPage/>,
+    },
+
   ];
 
   return (

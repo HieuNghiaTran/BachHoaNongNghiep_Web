@@ -14,6 +14,9 @@ import { MdLocalPrintshop } from "react-icons/md";
 import { MdDelete } from "react-icons/md";
 import { FaPencil } from "react-icons/fa6";
 import ModalDelete from "./ModalsDelete";
+import { FaShippingFast } from "react-icons/fa";
+import axios from 'axios';
+
 const TableOrders = ({ order }) => {
 
     const [listOrders, setListOrders] = useState([])
@@ -36,6 +39,36 @@ const TableOrders = ({ order }) => {
     const [address, setAddress] = useState()
     const [isShowModalDelete, setIsShowModalDelete] = useState(false);
 
+  
+      
+        const handleSubmitShip = async () => {
+            try {
+                const res = await axios.post(
+                    'https://dev-online-gateway.ghn.vn/shiip/public-api/v2/shipping-order/create',
+                    {
+                      payment_type_id: 2,
+
+                    },
+                    {
+                      headers: {
+                        'Content-Type': 'application/json',
+                        ShopId: '885',
+                        Token: "285518-c4bb-11ea-be3a-f636b1deefb9",
+                      },
+                    }
+                )
+
+                console.log(res)
+
+            } catch (error) {
+                console.error(error);
+            }
+        };
+
+    
+
+
+
 
     useEffect(() => {
         if (order && order.length > 0) {
@@ -44,7 +77,7 @@ const TableOrders = ({ order }) => {
             fetchData();
         }
     }, [order]);
-    
+
 
     const fetchDataPrint = async (id) => {
         try {
@@ -93,16 +126,16 @@ const TableOrders = ({ order }) => {
 
 
     const fetchData = async () => {
-        
-            try {
-                let res = await getaAllOrder()
-                setListOrders(res.data)
-            } catch (err) {
-                console.log(err)
-            }
+
+        try {
+            let res = await getaAllOrder()
+            setListOrders(res.data)
+        } catch (err) {
+            console.log(err)
+        }
 
 
-        
+
     }
 
     return (
@@ -155,6 +188,23 @@ const TableOrders = ({ order }) => {
                                     <FaPencil style={{ marginRight: "0.2rem" }} />
                                     Cập nhật
                                 </button>
+
+
+                                <button type="button" className="btn btn-warning mx-2"s
+                                
+                                
+                                onClick={()=>{
+                                handleSubmitShip(item.name, item.phone,item.address)
+
+
+
+                                }}>
+
+                                    <FaShippingFast style={{ marginRight: "0.2rem" }} />
+                                    Tạo đơn vận chuyển
+                                </button>
+
+
                                 <button type="button" className="mx-2 btn btn-danger"
 
                                     onClick={() => {

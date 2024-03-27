@@ -4,28 +4,30 @@ const cartReducer = (state = { id_user: '', listCart: [] }, action) => {
 
             const data = action.data;
             const list = state.listCart;
-                const existingItemIndex = list.findIndex(existingItem => existingItem.id === data.id);
-
-                if (existingItemIndex !== -1) {
-                    const updatedProductItems = [...list];
-                    updatedProductItems[existingItemIndex].quantity += 1;
-
-                    return {
-                        ...state,
-                        listCart: updatedProductItems
-                    };
-
+            const existingItemIndex = list.findIndex(existingItem => existingItem.id === data.id);
+        
+            if (existingItemIndex !== -1) {
+                let updatedProductItems = [...list];
+                if (data.quantity) {
+                
+                    updatedProductItems[existingItemIndex] = {...updatedProductItems[existingItemIndex], quantity: updatedProductItems[existingItemIndex].quantity + data.quantity};
                 } else {
-                    return {
-                        ...state,
-                        listCart: [...list, { ...data, quantity: 1 }]
-                    };
-
+                
+                    updatedProductItems[existingItemIndex] = {...updatedProductItems[existingItemIndex], quantity: updatedProductItems[existingItemIndex].quantity + 1};
                 }
+        
+                return {
+                    ...state,
+                    listCart: updatedProductItems
+                };
+            } else {
             
+                return {
+                    ...state,
+                    listCart: [...list, { ...data, quantity: 1 }]
+                };
+            }
 
-            localStorage.setItem('cartItems', JSON.stringify(state.listCart));
-            return state;
         }
         case "DELETE_CART": {
             const list = state.listCart.slice();
@@ -36,7 +38,7 @@ const cartReducer = (state = { id_user: '', listCart: [] }, action) => {
                 ...state,
                 listCart: list
             };
-        
+
         }
 
 
@@ -44,22 +46,22 @@ const cartReducer = (state = { id_user: '', listCart: [] }, action) => {
 
             const data = action.data;
             const list = state.listCart;
-                const existingItemIndex = list.findIndex(existingItem => existingItem.id === data.id);
+            const existingItemIndex = list.findIndex(existingItem => existingItem.id === data.id);
 
-                if (existingItemIndex !== -1) {
-                    const updatedProductItems = [...list];
-                    updatedProductItems[existingItemIndex].quantity -= 1;
+            if (existingItemIndex !== -1) {
+                const updatedProductItems = [...list];
+                updatedProductItems[existingItemIndex].quantity -= 1;
 
-                    return {
-                        ...state,
-                        listCart: updatedProductItems
-                    };
+                return {
+                    ...state,
+                    listCart: updatedProductItems
+                };
 
-                }
-        
+            }
+
             return state;
         }
-        
+
 
 
         case "UPDATE_CART": {

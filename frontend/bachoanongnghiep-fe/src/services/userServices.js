@@ -15,13 +15,25 @@ const getAllUser =async ()=>{
 return axios.get("http://localhost:8001/user")
 }
 
+
+const getUser = async (query) => {
+  try {
+    const response = await axios.get(`http://localhost:8001/user/detail?${query}`);
+    return response.data;
+  } catch (error) {
+    throw error; 
+  }
+};
+
+
+
 const getDetailUser = async (query) => {
   try {
     const response = await axios.get(`http://localhost:8001/user/detail/login${query}`);
     return response.data;
   } catch (error) {
-    throw error; // Propagate the error so it can be caught and handled where the function is called.
+    throw error; 
   }
 };
 
-export { addNewUser, getDetailUser, getAllUser,LoginAdminUser  };
+export { addNewUser, getDetailUser, getAllUser,LoginAdminUser, getUser  };

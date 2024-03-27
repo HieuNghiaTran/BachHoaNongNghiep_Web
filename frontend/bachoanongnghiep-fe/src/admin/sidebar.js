@@ -1,11 +1,32 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { MdDashboard } from "react-icons/md";
 import { AuthContext } from './context/authContext';
+import { MdOutlineMarkUnreadChatAlt } from "react-icons/md";
 
 const Sidebar = () => {
     const [admin, setAdmin] = useState('')
     const { user, logOut } = useContext(AuthContext)
+    const [isHaveMes, setIsHaveMes]=useState(false)
+    const ENDPOINT = "http://localhost:8001";
+    const socketRef = useRef();
+    const [loading, setLoading] = useState(false)
+    const [messages, setMessages] = useState([]);
+    const [id, setId] = useState('')
+
+    const [value, setValue] = useState("");
+
+    const handleValueChange = (e) => {
+        setValue(e.target.value);
+        console.log(value)
+    };
+
+
+
+    
+
+
+
 
 useEffect(()=>{
 
@@ -17,10 +38,15 @@ useEffect(()=>{
 
 
 },[user])
+
 const handleLogout=()=>{
     logOut();
 
 }
+
+
+
+
 
     return (
         <div className="sidebar-wrapper">
@@ -44,6 +70,11 @@ const handleLogout=()=>{
 
                     <li>
                         <Link to="/admin/orders"><i className="fa fa-shopping-basket"></i> Quản lý đơn hàng</Link>
+                    </li>
+
+
+                    <li>
+                        <Link to="/admin/chat"><MdOutlineMarkUnreadChatAlt  style={{marginRight:"1rem"}}/>Chat</Link>
                     </li>
 
 
