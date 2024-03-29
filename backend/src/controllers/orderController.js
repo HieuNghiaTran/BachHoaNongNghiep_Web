@@ -28,7 +28,6 @@ const OrderController = {
             }
 
             const order = await Order.create(data)
-
             res.status(200).json(order)
         } catch (err) {
             return res.status(500).json(err);

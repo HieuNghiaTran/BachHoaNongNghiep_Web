@@ -1,4 +1,5 @@
 const moment = require('moment');
+const Order = require('../models/order');
 
 
 function sortObject(obj) {
@@ -22,6 +23,9 @@ const PaymentCotroller = {
 
     createPaymentUrl: async (req, res, next) => {
 
+        let order = await Order.findOne({ phone: req.body.phone, create_time: req.body.create_time  })
+       
+ 
         process.env.TZ = 'Asia/Ho_Chi_Minh';
 
         let date = new Date();
@@ -38,7 +42,7 @@ const PaymentCotroller = {
         let secretKey = "JKNZFYHSFFLICTLJDSOIAYPKBYVAHAPP";
         let vnpUrl = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
         let returnUrl = "http://localhost:8001/payment/get_result";
-        let orderId = moment(date).format('DDHHmmss');
+        let orderId = order._id;
         let amount = req.body.amount;
         let bankCode = req.body.bankCode || 'NCB';
 
@@ -73,13 +77,29 @@ const PaymentCotroller = {
         let signed = hmac.update(new Buffer(signData, 'utf-8')).digest("hex");
         vnp_Params['vnp_SecureHash'] = signed;
         vnpUrl += '?' + querystring.stringify(vnp_Params, { encode: false });
-        res.status(200).json(vnpUrl)
+
+
+
+
+        let que = '?' + querystring.stringify(vnp_Params, { encode: false })
+
+        res.status(200).json(
+
+            {
+                vnpUrl,
+                que
+
+
+            }
+        )
 
     },
 
 
     vnpayReturn: async (req, res, next) => {
         try {
+
+
             let vnp_Params = req.query;
             let secureHash = vnp_Params['vnp_SecureHash'];
 
@@ -107,6 +127,16 @@ const PaymentCotroller = {
                     if (checkAmount) {
                         if (paymentStatus == "0") { //kiểm tra tình trạng giao dịch trước khi cập nhật tình trạng thanh toán
                             if (rspCode == "00") {
+                                let order = await Order.findById(orderId);
+                                if (order) {
+                                    order.status = "Đã Thanh Toán";
+                                    await order.save(); 
+                                    console.log("thành công"+ order)
+                            
+                                } else {
+                                    // Xử lý khi không tìm thấy đơn hàng
+                                    res.status(404).json({ message: 'Đơn hàng không tồn tại' });
+                                }
                                 //thanh cong
                                 //paymentStatus = '1'
                                 // Ở đây cập nhật trạng thái giao dịch thanh toán thành công vào CSDL của bạn
@@ -133,7 +163,7 @@ const PaymentCotroller = {
             }
             else {
                 res.status(200).json({ RspCode: '97', Message: 'Checksum failed' })
-                
+
             }
 
         } catch (err) {

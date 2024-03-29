@@ -5,7 +5,7 @@ const paymentVNPay = (data) => {
 
 }
 const getResultPaymentVNpay = (data) => {
-    return axios.get("http://localhost:8001/create_payment_url", data)
+    return axios.get(`http://localhost:8001//payment/get_result${data}`)
 
 }
 

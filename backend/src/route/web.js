@@ -46,7 +46,7 @@ router.get("/category/:id",CategoryController.getNameCategory)
 router.post("/category", CategoryController.addCategory);
 
 
-router.get("/collection/:id_category", ColectionController.getAllColecion);
+router.get("/collection", ColectionController.getAllColecion);
 router.post("/collection", ColectionController.addCollection);
 
 

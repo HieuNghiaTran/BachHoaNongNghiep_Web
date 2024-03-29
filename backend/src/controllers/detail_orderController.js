@@ -39,7 +39,7 @@ const Detail_order = {
             };
             for (let item of product) {
                 await Products.findByIdAndUpdate(item.id_product, {
-                    $inc: { soldQuantity: stock-item.count}
+                    $inc: { soldQuantity: item.count}
                 });
             }
 

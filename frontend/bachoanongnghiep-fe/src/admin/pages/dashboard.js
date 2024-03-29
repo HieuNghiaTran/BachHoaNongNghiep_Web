@@ -207,7 +207,7 @@ let tbvtt=0;
         };
 
         fetchData();
-        console.log(products)
+   
 
         return () => {
             isMounted = false;

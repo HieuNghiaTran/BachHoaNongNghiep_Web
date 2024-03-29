@@ -144,7 +144,7 @@ const DetailProduct = (props) => {
 
                         <span className=" plus" onClick={upCount}>+</span>
                     </div>
-                    <button type="button" id="cart_btn" className="btn btn-primary d-inline ml-5" disabled={product.numOfReviews === 0} onClick={addToCart}>Thêm vào giỏ hàng</button>
+                    <button type="button" id="cart_btn" className="btn btn-primary d-inline ml-5" disabled={product.stock === 0} onClick={addToCart}>Thêm vào giỏ hàng</button>
 
                     <hr />
 

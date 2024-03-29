@@ -163,7 +163,21 @@ const TableOrders = ({ order }) => {
                             </td>
                             <td style={{ color: "red", fontWeight: "bolder" }} className="text-center m-auto">{item.total} đ</td>
                             <td >{format(new Date(item.create_time), 'dd/MM/yyyy HH:mm:ss')}</td>
-                            <td>{item.status}</td>
+                            <td>
+    {item.status === "Đã Thanh Toán" ? (
+        <>
+            <span><img className="mx-2" width={"32rem"} src={require("../components/images/VNPAY.png")} alt="Thanh toán khi nhận hàng"></img></span>
+            <button className="btn btn-light">Đã thanh toán</button>
+        </>
+    ) : (
+
+        <>
+        <span><img className="mx-2" width={"32rem"} src={require("../components/images/thanhtoankhinhanhang.png")} alt="Thanh toán khi nhận hàng"></img></span>
+        <button className="btn btn-light">Đã đặt hàng</button>
+        
+        </>
+    )}
+</td>
                             <td>
                                 <button type="button" className="btn btn-primary mx-1" onClick={() => {
                                     setID(item._id)

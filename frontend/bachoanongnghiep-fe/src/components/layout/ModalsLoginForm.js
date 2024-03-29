@@ -39,12 +39,10 @@ const ModalsLoginForm = (props) => {
     };
     const showModalsSign = () => {
         setIsShowModalSign(true);
-        //handleClose();
 
     }
 
-    const dispatch = useDispatch();
-    //const count_change = useSelector(state => state.Count.isLoad);
+    const dispatch = useDispatch()
     const handleLogin = async () => {
 
         const params = { username, pass };
@@ -82,7 +80,7 @@ const ModalsLoginForm = (props) => {
 
 
         } catch (err) {
-            ///toast.error("Tài khoản hoặc mật khẩu sai !!");
+      
         }
 
        

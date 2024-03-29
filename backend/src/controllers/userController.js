@@ -19,12 +19,12 @@ const userController = {
                 var newUser = new Users()
                 const salt = await bcrypt.genSalt();
                 const pass = await bcrypt.hash(req.body.password, salt);
-                newUser.fullname = req.body.name
+                newUser.fullname = req.body.fullname
                 newUser.username = req.body.username
                 newUser.phone = req.body.phone
                 newUser.password = pass
                 newUser.id_permission = req.body.id_permission
-                newUser.email = req.query.email
+                newUser.email = req.body.email
                 console.log(newUser)
 
                 newUser.save();
@@ -72,7 +72,7 @@ const userController = {
 
 
     },
-    // Make sure to replace 'path/to/UsersModel' with the actual path to your Users model.
+
 
     getDetailUser: async (req, res) => {
         try {
@@ -116,8 +116,8 @@ const userController = {
     },
     getAUser: async (req, res) => {
         try {
-            let username = req.query;
-            let user = Users.findOne({ username: username })
+            const username = req.query.username
+            let user =  await Users.findOne({ username: username })
             res.status(200).json(user)
 
 

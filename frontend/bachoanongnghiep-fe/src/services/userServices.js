@@ -16,13 +16,10 @@ return axios.get("http://localhost:8001/user")
 }
 
 
-const getUser = async (query) => {
-  try {
-    const response = await axios.get(`http://localhost:8001/user/detail?${query}`);
-    return response.data;
-  } catch (error) {
-    throw error; 
-  }
+const getUser =  (query) => {
+
+    return axios.get(`http://localhost:8001/user/detail?username=${query}`);
+  
 };
 
 

@@ -44,7 +44,7 @@ const ModalAddNewProduct = (props) => {
         let temp = await getAllCategory();
         setListCategory(temp.data);
 
-        console.log(temp)
+    
     }
 
     const handleCancel = () => setPreviewOpen(false);
@@ -52,12 +52,8 @@ const ModalAddNewProduct = (props) => {
 
 
     useEffect(() => {
-        if (isModalVisible) {
-
+       
             fetchData()
-
-
-        }
 
     }, [])
 
@@ -173,9 +169,8 @@ const ModalAddNewProduct = (props) => {
                                                     value={selected1}
                                                     onChange={async (e) => {
                                                         setSelected1(e.target.value)
-                                                        let temp = await getAllColecion(selected1)
-                                                        temp.data.length > 0 ? setListColection(temp.data) : setListCategory("")
-
+                                                        let temp = await getAllColecion(e.target.value)
+                                                        temp.data.length > 0 ? setListColection(temp.data) : setListColection("")
 
                                                     }}
 
@@ -190,7 +185,7 @@ const ModalAddNewProduct = (props) => {
 
 
 
-                                            {listColection.length > 0 && (
+                                            {listColection && listColection.length > 0 && (
                                                 <div className="form-group col-md-12 mb-2">
                                                     <label htmlFor="category">Loại: </label>
                                                     <select className="form-control" id="category"

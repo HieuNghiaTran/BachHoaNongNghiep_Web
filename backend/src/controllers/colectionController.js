@@ -5,7 +5,7 @@ const ColectionController = {
         try {
 
             let id_category = req.query.id_category
-            const colection = await Colection.find({id_category :id_category});
+            const colection = await Colection.find({id_catory :id_category});
             res.status(200).json(colection);
         } catch (err) {
             console.log(err);

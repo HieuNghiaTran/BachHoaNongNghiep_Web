@@ -8,7 +8,7 @@ import MetaData from "../services/setHead";
 import { UserContext } from "../context/userContext";
 import { submitDetail, submitOrder } from "../services/orderServies"
 import { Radio, Space } from 'antd';
-import { paymentVNPay } from "../services/paymentServices";
+import { getResultPaymentVNpay, paymentVNPay } from "../services/paymentServices";
 import { getUser } from "../services/userServices";
 
 
@@ -17,10 +17,10 @@ import { getUser } from "../services/userServices";
 const SubmitOrderPage = () => {
     const { user, jwt } = useContext(UserContext)
     const [currentDateTime, setCurrentDateTime] = useState(new Date());
-    const [name, setName] = useState()
-    const [email, setEmail] = useState()
-    const [phone, setPhone] = useState()
-    const [address, setAddress] = useState()
+    const [name, setName] = useState('')
+    const [email, setEmail] = useState('')
+    const [phone, setPhone] = useState('')
+    const [address, setAddress] = useState('')
     const [product, setProduct] = useState([])
     const dispatch = useDispatch()
     const pt = useSelector(state => state.cartProvider)
@@ -34,38 +34,48 @@ const SubmitOrderPage = () => {
     const [orderID, setOrderID] = useState()
 
     useEffect(() => {
-        fetData();
         setProduct(pt.listCart);
-    
         const interval = setInterval(() => {
             setCurrentDateTime(new Date());
         }, 1000);
-    
+
         return () => clearInterval(interval);
     }, []);
-    
+
+
+
+
+    useEffect(() => {
+        if (user && jwt) {
+            fetData(user);
+        }
+    }, [user, jwt]);
+
     useEffect(() => {
         if (product.length > 0) {
             const count = product.reduce((acc, item) => (acc + item.price_product * item.quantity), 0);
             setTotal(count + 25000);
-            console.log(count + 25000);
         }
     }, [product]);
-    
-    const fetData = async () => {
-        alert("1")
-        if (user && jwt) {
 
-            let res = await getUser(user.username);
-            alert("2")
-            console.log(res)
-            setName(res.data.fullname);
-            setEmail(res.data.email);
-            setPhone(res.data.phone);
-            setAddress(res.data.address);
+    const fetData = async (user) => {
+
+        try {
+
+            if (user && jwt) {
+
+                let res = await getUser(user.username);
+                setName(res.data.fullname);
+                setEmail(res.data.email);
+                setPhone(res.data.phone);
+                setAddress(res.data.address);
+            } else {
+                console.log("User or username not available:", user);
+            }
+        } catch (error) {
+            console.error("Error fetching user data:", error);
         }
     };
-
 
 
 
@@ -96,7 +106,6 @@ const SubmitOrderPage = () => {
                     status: "Đã đặt hàng",
                     feeship: feeship,
                     create_time: currentDateTime,
-                    payment_status: "Chưa thanh toán"
                 }
                 let data2 = new FormData();
                 data2 = {
@@ -108,69 +117,53 @@ const SubmitOrderPage = () => {
 
                 let res = await submitOrder(data)
                 let rs = await submitDetail(data2)
-                window.location.href = "/order/success"
+                if (rs.status === 200 && res.status === 200) { window.location.replace("/order/success") }
+
 
 
 
             } else {
 
-                try {
+                    if (!user && !jwt) {
+                        alert("Bạn cần đăng nhập để thực hiện tính năng này !!!")
+                    }else{
+
+                    let data = new FormData()
+                    data = {
+                        username: user.username,
+                        name: name,
+                        email: email,
+                        note: note,
+                        address: address,
+                        phone: phone,
+                        total: total,
+                        status: "Thanh toán Online/Chưa Thành Công",
+                        feeship: feeship,
+                        create_time: currentDateTime,
+                    }
+
+                    let data2 = new FormData();
+                    data2 = {
+                        name: name,
+                        phone: phone,
+                        time: currentDateTime,
+                        product: product
+                    }
 
                     let data_pay = new FormData();
                     data_pay = {
                         amount: total,
-                        language: ""
+                        language: "",
+                        phone: phone,
+                        create_time: currentDateTime,
                     }
-
-
-
-
-                    let res = await paymentVNPay(data_pay)
-                    window.open(res.data, '_blank');
-                    let resulpayment;
-                    if (resulpayment) {
-
-                        let data = new FormData()
-                        data = {
-                            username: user.username,
-                            name: name,
-                            email: email,
-                            note: note,
-                            address: address,
-                            phone: phone,
-                            total: total,
-                            status: "Thanh toán Online",
-                            feeship: feeship,
-                            create_time: currentDateTime,
-                            payment_id: "",
-                            payment_status: "Chưa thanh toán",
-                        }
-                        let data2 = new FormData();
-                        data2 = {
-                            name: name,
-                            phone: phone,
-                            time: currentDateTime,
-                            product: product
-                        }
-
-                        let res = await submitOrder(data)
-                        let rs = await submitDetail(data2)
-                        toast.success("Thanh Cong")
-
-
-
-
-
-                    }
-
-
-
-
-
-                } catch (err) {
-                    console.log(err)
+                   await submitOrder(data)
+                  await submitDetail(data2)
+                    let resposen = await paymentVNPay(data_pay)
+                    window.open(resposen.data.vnpUrl, '_blank');
 
                 }
+
             }
 
 
@@ -216,13 +209,13 @@ const SubmitOrderPage = () => {
     return (
 
         <>
-            <MetaData title={"Thông tin đơn hàng"}></MetaData>
+            <MetaData title={"Thông tin đặt hàng"}></MetaData>
             <div className="container">
 
                 <div className="row">
                     <div className="p-left col-md-6">
                         <div className="logo text-center"><Link to={"/trang-chu"}><img src={require("../components/images/logo.png")}></img></Link></div>
-                        <History />
+                        <div><History data={`Trang chủ / Giỏ hàng (${product.length}) /`} last_item={"Thông tin đặt hàng"} /></div>
                         <div className="h2 my-3 text-center" style={{ fontWeight: "bold" }}>Thông tin đặt hàng</div>
                         <div className="my-3 text-center">Bạn đã có tài khoản chưa? <span><Link>Đăng nhập</Link></span></div>
 
@@ -242,49 +235,59 @@ const SubmitOrderPage = () => {
                                 initialValues={{
                                     remember: true,
                                 }}
-                                onFinish={onFinish}
+                                onFinish={submitMyOrder}
                                 onFinishFailed={onFinishFailed}
                                 autoComplete="off"
                             >
-                                <Form.Item
-                                    label="Họ và tên"
-                                    name="name"
-                                    rules={[
-                                        {
-                                            required: true,
-                                            message: 'Vui lòng nhập họ tên',
-                                        },
-                                    ]}
-                                >
-                                    <Input value={name} onChange={(e) => { setName(e.target.value) }} />
-                                </Form.Item>
 
-                                <Form.Item
-                                    label="Email"
-                                    name="email"
-                                    rules={[
-                                        {
-                                            required: true,
-                                            message: 'Email là cần thiết',
-                                        },
-                                    ]}
-                                >
-                                    <Input value={email} onChange={(e) => { setEmail(e.target.value) }} />
-                                </Form.Item>
+                               
+                                    <Form.Item
+                                        label="Họ và tên"
+                                        name="name"
+                                        rules={[
+                                            {
+
+                                                required: true,
+                                                message: 'Vui lòng nhập họ tên',
+                                            },
+                                        ]}
+                                    >
+                                        <Input value={name} defaultValue={name} onChange={(e) => { setName(e.target.value) }} />
+                                    </Form.Item>
+                         
+                             
+                                    <Form.Item
+                                        label="Email"
+                                        name="email"
+                                        rules={[
+                                            {
+                                                required: true,
+                                                message: 'Email là cần thiết',
+                                            },
+                                        ]}
+                                    >
+                                        <Input value={email} defaultValue={email} onChange={(e) => { setEmail(e.target.value) }} />
+                                    </Form.Item>
+
+                 
 
 
-                                <Form.Item
-                                    label="Số điện thoại"
-                                    name="phone"
-                                    rules={[
-                                        {
-                                            required: true,
-                                            message: 'Vui lòng nhập số điện thoại',
-                                        },
-                                    ]}
-                                >
-                                    <Input value={phone} onChange={(e) => { setPhone(e.target.value) }} />
-                                </Form.Item>
+                      
+                                    <Form.Item
+                                        label="Số điện thoại"
+                                        name="phone"
+                                        rules={[
+                                            {
+                                                required: true,
+                                                message: 'Vui lòng nhập số điện thoại',
+                                            },
+                                        ]}
+                                    >
+                                        <Input value={phone} defaultValue={phone} onChange={(e) => { setPhone(e.target.value) }} />
+
+                                    </Form.Item>
+                        
+
                                 <Form.Item
                                     label="Địa chỉ giao hàng"
                                     name="address"
@@ -352,7 +355,7 @@ const SubmitOrderPage = () => {
                                         span: 16,
                                     }}
                                 >
-                                    <Button type="primary" htmlType="submit" onClick={submitMyOrder}>
+                                    <Button type="primary" htmlType="submit">
                                         Tiến hành đặt hàng
                                     </Button>
                                 </Form.Item>
@@ -381,9 +384,8 @@ const SubmitOrderPage = () => {
 
                             </div>
                             <div className="d-flex justify-content-between">
-
                                 <span>Phí vận chuyển:</span>
-                                <span>---</span>
+                                <span style={{ color: "red", fontWeight: 'bold' }}>25000 đ</span>
 
 
                             </div>
@@ -402,7 +404,7 @@ const SubmitOrderPage = () => {
 
 
                                 <span>Tổng Cộng:</span>
-                                <span>---</span>
+                                <span style={{ color: "red", fontWeight: 'bold' }}>{total} đ</span>
 
 
                             </div>

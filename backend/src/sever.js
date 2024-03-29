@@ -50,23 +50,17 @@ http.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
 
-//let comments = [];
+
 let conversation=[]
 io.on('connection', (socket) => {
   console.log('Client connected'+ " "+ socket.id);
 
   socket.on('comment', (comment) => {
-   
-      //comments.push(comment);
 
-      console.log(comment)
+
       io.emit('newComment', comment);
     }
   );
-
-  //socket.emit('comments', comments);
-
-
 
 socket.on("sendDataClient", function(data) {
 
