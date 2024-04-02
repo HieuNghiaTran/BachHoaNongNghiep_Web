@@ -14,7 +14,6 @@ import { Link } from "react-router-dom";
 import { MdNavigateNext } from "react-icons/md";
 import MetaData from "../services/setHead";
 import ScrollToTop from "../components/layout/scollToTop";
-
 import Slider from "react-slick";
 import HotDeal from "../components/layout/hotDeals";
 
@@ -94,6 +93,7 @@ const HomePage = () => {
        
       <MetaData title={"Trang chủ"}></MetaData>
       <Header />
+      
       <main className="">
         <div className='top-main d-flex position-relative px-3'>
           <Sidebar />

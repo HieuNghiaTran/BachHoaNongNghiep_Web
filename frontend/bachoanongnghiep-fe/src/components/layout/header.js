@@ -18,8 +18,7 @@ import Search from "./search";
 import { FaPhone } from "react-icons/fa6";
 import Cart from "./cart";
 import { Link } from "react-router-dom";
-
-
+import ProgressBar from "@ramonak/react-progress-bar";
 
 
 
@@ -30,12 +29,16 @@ const Header = () => {
   const [pageScoll, setPageScoll] = useState()
   const [isShowHeader, setIsShowHeader] = useState(true);
   const [isShowModalsLogin, setIsShowModalLogin] = useState(false);
-
+  let [valueProgress, setValueProgress] = useState(0)
 
   const btnsidebar = document.querySelector('.toogle_nav_wrapper')
   const sb = document.querySelector('.sidebar')
 
+
+
+
   useEffect(() => {
+
 
     window.addEventListener('scroll', handleScroll);
 
@@ -48,6 +51,11 @@ const Header = () => {
 
   const handleScroll = () => {
     setPageScoll(window.pageYOffset)
+
+    let pageHeight = document.body.scrollHeight;
+    let scoll = window.pageYOffset;
+    setValueProgress((scoll / pageHeight) * 100)
+
   };
 
 
@@ -109,7 +117,7 @@ const Header = () => {
                   {jwt && user ?
                     <span className="Account mx-2">{user.username}</span> :
                     <span className="Account mx-2">
-                      <div style={{ fontSize: '0.8rem', display: "inline-block"}}>Đăng nhập</div>
+                      <div style={{ fontSize: '0.8rem', display: "inline-block" }}>Đăng nhập</div>
                       <div style={{ fontSize: '0.5rem', display: "inline-block" }}>Đăng ký</div>
                     </span>
                   }
@@ -122,7 +130,7 @@ const Header = () => {
                     style={{ zIndex: '999', right: "3.5rem", top: "0.5rem" }}
                   >
                     <NavDropdown.Item href="#action/3.1">Thông tin tài khoản</NavDropdown.Item>
-                   <NavDropdown.Item> <Link to={"/my-order"}>Đơn mua</Link></NavDropdown.Item>
+                    <NavDropdown.Item> <Link to={"/my-order"}>Đơn mua</Link></NavDropdown.Item>
                     <NavDropdown.Divider />
                     <NavDropdown.Item href="#action/3.4" onClick={handleSignOut}>
                       Đăng xuất
@@ -142,7 +150,7 @@ const Header = () => {
 
       </Navbar><div className="under_nav">
           <div className="toogle_nav_wrapper p-0 mx-4">
-            <button className="toogle_menu btn-outline-successc" style={{ width: "20rem" }} >
+            <button className="toogle_menu btn-outline-success" style={{ width: "20rem" }} >
               <i className="fa-solid fa-bars"></i>
               <span>Danh mục sản phẩm</span>
             </button>
@@ -154,10 +162,12 @@ const Header = () => {
             <li><a href="#"><i className="fa-solid fa-shop"></i>Kiểm tra đơn hàng</a></li>
             <li><Link to={"/page/location"}><i className="fa-solid fa-location-dot fa-flip"></i>Hệ thống cửa hàng </Link></li>
             <li><a href="#"><i className="fa-solid fa-phone"></i>Liên hệ</a></li>
-           
+
           </ul>
         </div>
+        <ProgressBar completed={valueProgress.toFixed(2)} bgColor="#ff3f34" height="3px" width="100vw" isLabelVisible={false} />
       </div>
+
       <ModalsLoginForm
         show={isShowModalsLogin}
         handleClose={handleClose}

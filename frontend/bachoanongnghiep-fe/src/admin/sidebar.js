@@ -49,7 +49,7 @@ const handleLogout=()=>{
 
 
     return (
-        <div className="sidebar-wrapper">
+        <div className="sidebar-wrapper bg-dark">
 
             <div class="bg-light text-center ">
                 <div className=''>

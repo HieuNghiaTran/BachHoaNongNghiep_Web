@@ -76,46 +76,48 @@ const CartPage = (props) => {
             <Header />
             <div><History data={"Trang chủ / "} last_item={`Giỏ hàng (${productItem1.length})`}/></div>
             <MetaData title={"My-oder"} />
-            <div className='my-cart'>
+          <main>
+          <div className='my-cart'>
 
-                <div className="top-cart d-flex justify-content-center align-item-center row">
+<div className="top-cart d-flex justify-content-center align-item-center row">
 
 
 
-                    <div className="top-left-cart col-md-6">
-                        <div className='h3 mb-2'>Giỏ hàng của tôi</div>
-                        <div className='table-product'>
-                            <Table striped bordered hover>
-                                <tbody>
-                                    {productItem1 && productItem1.length > 0 && productItem1.map((item, index) => (
-                                        <tr key={index} className='text-center justify-content-center'>
-                                            <td><button className='btn btn-delete' onClick={() => handleDeleteItem(item._id)}>Xoá</button></td>
-                                            <td><img src={item.images[0].url} alt={item.name_product} style={{ width: '6rem' }} /></td>
-                                            <td>{item.name_product}</td>
-                                            <td>{item.price_product}</td>
-                                            <td>
-                                                <div className="stockCounter d-inline">
-                                                    <span className="minus" onClick={() => downCount(item)}>-</span>
-                                                    <input type="number" className="count d-inlien" value={item.quantity} readOnly />
-                                                    <span className="plus" onClick={() => upCount(item)}>+</span>
-                                                </div>
-                                            </td>
-                                            <td>{item.price_product * item.quantity}</td>
-                                        </tr>
-                                    ))}
-                                </tbody>
-                            </Table>
-                        </div>
+    <div className="top-left-cart col-md-6">
+        <div className='h3 mb-2'>Giỏ hàng của tôi</div>
+        <div className='table-product'>
+            <Table striped bordered hover>
+                <tbody>
+                    {productItem1 && productItem1.length > 0 && productItem1.map((item, index) => (
+                        <tr key={index} className='text-center justify-content-center'>
+                            <td><button className='btn btn-delete' onClick={() => handleDeleteItem(item._id)}>Xoá</button></td>
+                            <td><img src={item.images[0].url} alt={item.name_product} style={{ width: '6rem' }} /></td>
+                            <td>{item.name_product}</td>
+                            <td>{item.price_product}</td>
+                            <td>
+                                <div className="stockCounter d-inline">
+                                    <span className="minus" onClick={() => downCount(item)}>-</span>
+                                    <input type="number" className="count d-inlien" value={item.quantity} readOnly />
+                                    <span className="plus" onClick={() => upCount(item)}>+</span>
+                                </div>
+                            </td>
+                            <td>{item.price_product * item.quantity}</td>
+                        </tr>
+                    ))}
+                </tbody>
+            </Table>
+        </div>
 
-                    </div>
-                    <div className="top-right-cart col-md-6">
-                        <p>Số lượng:  <span className="order-summary-values">{productItem1.reduce((acc, item) => (acc + Number(item.quantity)), 0)} (Sản phẩm)</span></p>
-                        <div className='total d-flex justify-content-between'>Tổng tiền là:<span style={{ color: 'red', fontWeight: 'bold' }}>{productItem1.reduce((acc, item) => (acc + item.price_product * item.quantity), 0)} đ</span></div>
-                        <div className='btn-are mt-3'><button className="btn_payment btn" onClick={handleaSubmit}><Link to={`/checkouts/${Math.random()}`} style={{ color: "#fff" }}>Tiến hành đặt hàng</Link></button></div>
-                        <div className='mt-2 back-top-buy text-center'><button className="btn"><Link to={"/trang-chu"} style={{ color: "#666666" }} className='back-link'><span><IoIosArrowRoundBack /></span>Tiếp tục mua hàng</Link></button></div>
-                    </div>
-                </div>
-            </div>
+    </div>
+    <div className="top-right-cart col-md-6">
+        <p>Số lượng:  <span className="order-summary-values">{productItem1.reduce((acc, item) => (acc + Number(item.quantity)), 0)} (Sản phẩm)</span></p>
+        <div className='total d-flex justify-content-between'>Tổng tiền là:<span style={{ color: 'red', fontWeight: 'bold' }}>{productItem1.reduce((acc, item) => (acc + item.price_product * item.quantity), 0)} đ</span></div>
+        <div className='btn-are mt-3'><button className="btn_payment btn" onClick={handleaSubmit}><Link to={`/checkouts/${Math.random()}`} style={{ color: "#fff" }}>Tiến hành đặt hàng</Link></button></div>
+        <div className='mt-2 back-top-buy text-center'><button className="btn"><Link to={"/trang-chu"} style={{ color: "#666666" }} className='back-link'><span><IoIosArrowRoundBack /></span>Tiếp tục mua hàng</Link></button></div>
+    </div>
+</div>
+</div>
+          </main>
 
    <Footer/>
          

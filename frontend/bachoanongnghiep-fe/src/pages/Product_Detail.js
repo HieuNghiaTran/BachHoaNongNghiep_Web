@@ -112,7 +112,9 @@ const DetailProduct = (props) => {
     return (
         <>
             <Header />
-            <div><History data={"Trang chủ / "} last_item={`Sản phẩm`} /></div>
+         <main>
+
+         <div><History data={"Trang chủ / "} last_item={`Sản phẩm ${product.name_product}`} /></div>
             <MetaData title={product.name_product} />
             <div className="row d-flex justify-content-around">
                 <div className="col-12 col-lg-4 img-fluid p-4" id="product_image">
@@ -199,6 +201,8 @@ const DetailProduct = (props) => {
 
                 )}
             </div>
+
+         </main>
             <Footer />
 
 

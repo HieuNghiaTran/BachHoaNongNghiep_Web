@@ -133,11 +133,7 @@
         }
     }
 
-    .search_loc:focus+.result {
-        display: block;
-        background-color: #008848;
 
-    }
 
     // Right location styling
     .right_loc {
@@ -146,16 +142,16 @@
 
 
         ul {
-            
+
 
             .cus_li {
                 display: flex;
-               
+
             }
 
 
 
-          
+
 
 
         }
@@ -175,7 +171,7 @@
 
 
             .total_product_cart {
-              
+
                 margin: 0 auto;
                 background-color: #100da6;
                 color: #fff;
@@ -200,7 +196,7 @@
             //padding-right: 8px;
             padding-top: 0px;
             padding-bottom: 0px;
-            
+
             //height: 70%;
             color: #008848;
 
@@ -211,15 +207,14 @@
             font-size: 1.9em;
 
         }
-        .Account div:hover{
+
+        .Account div:hover {
 
 
             color: rgb(175, 73, 19);
         }
 
-        .acount_name:hover {
-
-        }
+        .acount_name:hover {}
 
     }
 
@@ -263,12 +258,14 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
-li:hover{
+
+        li:hover {
 
 
-    border-bottom: 3px solid #ffcc00;
-    transition: calc(1.1) 0.5s;
-}
+            border-bottom: 3px solid #ffcc00;
+            transition: calc(1.1) 0.5s;
+        }
+
         li {
             display: inline-block;
             margin: auto;
@@ -285,13 +282,13 @@ li:hover{
                 align-items: center;
                 text-decoration: none;
                 color: #fff;
-              
+
 
 
             }
 
 
-    
+
         }
 
     }
@@ -420,7 +417,7 @@ footer {
     width: 100%;
 
     .toogle_menu {
-        
+
         width: 100%;
     }
 
@@ -518,11 +515,12 @@ footer {
     background-color: #fff;
     position: fixed;
     padding: 5px;
-    grid-column: 3;
+    //grid-column: 3;
     font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
-    top: 70px;
+    top: 4rem;
     width: 30%;
     z-index: 999;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, .2);
 
 
     .title {
@@ -540,6 +538,19 @@ footer {
         background-color: rgb(245, 243, 243);
         transform: scaleY(1.2) ease-in-out;
     }
+}
+
+.result::before{
+    content: '';
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 0 7.5px 10px 7.5px;
+    border-color: transparent transparent #ffffff transparent;
+    position: absolute;
+    top: -9px;
+    left: 60px;
+
 }
 
 .list-result {
@@ -569,14 +580,15 @@ footer {
 
 
 ///cart
+
 .list-cart-from-icon {
     background-color: #fff;
     right: 30px;
     padding: 5px;
-    border: 0.2px solid rgb(189, 187, 187);
     z-index: 998;
     border-radius: 4px;
     font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, .2);
 
     .product-item-from-cart-icon-left {
 
@@ -621,6 +633,19 @@ footer {
             }
         }
     }
+}
+
+
+.list-cart-from-icon::before{
+    content: '';
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 0 7.5px 10px 7.5px;
+    border-color: transparent transparent #ffffff transparent;
+    position: absolute;
+    top: -9px;
+    right: 60px;
 }
 
 .bold-title {
@@ -706,14 +731,17 @@ footer {
     overflow: auto;
 
 }
-td, th {
+
+td,
+th {
     white-space: nowrap;
- /* Ngăn các phần tử từ việc xuống hàng */
+    /* Ngăn các phần tử từ việc xuống hàng */
 }
 
-th{
+th {
     text-align: center;
 }
+
 .close-button {
     position: absolute;
     top: 0;
@@ -724,26 +752,27 @@ th{
     font-size: 0.6rem;
     cursor: pointer;
     border-radius: 50%;
-  }
-  .image-container {
-    position: relative;
-    display: inline-block; 
-  }
+}
 
-.phone:hover{
+.image-container {
+    position: relative;
+    display: inline-block;
+}
+
+.phone:hover {
     color: red;
     transform: calc(1.1);
 }
 
 
- .slick-next{
+.slick-next {
     background-color: #008848;
- }
+}
 
 
- .isShowBackground{
+.isShowBackground {
     background-color: rgb(254, 254, 181);
- }
+}
 
 
 
@@ -757,10 +786,11 @@ th{
 
 
 
-.chatuser{
+.chatuser {
     z-index: 1111;
 }
-.contact{
+
+.contact {
     position: fixed;
     height: 100vh;
     overflow-y: scroll;
@@ -772,7 +802,7 @@ th{
 
 }
 
-.contact-top h2{
+.contact-top h2 {
     margin: 0;
     display: flex;
     padding: 1rem 0;
@@ -780,15 +810,18 @@ th{
     font-weight: 600;
     color: #6b6b6b;
 }
-.contact-list{
+
+.contact-list {
     overflow: hidden;
 }
-.contact-list-item{
+
+.contact-list-item {
     display: flex;
     margin-top: 1rem;
     cursor: pointer;
 }
-.contact-list-item-avarta{
+
+.contact-list-item-avarta {
     min-width: 50px;
     width: 50px;
     height: 50px;
@@ -802,54 +835,63 @@ th{
 
     border-radius: 50%;
 }
-.contact-list-item-content{
+
+.contact-list-item-content {
     margin-left: 1rem;
 }
-.contact-list-item-name{
+
+.contact-list-item-name {
     font-size: 18px;
     font-weight: 700;
     margin: 0;
     text-align: left;
 }
-.contact-list-item-lastmessage{
+
+.contact-list-item-lastmessage {
     overflow-y: hidden;
     color: #6b6b6b;
 }
 
 
-.chat{
+.chat {
     flex-grow: 1;
     margin-left: 280px;
 }
-.ad-chatuser{
+
+.ad-chatuser {
     display: flex;
     flex-direction: column;
     border: 1px solid #eee;
 
     height: 92vh;
 }
-.ad-chatuser-user{
+
+.ad-chatuser-user {
     text-align: left;
     color: #6b6b6b;
     padding: 1.5rem 1rem;
     border-bottom: 1px solid #eee;
     box-shadow: 0px 3px 4px -4px;
 }
-.ad-chatuser-user-name{
+
+.ad-chatuser-user-name {
     text-align: left;
     font-weight: 700;
     font-size: 17px;
 }
-.ad-chatuser-listmessage{
+
+.ad-chatuser-listmessage {
     flex-grow: 1;
     overflow-y: scroll;
 }
-.ad-chatuser-listmessage-message{
+
+.ad-chatuser-listmessage-message {
     display: flex;
     padding: 1rem;
     word-break: break-word;
 }
-.ad-chatuser-listmessage-message p{
+
+.ad-chatuser-listmessage-message p {
     padding: 8px;
     background: #e4e6eb;
     max-width: 400px;
@@ -857,27 +899,31 @@ th{
     border-radius: 20px;
     text-align: left;
 }
-.ad-chatuser-listmessage-message.me{
+
+.ad-chatuser-listmessage-message.me {
     justify-content: flex-end
 }
-.ad-chatuser-listmessage-message.me p{
+
+.ad-chatuser-listmessage-message.me p {
     background: #1890ff;
     color: white;
 }
 
-.ad-chatuser-typemessage{
+.ad-chatuser-typemessage {
     display: flex;
     padding: 1rem .5rem;
     border-top: 1px solid #eee;
     box-shadow: 0px 3px 4px -4px;
 }
-.ad-chatuser-typemessage input{
+
+.ad-chatuser-typemessage input {
     width: 100%;
     padding: .3rem 1rem;
     outline: none;
     border: 1px solid #ddd;
 }
-.ad-chatuser-typemessage button{
+
+.ad-chatuser-typemessage button {
     background: #1890ff;
     color: white;
     margin-left: 10px;
@@ -886,4 +932,25 @@ th{
     outline: none;
     padding: .5rem 1.5rem;
     cursor: pointer;
+}
+
+
+
+.bg-darks {
+    opacity: 0.2;
+    z-index: 9999;
+    //background-color: gray;
+}
+
+.isShowSidebar {
+    display: block;
+    position: fixed;
+    z-index: 999;
+    top: 9rem;
+    z-index: 999;
+    opacity: 1;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, .2);
+    background-color: #CAD3C8;
+
+
 }
