@@ -15,6 +15,8 @@ import History from "../components/layout/history";
 import Footer from "../components/layout/footer";
 import { SubmitContext } from "../context/submitContext";
 import socketIOClient from "socket.io-client";
+import Chat from "../components/layout/chat";
+import AppChat from "../components/layout/appchat";
 const DetailProduct = (props) => {
     const dispatch = useDispatch();
 
@@ -203,6 +205,7 @@ const DetailProduct = (props) => {
             </div>
 
          </main>
+         <AppChat/>
             <Footer />
 
 

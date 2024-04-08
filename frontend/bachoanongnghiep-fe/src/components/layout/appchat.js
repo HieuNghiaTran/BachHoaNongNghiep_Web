@@ -42,14 +42,19 @@ function AppChat(props) {
 
 
 
- 
+
 
   const handleChatFormSubmit = async (message) => {
+
+    if (!user) {
+      alert("Bạn cần đang nhập để sử dụng !")
+      return;
+    }
     if (messages !== null) {
       const msg = {
         content: message,
         sender: user.username,
-       
+
       }
       socketRef.current.emit('sendDataClient', msg)
 
@@ -86,7 +91,7 @@ function AppChat(props) {
         openChat ? (<div className="chatuser">
           <div className="chatuser-user">
             <span className="chatuser-user-name">Admin</span>
-            <span className="chatuser-user-line" onClick={() => setOpenChat(!openChat)}><LineOutlined></LineOutlined></span>
+            <span className="btn text-center" onClick={() => setOpenChat(!openChat)}><LineOutlined></LineOutlined></span>
           </div>
 
           {

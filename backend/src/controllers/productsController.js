@@ -75,9 +75,10 @@ const productController = {
                     url: result.secure_url
                 })
             }
-            console.log(imagesLinks)
+
 
             req.body.images = imagesLinks
+
 
 
             const product = await Products.create(req.body);
@@ -148,18 +149,21 @@ const productController = {
     getProductWithSearch: async (req, res) => {
         try {
             let keyWord = req.params.value;
+            console.log(keyWord);
             const getList = await Products.find();
             let newData = getList.filter((value) => {
-                return value.name_product.toUpperCase().indexOf(keyWord.toUpperCase()) !== -1 ||
-                    value.price_product.toUpperCase().indexOf(keyWord.toUpperCase()) !== -1
 
+                if (value.name_product && typeof value.name_product === 'string' ) {
+
+                    return value.name_product.toUpperCase().indexOf(keyWord.toUpperCase()) !== -1
+                } else {
+                    return false; 
+                }
             });
-            res.status(200).json(newData)
-
-
+            res.status(200).json(newData);
         } catch (err) {
-            console.log(err)
-            res.status(500).json(err)
+            console.log(err);
+            res.status(500).json(err);
         }
     },
     PageginateProduct: async (req, res) => {

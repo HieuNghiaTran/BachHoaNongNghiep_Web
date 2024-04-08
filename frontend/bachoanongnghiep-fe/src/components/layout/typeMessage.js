@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-
+import { IoSend } from "react-icons/io5";
 function TypeMessage(props) {
   const { onSubmit } = props;
   const [value, setValue] = useState("");
@@ -26,7 +26,7 @@ function TypeMessage(props) {
           value={value}
           onChange={handleValueChange}
         />
-        <button type="submit">Gửi</button>
+        <button type="submit"><IoSend /></button>
       </form>
     </div>
   );

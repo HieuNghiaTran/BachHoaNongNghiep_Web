@@ -8,7 +8,6 @@ import { ToastContainer } from 'react-toastify';
 import React, { useContext, useEffect, useRef } from 'react';
 import ReactDOM from 'react-dom';
 import socketIOClient from "socket.io-client";
-import AppChat from "./components/layout/appchat";
 import { SubmitContext } from "./context/submitContext";
 
 function App() {
@@ -51,13 +50,7 @@ function App() {
     return () => {
       btnSidebar.removeEventListener('mouseenter', handleMouseEnter);
       btnSidebar.removeEventListener('mouseleave', handleMouseLeave);
-
-      sidebar.removeEventListener("mouseenter", () => {
-        btnSidebar.removeEventListener('mouseleave', handleMouseLeave)
-      })
-
-
-    };
+  };
 
   },[]);
   useEffect(() => {
@@ -82,7 +75,6 @@ function App() {
 
     <BrowserRouter>
 
-      <AppChat />
       <ScrollToTop />
       <RouterCustom />
       <RouterAdmin />

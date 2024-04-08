@@ -103,7 +103,8 @@ const ModalAddNewProduct = (props) => {
             images: img,
             stock: stock,
             date: date,
-            describe: describe
+            describe: describe,
+            soldQuantity: 0
         }
         let res = await addNewProduct(data);
 

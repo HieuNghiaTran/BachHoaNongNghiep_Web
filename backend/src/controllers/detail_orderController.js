@@ -23,23 +23,37 @@ const Detail_order = {
     post_detail_order: async (req, res) => {
         try {
             
-            let order = await Order.findOne({ name: req.body.name });
+            let order = await Order.findOne({ name: req.body.name});
             let product = [];
             for (let i = 0; i < req.body.product.length; i++) {
                 product.push({
-                    id_product: req.body.product[i].id_product,
+                    id_product: req.body.product[i].id,
                     name_product: req.body.product[i].name_product,
                     price_product: req.body.product[i].price_product,
                     count: req.body.product[i].quantity
+
                 });
             }
+            
+
+
+    
             const data = {
                 id_order: order._id,
                 product: product,
             };
             for (let item of product) {
+                const productToUpdate = await Products.findById(item.id_product);
+                if (!productToUpdate) {
+                    console.log("not found product")
+                    continue;
+                }
+            
+                const newStock = productToUpdate.stock - item.count;
+                const newSoldQuantity = productToUpdate.soldQuantity + item.count;
+            
                 await Products.findByIdAndUpdate(item.id_product, {
-                    $inc: { soldQuantity: item.count}
+                    $set: { soldQuantity: newSoldQuantity, stock: newStock }
                 });
             }
 

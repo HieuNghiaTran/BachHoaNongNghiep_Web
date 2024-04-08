@@ -12,6 +12,8 @@ import { Link } from 'react-router-dom';
 import { IoIosArrowRoundBack } from "react-icons/io";
 import HotDeal from '../components/layout/hotDeals';
 import Footer from '../components/layout/footer';
+import Chat from '../components/layout/chat';
+import AppChat from '../components/layout/appchat';
 
 const CartPage = (props) => {
     const pt = useSelector(state => state.cartProvider)
@@ -120,6 +122,7 @@ const CartPage = (props) => {
           </main>
 
    <Footer/>
+   <AppChat/>
          
 
         </>

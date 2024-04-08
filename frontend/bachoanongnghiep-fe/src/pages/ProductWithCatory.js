@@ -19,6 +19,8 @@ import { FaPagelines } from 'react-icons/fa';
 import { useParams } from 'react-router-dom';
 import { Input, Radio, Space } from 'antd'
 import Loader from "../components/layout/Loader";
+import Chat from "../components/layout/chat";
+import AppChat from "../components/layout/appchat";
 
 const ProductWithCatoryPage = () => {
     const { category_id } = useParams();
@@ -327,6 +329,7 @@ const ProductWithCatoryPage = () => {
                     </div >
                 </div >
             }
+            <AppChat/>
             <Footer />
         </>
     );

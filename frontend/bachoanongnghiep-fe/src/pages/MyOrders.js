@@ -8,6 +8,8 @@ import { Table } from 'antd';
 import { getMyOrder } from "../services/orderServies";
 import { UserContext } from "../context/userContext";
 import { FaRegAddressBook, FaPhone, FaUser } from "react-icons/fa";
+import Chat from '../components/layout/chat';
+import AppChat from '../components/layout/appchat';
 
 const MyOrder = () => {
   const { user} = useContext(UserContext);
@@ -93,6 +95,7 @@ const MyOrder = () => {
           </div>
         </div>
       </div>
+      <AppChat/>
       <div className="m-auto"><Footer /></div>
     </>
   );

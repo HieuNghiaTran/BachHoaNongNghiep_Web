@@ -16,6 +16,7 @@ import MetaData from "../services/setHead";
 import ScrollToTop from "../components/layout/scollToTop";
 import Slider from "react-slick";
 import HotDeal from "../components/layout/hotDeals";
+import AppChat from "../components/layout/appchat";
 
 
 const HomePage = () => {
@@ -193,12 +194,13 @@ const HomePage = () => {
 
         </div>
         <ScrollToTop />
-        <Chat />
+        <AppChat />
       
       </main>
 
 
       <Footer />
+
 
       
     </div>

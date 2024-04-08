@@ -25,10 +25,7 @@ const OrderManager = () => {
     }
 
 
-    if (!jwt && !user ) {
-        alert("Bạn không có quyền truy cập.")
-        return <Navigate to="/admin/login" replace />;
-    }
+  
 
 
 

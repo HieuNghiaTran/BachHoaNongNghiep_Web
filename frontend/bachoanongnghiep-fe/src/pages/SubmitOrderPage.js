@@ -10,6 +10,8 @@ import { submitDetail, submitOrder } from "../services/orderServies"
 import { Radio, Space } from 'antd';
 import { getResultPaymentVNpay, paymentVNPay } from "../services/paymentServices";
 import { getUser } from "../services/userServices";
+import Chat from "../components/layout/chat";
+import AppChat from "../components/layout/appchat";
 
 
 
@@ -29,9 +31,6 @@ const SubmitOrderPage = () => {
     const [note, setNote] = useState('')
     const [value, setValue] = useState('')
 
-
-
-    const [orderID, setOrderID] = useState()
 
     useEffect(() => {
         setProduct(pt.listCart);
@@ -80,9 +79,7 @@ const SubmitOrderPage = () => {
 
 
 
-    const onFinish = (values) => {
-        console.log('Success:', values);
-    };
+
     const onFinishFailed = (errorInfo) => {
         console.log('Failed:', errorInfo);
     };
@@ -114,10 +111,11 @@ const SubmitOrderPage = () => {
                     time: currentDateTime,
                     product: product
                 }
+        
 
                 let res = await submitOrder(data)
                 let rs = await submitDetail(data2)
-                if (rs.status === 200 && res.status === 200) { window.location.replace("/order/success") }
+                if (rs.status === 200 && res.status === 200) { window.location.replace("/order/success") }else{alert("Đã có lỗi xảy ra vui lòng thử lại sau !")}
 
 
 
@@ -432,7 +430,7 @@ const SubmitOrderPage = () => {
             </div>
 
 
-
+            <AppChat/>
 
         </>
 

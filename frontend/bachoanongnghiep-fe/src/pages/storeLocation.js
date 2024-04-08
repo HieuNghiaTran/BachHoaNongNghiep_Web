@@ -7,6 +7,8 @@ import { FaLocationDot } from "react-icons/fa6";
 import './ccs/storeLocation.scss'
 import Footer from "../components/layout/footer";
 import { useState } from "react";
+import Chat from "../components/layout/chat";
+import AppChat from "../components/layout/appchat";
 const Location = () => {
     const [map, setMap] = useState(null);
 
@@ -168,6 +170,7 @@ const Location = () => {
 
             <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD1234567890-abcdefghijklmnopqrstuvwxyz&libraries=places"></script>
             <Footer />
+            <AppChat/>
         </>
 
 

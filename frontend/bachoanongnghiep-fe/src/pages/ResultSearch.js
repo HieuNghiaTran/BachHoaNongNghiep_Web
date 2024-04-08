@@ -1,27 +1,44 @@
 import { useContext, useState, useEffect } from "react";
 import Header from "../components/layout/header";
 import MetaData from "../services/setHead";
-import { historyContext } from "../context/historyContext";
 import History from '../components/layout/history';
 import Products from "../components/layout/products";
-import { getAllProduct, getProductDetail, getProductWithSearch } from "../services/productSevices";
-
+import {  getProductWithSearch } from "../services/productSevices";
+import Pagination from '@mui/material/Pagination';
+import Stack from '@mui/material/Stack';
 import './ccs/ResultSearch.scss'
-const ResultSearch = (props) => {
-const value=props
-const {listHistory}=useContext(historyContext)
+import Footer from "../components/layout/footer";
+import AppChat from "../components/layout/appchat";
+import { useParams } from "react-router-dom";
+const ResultSearch = () => {
+  const [totalPages, setTotalPages] = useState(3);
 const [products, setProducts] = useState([]);
 
 
+const {value}=useParams()
+
 useEffect(() => {
-    fetchData(localStorage.getItem('search-value'));
+    fetchData(value);
+    setTotalPages(Math.trunc(products.length/12))
+alert(totalPages)
     
-  }, []);
+  }, [value]);
+
+  const handlePageClick = async (e) => {
+    const currentPage = e.target.textContent;
+
+
+}
+
+
+
+
 
   const fetchData = async (value) => {
     try {
       let res = await getProductWithSearch(value);
       setProducts(res.data);
+
     } catch (err) {
       console.log(err);
     }
@@ -31,24 +48,49 @@ useEffect(() => {
 return (
 <>
 <Header />
-<History/>
+<div><History data={"Trang chủ / "} last_item={`Tìm kiếm`}/></div>
 <MetaData title={`Kết quản tìm kiếm "${localStorage.getItem('search-value')}"`} />
 
-<div>
+<div className="col-md-10 m-auto">
 
-    <div className="h4 p-2">CÓ {products.length} KẾT QUẢ TÌM KIẾM PHÙ HỢP</div>
+   
+    
 
 
-
-    <div className="result-page d-flex ">
+    {products.length>0?
+    <>
+     <div className="h4 my-2 fw-bold">Có {products.length} kết quả tìm kiếm phù hợp</div>
+    
+    <div className="result-page d-flex row">
     {products && products.length > 0 && products.map((product) => (
-    <Products key={product._id} product={product} col={2} />
+    <Products key={product._id} product={product} col={3} />
     ))}
-    </div>
+    </div></>
+    :
+    <>
+    <div className="d-flex justify-content-center align-item-center m-auto fw-bold my-5"><div>KHÔNG TÌM THẤY BẤT KỲ KẾT QUẢ NÀO VỚI TỪ KHÓA TRÊN</div></div>
+    </>
+
+  
+}
 </div>
 
+<div className='pageginate'>
+                <Stack spacing={2}>
+                    <Pagination count={totalPages} color="success"
+
+                        onChange={handlePageClick}
+                        pageCount={totalPages}
 
 
+                    />
+                </Stack>
+            </div>
+<AppChat/>
+
+
+
+<Footer/>
 
 </>
 

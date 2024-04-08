@@ -43,7 +43,7 @@ const Products = ({ product, col }) => {
                         </div>
                         <span id="no_of_reviews">({product.numOfReviews} đánh giá)</span>
                     </div>
-                    <p className="card-text" style={{ color: 'red' }}>{(product.price_product).toLocaleString()}đ</p>
+                    <p className="card-text fw-bold" style={{ color: 'red' }}>{(product.price_product).toLocaleString()}đ</p>
                     <div class="container">
                         <div class="row">
 

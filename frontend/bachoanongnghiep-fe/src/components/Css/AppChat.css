@@ -10,9 +10,6 @@
     border-radius: 50px;
     cursor: pointer;
 
-
-
-
 }
 
 .chatuser {
@@ -22,7 +19,6 @@
     height: 450px;
     width: 330px;
     border: 1px solid #eee;
-
     display: flex;
     flex-direction: column;
     box-shadow: rgb(149 157 165 / 20%) 0px 8px 24px;
@@ -46,24 +42,10 @@
     font-size: 16px;
 }
 
-.chatuser-user-line {
-    width: 30px;
-    height: 30px;
-    line-height: 30px;
-    border-radius: 50%;
-    cursor: pointer;
-}
-
-.chatuser-user-line:hover {
-    background: #ddd;
-    transition: .3s;
-}
-
 .chatuser-listmessage {
     flex-grow: 1;
     overflow-y: scroll;
     padding: .5rem;
-
     overflow-y: auto;
 }
 
@@ -85,7 +67,7 @@
 }
 
 .chatuser-listmessage-message.me p {
-    background: #d70018;
+    background: #316FF6;
     color: white;
 
 }
@@ -105,11 +87,11 @@
 }
 
 .chatuser-typemessage button {
-    background: #d70018;
+    background: #316FF6;
     color: white;
     margin-left: 10px;
     border: none;
-    border-radius: 10px;
+    border-radius: 7px;
     outline: none;
     padding: .5rem 1.5rem;
     cursor: pointer;

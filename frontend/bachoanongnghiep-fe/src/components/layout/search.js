@@ -38,27 +38,27 @@ const Search = () => {
 
     const handleSearch = debounce(async (e) => {
         try {
-            fetchData();
-            setValueSearch(e.target.value)
             let value = e.target.value;
-            let cloneListUser = _.cloneDeep(products);
-            if (Array.isArray(cloneListUser)) {
-                cloneListUser = cloneListUser.filter(item => item.name_product.toLowerCase().includes(value.toLowerCase()));
+            const response = await getAllProduct();
+            if (response && response.data) {
+                let cloneListUser = response.data.filter(item => {
+                    return item.name_product && typeof item.name_product === 'string' && 
+                           value && typeof value === 'string' && 
+                           item.name_product.toLowerCase().includes(value.toLowerCase());
+                });
                 setListResults(cloneListUser);
                 setListResults.length === 0 ? setStatus(false) : setStatus(true);
                 setIsShowResult(true);
-                setTemp(true)
-
-            } else {
-                console.error("Cloned data is not an array:", cloneListUser);
             }
-            if (!e.target.value) setListResults([])
+    
+            if (!e.target.value) {
+                setListResults([]);
+            }
         } catch (error) {
             console.error("Error fetching products:", error);
         }
-
-
-    }, 200)
+    }, 200);
+    
 
 
 
@@ -67,14 +67,16 @@ const Search = () => {
             <div className="d-flex flex-column ">
                 <div className="search_bar">
                     <input type="text" className="search_loc" placeholder="Tìm kiếm sản phẩm"
-                        onBlur={() => { 
+                        onBlur={() => {
                             offSubmit()
-                            listResults.length > 0 ? setTemp(true) : setTemp(false) }}
+                            listResults.length > 0 ? setTemp(true) : setTemp(false)
+                        }}
                         onChange={(e) => {
                             setValueSearch(e.target.value)
                             onSubmit()
                             handleSearch(e);
                             handleShowResult();
+                            console.log(listResults)
                         }}
                         onKeyPress={(e) => {
 
@@ -91,7 +93,7 @@ const Search = () => {
                 </div>
 
 
-                {isShowResult && temp && valueSearch!='' &&  (
+                {isShowResult && temp && valueSearch != '' && (
                     <div className="result mt-3" onClick={() => { setIsShowResult(true) }}>
                         <div className="title" style={{ color: '#A0A0A0' }}>Kết quả tìm kiếm cho <span style={{ color: 'red' }}>"{valueSearch}"</span> </div>
                         <div className="list-result overflow-auto">

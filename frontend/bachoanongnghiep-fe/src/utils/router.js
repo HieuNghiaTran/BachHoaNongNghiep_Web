@@ -4,7 +4,7 @@ export const ROUTER = {
         My_Order:"/my-order",
         Product: "/product/:id",
         Cart: "/cart",
-        Result: '/search/:value',
+        Result: "/search/:value",
         ProductWithCatory: "/collections/:category_id",
         SubmitOrder: "/checkouts/:id",
         Location: "/page/location",

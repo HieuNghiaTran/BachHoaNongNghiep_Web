@@ -6,22 +6,30 @@ import { getDetailOrder } from "../services/orderServies";
 
 
 const ModalDetailOrder = (props) => {
-    const { isModalVisible, handleCloseModal, id_order,ship } = props
+    const { isModalVisible, handleCloseModal, id_order, ship } = props
     const [detailOrder, setDetailOrder] = useState([]);
 
 
     const fetchData = async (id) => {
-        let res = await getDetailOrder(id);
-        setDetailOrder(res.data[0].product);
+        try {
+            let res = await getDetailOrder(id);
+            if (res && res.data && res.data.length > 0) {
+                setDetailOrder(res.data[0].product || []);
+            } else {
+                setDetailOrder([]);
+            }
+        } catch (error) {
+            console.error("Error fetching detail order:", error);
 
-
+        }
     }
 
 
     useEffect(() => {
         if (isModalVisible) {
 
-            fetchData(id_order);
+            fetchData(id_order)
+
 
         }
     }, [id_order])
@@ -78,7 +86,7 @@ const ModalDetailOrder = (props) => {
 
                     <div style={{ fontWeight: "bold" }} className="text-center">Phí giao hàng: <span style={{ color: "red", fontSize: "1.2rem" }} className="mx-2">{ship} đ</span>    </div>
 
-                    <div style={{ fontWeight: "bold" }} className="text-center">Tổng cộng đơn hàng: <span style={{ color: "red", fontSize: "1.2rem" }} className="mx-2">{detailOrder.reduce((acc, item) => (acc + item.price_product * item.count), 0)+ship} đ</span>    </div>
+                    <div style={{ fontWeight: "bold" }} className="text-center">Tổng cộng đơn hàng: <span style={{ color: "red", fontSize: "1.2rem" }} className="mx-2">{detailOrder.reduce((acc, item) => (acc + item.price_product * item.count), 0) + ship} đ</span>    </div>
 
 
 

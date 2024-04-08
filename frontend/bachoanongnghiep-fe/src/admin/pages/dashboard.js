@@ -1,4 +1,4 @@
-import { Chart as ChartJS, ArcElement, Tooltip, Legend, CategoryScale,BarElement, LinearScale, PointElement, LineElement, RadialLinearScale } from "chart.js";
+import { Chart as ChartJS, ArcElement, Tooltip, Legend, CategoryScale, BarElement, LinearScale, PointElement, LineElement, RadialLinearScale } from "chart.js";
 
 import { Bar, Doughnut, Line, Radar } from "react-chartjs-2";
 import Sidebar from "../sidebar"
@@ -30,80 +30,11 @@ const DashBoard = () => {
     const [orders, setOrders] = useState([])
     const [listCategory, setListCategoty] = useState([])
     const [loading, setLoading] = useState(false);
+    const [dataStockCategory, setdataStockCategory] = useState([])
+    const [dataSoldQuantityCategory, setdataSoldQuantityCategory] = useState([])
 
 
-let dataStockCategory=[]  
-let gao=0;
-let phanbon=0;
-let lk=0;
-let hatgiong=0;
-let tbvtt=0;
-  products.forEach(product => {
-        if (product.id_category === "658d7164bdf16aee6ce1633c" ) {
-           gao+=product.stock
-           
-        }  
-    })
-    dataStockCategory.push(gao)
-
-    products.forEach(product => {
-        if (product.id_category === "658d7170bdf16aee6ce1633e" ) {
-            phanbon+=product.stock 
-           
-        } 
-       
-    })
-    dataStockCategory.push(phanbon)
-    products.forEach(product => {
-        if (product.id_category === "658d7182bdf16aee6ce16340" ) {
-         lk+=product.stock  
-          
-           
-        } 
-        
-    })
-    dataStockCategory.push(lk)
-
-    products.forEach(product => {
-        if (product.id_category === "658d7192bdf16aee6ce16342" ) {
-         hatgiong+=product.stock  
-          
-           
-        } 
-        
-    })
-    dataStockCategory.push(hatgiong)
-
-    products.forEach(product => {
-        if (product.id_category === "658d71c7bdf16aee6ce16344" ) {
-           tbvtt+=product.stock
-           
-        }  
-    })
-    dataStockCategory.push(tbvtt)
-
-    const data = {
-        labels: listCategory,
-        datasets: [{
-            
-            label: "Số lượng sản phẩm bán được",
-            backgroundColor: ["#009432"],
-            hoverBackgroundColor: ["rgb(197, 72, 49)"],
-            data: "0",
-        },
-
-
-        {
-            
-            label: "Số lượng còn lại trong kho",
-            backgroundColor: ["#EA2027"],
-            hoverBackgroundColor: ["rgb(197, 72, 49)"],
-            data: dataStockCategory,
-        },
-
-
-        ]
-    };
+    
 
     let outOfStock = 0;
     products.forEach(product => {
@@ -116,9 +47,9 @@ let tbvtt=0;
     let da_dat_hang = 0;
     orders &&
         orders.forEach((order) => {
-    
-    
-    
+
+
+
             if (order.status === "Đã đặt hàng") {
                 da_dat_hang += 1;
             }
@@ -172,9 +103,12 @@ let tbvtt=0;
         ],
     };
     useEffect(() => {
+        
         let isMounted = true;
 
         const fetchData = async () => {
+
+            
             setLoading(true);
             try {
                 let category = await getAllCategory();
@@ -197,6 +131,10 @@ let tbvtt=0;
                 if (isMounted) {
                     setOrders(orderData.data);
                 }
+                handleCalculateSoldStock()
+                console.log(dataStockCategory)
+                console.log(dataSoldQuantityCategory)
+
 
                 setLoading(false);
             } catch (error) {
@@ -207,7 +145,7 @@ let tbvtt=0;
         };
 
         fetchData();
-   
+
 
         return () => {
             isMounted = false;
@@ -215,13 +153,80 @@ let tbvtt=0;
     }, []);
 
 
-    if (!jwt && !user) {
-        alert("Bạn không có quyền truy cập.")
-        return <Navigate to="/admin/login" replace />;
-    }
 
 
 
+    const handleCalculateSoldStock = () => {
+        let gao = 0;
+        let phanbon = 0;
+        let lk = 0;
+        let hatgiong = 0;
+        let tbvtt = 0;
+
+        let soldgao = 0;
+        let soldphanbon = 0;
+        let soldlk = 0;
+        let soldhatgiong = 0;
+        let soldtbvtt = 0;
+
+        products.forEach(product => {
+            switch (product.id_category) {
+                case "658d7164bdf16aee6ce1633c":
+                    gao += product.stock;
+                    soldgao += product.soldQuantity;
+                    break;
+                case "658d7170bdf16aee6ce1633e":
+                    phanbon += product.stock;
+                    soldphanbon += product.soldQuantity;
+                    break;
+                case "658d7182bdf16aee6ce16340":
+                    lk += product.stock;
+                    soldlk += product.soldQuantity;
+                    break;
+                case "658d7192bdf16aee6ce16342":
+                    hatgiong += product.stock;
+                    soldhatgiong += product.soldQuantity;
+                    break;
+                case "658d71c7bdf16aee6ce16344":
+                    tbvtt += product.stock;
+                    soldtbvtt += product.soldQuantity;
+                    break;
+                default:
+                    break;
+            }
+        });
+
+        setdataStockCategory([gao, phanbon, lk, hatgiong, tbvtt]);
+        setdataSoldQuantityCategory([soldgao, soldphanbon, soldlk, soldhatgiong, soldtbvtt]);
+    };
+    const data = {
+        labels: listCategory,
+        datasets: [{
+
+            label: "Số lượng sản phẩm bán được",
+            backgroundColor: ["#009432"],
+            hoverBackgroundColor: ["rgb(197, 72, 49)"],
+            data: dataSoldQuantityCategory,
+        },
+
+
+        {
+
+            label: "Số lượng còn lại trong kho",
+            backgroundColor: ["#EA2027"],
+            hoverBackgroundColor: ["rgb(197, 72, 49)"],
+            data: dataStockCategory,
+        },
+
+
+        ]
+    };
+
+
+   
+
+
+  
 
     return (
 
@@ -236,7 +241,7 @@ let tbvtt=0;
                         </div>
 
                         <div className="col-12 col-md-10">
-                            <h1 className="my-4 text-center bold mb-3">Tổng quan</h1>
+                            <h1 className="my-4 text-center fw-bold mb-3">Tổng quan</h1>
 
                             {loading ? <Loader /> : (
                                 <>
@@ -346,7 +351,7 @@ let tbvtt=0;
 
                             <div className='row'>
 
-                               
+
 
                                 <div className='cod-md-9 card text-white bg-light'>
 

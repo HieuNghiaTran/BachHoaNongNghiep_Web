@@ -1,12 +1,39 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 
 const Sidebar = () => {
 
+
+    //const btnSidebar = document.querySelector('.toogle_nav_wrapper')
+    const sidebar = document.querySelector('.sidebar')
+    const [btnSidebar, setBtnSidebar] = useState(null);
+    useEffect(() => {
+       
+        const btn = document.querySelector('.toogle_nav_wrapper');
+        setBtnSidebar(btn); 
+    }, []);
+
+      const handleMouseEnter = () => {
+        if (window.pageYOffset > 300) {
+  
+          sidebar.classList.add('isShowSidebar');
+         
+  
+        }
+  
+  
+      }
+  
+      const handleMouseLeave = () => {
+        sidebar.classList.remove('isShowSidebar');
+      };
+  
+
+
     return (
 
         <>
-            <div className="sidebar mx-2"  >
+            <div className="sidebar mx-2" onMouseLeave={handleMouseLeave} onMouseEnter={()=>{btnSidebar.removeEventListener('mouseleave', handleMouseLeave)}}  >
                 <ul className="" style={{width:"20rem"}}>
                     <li>
                         <a href="#">

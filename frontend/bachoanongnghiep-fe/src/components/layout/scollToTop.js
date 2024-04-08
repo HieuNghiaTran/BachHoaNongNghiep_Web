@@ -18,10 +18,10 @@ function ScrollToTop(props) {
       {heightPage > 300 ? (
         <div>
           <BackTop
-            className="scrolltotop"
-            style={{ color: "white", right: "85px", fontWeight:"bold" }}
+            className="scrolltotop fw-bold"
+            style={{ color: "white", right: "85px" }}
           >
-            <UpOutlined/>
+            <UpOutlined className='fw-bold'/>
           </BackTop>
         </div>
       ) : (

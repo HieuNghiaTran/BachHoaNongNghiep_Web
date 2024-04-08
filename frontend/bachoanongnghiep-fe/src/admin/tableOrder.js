@@ -16,6 +16,9 @@ import { FaPencil } from "react-icons/fa6";
 import ModalDelete from "./ModalsDelete";
 import { FaShippingFast } from "react-icons/fa";
 import axios from 'axios';
+import pdfMake from 'pdfmake/build/pdfmake';
+import pdfFonts from 'pdfmake/build/vfs_fonts';
+import CreateOrderShip from "../services/GhnServies";
 
 const TableOrders = ({ order }) => {
 
@@ -38,34 +41,35 @@ const TableOrders = ({ order }) => {
     const [phone, setPhone] = useState()
     const [address, setAddress] = useState()
     const [isShowModalDelete, setIsShowModalDelete] = useState(false);
+    const [invoiceData, setInvoiceData] = useState({})
 
-  
-      
-        const handleSubmitShip = async () => {
-            try {
-                const res = await axios.post(
-                    'https://dev-online-gateway.ghn.vn/shiip/public-api/v2/shipping-order/create',
-                    {
-                      payment_type_id: 2,
 
-                    },
-                    {
-                      headers: {
-                        'Content-Type': 'application/json',
-                        ShopId: '885',
-                        Token: "285518-c4bb-11ea-be3a-f636b1deefb9",
-                      },
-                    }
-                )
 
-                console.log(res)
+    pdfMake.vfs = pdfFonts.pdfMake.vfs
+    const fontDescriptors = {
+        Roboto: {
+            normal: 'Roboto-Regular.ttf',
+            bold: 'Roboto-Medium.ttf',
+            italics: 'Roboto-Italic.ttf',
+            bolditalics: 'Roboto-MediumItalic.ttf'
+        }
+    };
 
-            } catch (error) {
-                console.error(error);
-            }
-        };
 
-    
+    pdfMake.fonts = {
+        Roboto: fontDescriptors.Roboto
+    };
+
+
+
+    const handleSubmitShip = async () => {
+
+        let res = await CreateOrderShip()
+        console.log(res)
+    };
+       
+
+
 
 
 
@@ -89,41 +93,126 @@ const TableOrders = ({ order }) => {
         }
     }
 
-    const handlePrint = () => {
-        const doc = new jsPDF();
-        console.log(doc.getFontList());
-        doc.addFont("Arimo-Bold.ttf", "Arimo", "bold");
+
+    useEffect(() => {
+        const invoiceData = {
+            customer: {
+                name: name,
+                address: address,
+                phone: phone,
+            },
+            items: product.map((item) => ({
+                name: item.name_product,
+                quantity: item.quantity,
+                price: item.price_product,
+            })),
+            total: billTotal !== undefined ? billTotal.toLocaleString() : '0',
+        };
+        setInvoiceData(invoiceData);
+    }, [product, name, address, phone, billTotal]);
+
+
+
+
+
+    const handlePrint = (item) => {
+
+        setName(item.name)
+        setEmail(item.mail)
+        setPhone(item.phone)
+        setAddress(item.address)
+        fetchDataPrint(item._id);
+
         let newArray = [];
         for (let i = 0; i < product.length; i++) {
-            newArray.push([i + 1, product[i].name_product, product[i].price_product, product[i].count, product[i].price_product * product[i].count]);
+            newArray.push([product[i].name_product, product[i].count, product[i].price_product, product[i].price_product * product[i].count]);
         }
 
-        doc.addImage("https://res.cloudinary.com/dofj1px4t/image/upload/v1709280860/products/M2RyLi9k_u9k4n7.png", 'PNG', 60, 10, 80, 40);
+        const docDefinition = {
+            content: [
 
-        let today = new Date();
-        let dd = String(today.getDate()).padStart(2, '0');
-        let mm = String(today.getMonth() + 1).padStart(2, '0');
-        let yyyy = today.getFullYear();
-        today = dd + '/' + mm + '/' + yyyy;
+                {
+                    text: "Hóa đơn",
+                    style: {
+                        fontSize: 22,
+                        bold: true,
+                        alignment: 'center'
+                    },
+                },
 
-        doc.text(`Date: ${today}`, 20, 60); // Căn lề trái cho ngày
-        doc.text(`Customer : ${name}`, 20, 65); // Căn lề trái cho thông tin khách hàng
-        doc.text(`Address : ${address}`, 20, 70); // Căn lề trái cho thông tin địa chỉ
-        doc.text(`Phone Number : ${phone}`, 20, 75); // Căn lề trái cho thông tin số điện thoại
-        doc.text(`Email : ${email}`, 20, 80); // Căn lề trái cho thông tin email
+                {
+                    text: "Ngày tạo: " + " " + new Date().toLocaleDateString(),
+                    style: {
+                        fontSize: 12,
+                        bold: true
+                    },
+                },
+                {
+                    text: "Thông tin khách hàng:",
+                    style: {
+                        fontSize: 14,
+                        bold: true,
+                    },
+                },
+                {
+                    text: "Khách hàng:" + " " + invoiceData.customer.name,
+                    style: {
+                        fontSize: 12,
+                    },
+                },
+                {
+                    text: "Địa chỉ:" + " " + invoiceData.customer.address,
+                    style: {
+                        fontSize: 12,
+                    },
+                },
+                {
+                    text: "Số điện thoại:" + " " + invoiceData.customer.phone,
+                    style: {
+                        fontSize: 12,
+                    },
+                },
+                {
+                    text: "Danh sách sản phẩm:",
+                    style: {
+                        fontSize: 12,
+                        bold: true,
+                    },
+                },
+                {
+                    table: {
+                        headerRows: 1,
+                        widths: ["*", "*", "*", "*"],
+                        body: [
+                            ["Tên sản phẩm", "Số lượng", "Giá", "Thành tiền"],
+                            ...newArray
 
-        autoTable(doc, {
-            head: [['STT', 'Name Product', 'Price', 'Quantity', 'Total']],
-            body: newArray,
-            startY: 90,
-        });
 
-        let finalY = doc.previousAutoTable.finalY;
-        doc.text(`Tổng cộng hoá đơn: ${billTotal}`, 12, finalY + 10);
 
-        doc.save(`Bill_KH_${name}.pdf`);
-    }
+                        ],
+                    },
+                },
+                {
+                    text: "Tổng cộng:",
+                    style: {
+                        fontSize: 12,
+                        bold: true,
+                    },
+                },
+                {
+                    text: invoiceData.total.toLocaleString(),
+                    style: {
+                        fontSize: 12,
+                    },
+                },
+            ],
+        }
 
+
+
+        const pdfDoc = pdfMake.createPdf(docDefinition);
+        pdfDoc.download("Bill_Kh.pdf");
+    };
 
     const fetchData = async () => {
 
@@ -164,20 +253,20 @@ const TableOrders = ({ order }) => {
                             <td style={{ color: "red", fontWeight: "bolder" }} className="text-center m-auto">{item.total} đ</td>
                             <td >{format(new Date(item.create_time), 'dd/MM/yyyy HH:mm:ss')}</td>
                             <td>
-    {item.status === "Đã Thanh Toán" ? (
-        <>
-            <span><img className="mx-2" width={"32rem"} src={require("../components/images/VNPAY.png")} alt="Thanh toán khi nhận hàng"></img></span>
-            <button className="btn btn-light">Đã thanh toán</button>
-        </>
-    ) : (
+                                {item.status === "Đã Thanh Toán" ? (
+                                    <>
+                                        <span><img className="mx-2" width={"32rem"} src={require("../components/images/VNPAY.png")} alt="Thanh toán khi nhận hàng"></img></span>
+                                        <button className="btn btn-light">Đã thanh toán</button>
+                                    </>
+                                ) : (
 
-        <>
-        <span><img className="mx-2" width={"32rem"} src={require("../components/images/thanhtoankhinhanhang.png")} alt="Thanh toán khi nhận hàng"></img></span>
-        <button className="btn btn-light">Đã đặt hàng</button>
-        
-        </>
-    )}
-</td>
+                                    <>
+                                        <span><img className="mx-2" width={"32rem"} src={require("../components/images/thanhtoankhinhanhang.png")} alt="Thanh toán khi nhận hàng"></img></span>
+                                        <button className="btn btn-light">Đã đặt hàng</button>
+
+                                    </>
+                                )}
+                            </td>
                             <td>
                                 <button type="button" className="btn btn-primary mx-1" onClick={() => {
                                     setID(item._id)
@@ -188,13 +277,10 @@ const TableOrders = ({ order }) => {
                                     Chi tiết
                                 </button>
                                 <button type="button" className="btn btn-success mx-1" onClick={() => {
-                                    setName(item.name)
-                                    setEmail(item.mail)
-                                    setPhone(item.phone)
-                                    setAddress(item.address)
-                                    fetchDataPrint(item._id)
-                                    handlePrint()
-                                }}>
+
+                                    handlePrint(item)
+                                }
+                                }>
                                     <MdLocalPrintshop style={{ marginRight: "0.2rem" }} />
                                     In hoá đơn
                                 </button>
@@ -204,15 +290,15 @@ const TableOrders = ({ order }) => {
                                 </button>
 
 
-                                <button type="button" className="btn btn-warning mx-2"s
-                                
-                                
-                                onClick={()=>{
-                                handleSubmitShip(item.name, item.phone,item.address)
+                                <button type="button" className="btn btn-warning mx-2" s
+
+
+                                    onClick={() => {
+                                        handleSubmitShip()
 
 
 
-                                }}>
+                                    }}>
 
                                     <FaShippingFast style={{ marginRight: "0.2rem" }} />
                                     Tạo đơn vận chuyển
