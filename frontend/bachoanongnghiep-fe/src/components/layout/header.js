@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext, useEffect, useRef } from "react";
 import { UserContext } from "../../context/userContext";
 import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
@@ -19,6 +19,7 @@ import { FaPhone } from "react-icons/fa6";
 import Cart from "./cart";
 import { Link } from "react-router-dom";
 import ProgressBar from "@ramonak/react-progress-bar";
+import Sidebar from "./sidebar";
 
 
 
@@ -29,37 +30,53 @@ const Header = () => {
   const [pageScoll, setPageScoll] = useState()
   const [isShowHeader, setIsShowHeader] = useState(true);
   const [isShowModalsLogin, setIsShowModalLogin] = useState(false);
+  const [sidebar, setSidebar] = useState()
+  const [btnSidebar, setBtnSidebar] = useState()
+
+  const btnsidebarRef = useRef(null);
+
+
+
   let [valueProgress, setValueProgress] = useState(0)
 
-  
 
-  const btnSidebar = document.querySelector('.toogle_nav_wrapper')
-  const sidebar = document.querySelector('.sidebar')
-   
-    const handleMouseEnter = () => {
-      if (window.pageYOffset > 300) {
+
+
+
+  const handleMouseEnter = () => {
+    if (window.pageYOffset > 300) {
+
+
+      if (sidebar) {
 
         sidebar.classList.add('isShowSidebar');
-       
-
       }
 
 
     }
 
-    const handleMouseLeave = () => {
+
+  }
+
+  const handleMouseLeave = () => {
+
+    if (sidebar) {
       sidebar.classList.remove('isShowSidebar');
-    };
-
-
-
+    }
+  };
 
 
 
 
 
   useEffect(() => {
+    setBtnSidebar(btnsidebarRef.current);
+  }, []);
 
+
+  useEffect(() => {
+     //setBtnSidebar(document.querySelector('.toogle_nav_wrapper'))
+     setSidebar(document.querySelector('.sidebar'))
 
     window.addEventListener('scroll', handleScroll);
 
@@ -122,9 +139,9 @@ const Header = () => {
             <ul className="icont_custom ">
               <li className="col-md-5 m-auto">
                 <div className="phone_area d-flex ujstify-content-center align-item-center">
-                  <span className=" mx-2 py-2 px-2" style={{ color: '#1aaf27', fontSize: '1.15rem' }}><FaPhone /></span>
+                  <img class="align-self-center mx-2" loading="lazy" src="//theme.hstatic.net/200000692099/1001033556/14/phone.png?v=30" width="27" alt="phone"></img>
                   <div className="d-md-flex flex-column">
-                    <div style={{ fontSize: '0.8rem' }}>Hỗ trợ khách hàng</div>
+                    <div style={{ fontSize: '0.85rem', color: "#3a445e" }}>Hỗ trợ khách hàng</div>
                     <div style={{ fontSize: '0.8rem', fontWeight: 'bold' }} className="phone">055.9809.019</div>
                   </div>
 
@@ -171,7 +188,7 @@ const Header = () => {
 
       </Navbar><div className="under_nav">
           <div className="toogle_nav_wrapper p-0 mx-4">
-            <button className="toogle_menu btn-outline-success" onMouseEnter={handleMouseEnter} style={{ width: "20rem" }} >
+            <button className="toogle_menu btn-outline-success" onMouseEnter={handleMouseEnter} ref={btnsidebarRef} style={{ width: "20rem" }} >
               <i className="fa-solid fa-bars"></i>
               <span>Danh mục sản phẩm</span>
             </button>
@@ -188,7 +205,6 @@ const Header = () => {
         </div>
         <ProgressBar completed={valueProgress.toFixed(2)} bgColor="#ff3f34" height="3px" width="100vw" isLabelVisible={false} />
       </div>
-
       <ModalsLoginForm
         show={isShowModalsLogin}
         handleClose={handleClose}

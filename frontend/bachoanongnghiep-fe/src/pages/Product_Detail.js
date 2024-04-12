@@ -152,12 +152,12 @@ const DetailProduct = (props) => {
 
                     <hr />
 
-                    <p>Tình trạng hàng: <span id="stock_status" className={product.numOfReviews > 0 ? 'greenColor' : 'redColor'} >{product.stock > 0 ? 'Còn hàng' : 'Hết hàng'}</span></p>
+                    <p>Tình trạng hàng: <span id="stock_status" className={product.stock > 0 ? 'greenColor' : 'redColor'} >{product.stock > 0 ? 'Còn hàng' : 'Hết hàng'}</span></p>
 
                     <hr />
 
-                    <h4 className="mt-2">Mô tả:</h4>
-                    <p>{product.describe}</p>
+                    <h4 className="mt-2 mb-3">Mô tả:</h4>
+                    <div dangerouslySetInnerHTML={{ __html: product.describe }} />
                     <hr />
 
                     {jwt && user ? <button id="review_btn" type="button" className="btn btn-primary mt-4" data-toggle="modal" data-target="#ratingModal" onClick={() => {
@@ -179,10 +179,10 @@ const DetailProduct = (props) => {
 
                     />
                 </div>
-                <div className="col-lg-2 product-policises flex-column d-flex align-items-start mt-5 container-fluid mr-3">
+                <div className="col-lg-2 product-policises flex-column d-flex align-items-start mt-5 container-fluid mr-3" >
 
-                    <div className="product-policises-top p-2">
-                        <h5>Chính sách quyển lợi</h5>
+                    <div className="product-policises-top p-2" style={{ boxShadow: "rgba(100, 100, 111, 0.2) 0px 7px 29px 0px" }}>
+                        <h5>Chính sách quyền lợi</h5>
                         <ul className="list-unstyled">
                             <li><img src="https://theme.hstatic.net/200000692099/1001033556/14/policy_product_image_1.png?v=30" className=""></img>100% hàng chính hãng</li>
                             <li><img src="https://theme.hstatic.net/200000692099/1001033556/14/policy_product_image_2.png?v=30"></img>Giá tốt nhất</li>

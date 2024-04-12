@@ -81,12 +81,12 @@ const CartPage = (props) => {
           <main>
           <div className='my-cart'>
 
-<div className="top-cart d-flex justify-content-center align-item-center row">
+<div className="top-cart d-flex justify-content-center align-item-center row my-4" >
 
 
 
-    <div className="top-left-cart col-md-6">
-        <div className='h3 mb-2'>Giỏ hàng của tôi</div>
+    <div className="top-left-cart col-md-6" style={{ boxShadow: "rgba(100, 100, 111, 0.2) 0px 7px 29px 0px" }} >
+        <div className='h2 mb-4 ' style={{ fontFamily: "'Roboto', sans-serif" }}>Giỏ hàng của tôi</div>
         <div className='table-product'>
             <Table striped bordered hover>
                 <tbody>
@@ -111,7 +111,7 @@ const CartPage = (props) => {
         </div>
 
     </div>
-    <div className="top-right-cart col-md-6">
+    <div className="top-right-cart col-md-6" style={{ boxShadow: "rgba(100, 100, 111, 0.2) 0px 7px 29px 0px" }}>
         <p>Số lượng:  <span className="order-summary-values">{productItem1.reduce((acc, item) => (acc + Number(item.quantity)), 0)} (Sản phẩm)</span></p>
         <div className='total d-flex justify-content-between'>Tổng tiền là:<span style={{ color: 'red', fontWeight: 'bold' }}>{productItem1.reduce((acc, item) => (acc + item.price_product * item.quantity), 0)} đ</span></div>
         <div className='btn-are mt-3'><button className="btn_payment btn" onClick={handleaSubmit}><Link to={`/checkouts/${Math.random()}`} style={{ color: "#fff" }}>Tiến hành đặt hàng</Link></button></div>

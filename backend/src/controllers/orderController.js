@@ -8,11 +8,11 @@ const OrderController = {
 
 
             const user = await Users.findOne({ username: req.body.username });
-           
+
             if (!user) {
                 return res.status(404).json({ message: "User not found" });
             }
-    
+
             let data = {
                 id_user: user.id,
                 name: req.body.name,
@@ -54,9 +54,8 @@ const OrderController = {
     getOrderWithPhoneNumber: async (req, res) => {
 
         const phone = req.query.phone
-
         const order = await Order.find({ phone: phone })
-
+        console.log(order)
         res.json(order);
 
     }
@@ -76,7 +75,7 @@ const OrderController = {
 
     getOrderCustormer: async (req, res) => {
         try {
-            const user = await Users.findOne({username:req.query.username});
+            const user = await Users.findOne({ username: req.query.username });
             console.log(user)
             let order = await Order.find({ id_user: user.id })
             res.status(200).json(order)
@@ -88,7 +87,26 @@ const OrderController = {
 
 
 
+    },
+
+    UpdateStatusOrder: async (req, res) => {
+        try {
+
+            let order = await Order.findById(req.body.id)
+            order.status = req.body.status
+            await order.save()
+            res.status(200).json(order)
+        } catch (err) {
+            res.status(500).json(err)
+
+
+        }
+
+
+
     }
+
+
 
 };
 

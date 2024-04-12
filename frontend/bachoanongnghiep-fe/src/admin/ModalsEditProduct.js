@@ -7,6 +7,7 @@ import { getAllCategory } from "../services/categoryServices";
 import getAllColecion from "../services/collectionsServices";
 import { addNewProduct, updateProduct } from "../services/productSevices";
 import { toast } from "react-toastify";
+import ReactQuill from 'react-quill';
 const getBase64 = (file) =>
     new Promise((resolve, reject) => {
         const reader = new FileReader();
@@ -28,14 +29,14 @@ const ModalEditProduct = (props) => {
     const [selected2, setSelected2] = useState()
     const [img, setImg] = useState([])
     const [listColection, setListColection] = useState([])
- 
+
 
 
     const [previewOpen, setPreviewOpen] = useState(false);
     const [previewImage, setPreviewImage] = useState('');
     const [previewTitle, setPreviewTitle] = useState('');
     const [fileList, setFileList] = useState([]);
-   
+
 
 
 
@@ -114,6 +115,14 @@ const ModalEditProduct = (props) => {
 
 
     const handleSubmit = async () => {
+
+        fileList.forEach(element => {
+
+
+            if (element.thumbUrl) { img.push(element.thumbUrl) }
+        });
+
+        
         let data = new FormData()
         data = {
             id_category: selected1,
@@ -130,35 +139,10 @@ const ModalEditProduct = (props) => {
         handleCloseModal()
         toast.success("Edit Product Success")
     }
-    const handleDeleteImg = (index) => {
-        const newImagesPreview = imagesPreview.filter((item, idx) => idx !== index);
-        const newImagesPreview2 = img.filter((item, idx) => idx !== index);
-        setImagesPreview(newImagesPreview);
-        setImg(newImagesPreview2)
-
-    };
 
 
-    const handleImageChange = (e) => {
-        const files = Array.from(e.target.files)
 
 
-        setImg([])
-
-        files.forEach(file => {
-            const reader = new FileReader();
-            reader.onload = () => {
-                if (reader.readyState === 2) {
-                    //setImagesPreview(oldArray => [...oldArray, reader.result])
-                    setImg(oldArray => [...oldArray, reader.result])
-                }
-            }
-
-            reader.readAsDataURL(file)
-        })
-
-
-    };
     return (
         <>
 
@@ -290,13 +274,19 @@ const ModalEditProduct = (props) => {
                                     <div className="form-group col-md-12 mb-2">
                                         <label for="entry">Mô Tả: </label>
 
-                                        <textarea
-                                            type="text" className="form-control w-100" id="price" placeholder="Describe"
-                                            defaultValue={product.describe}
-                                            value={describe}
-                                            onChange={(e) => { setDescirbe(e.target.value) }}></textarea>
+
+                                        <div>
+                                            <ReactQuill
+                                                theme="snow"
+                                                modules={{ toolbar: true }}
+                                                formats={['bold', 'italic', 'underline', 'link']}
+                                                value={describe}
+                                                onChange={setDescirbe}
+                                                style={{ height: '300px' }}
+                                            />
+                                        </div>
                                     </div>
-                                    <div className="form-group col-md-6 mb-2">
+                                    <div className="form-group col-md-6 mb-2 my-5">
                                         <label for="image">Thêm Ảnh Sản Phẩm: </label>
 
 

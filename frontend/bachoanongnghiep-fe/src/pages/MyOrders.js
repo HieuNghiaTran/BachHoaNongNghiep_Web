@@ -8,7 +8,6 @@ import { Table } from 'antd';
 import { getMyOrder } from "../services/orderServies";
 import { UserContext } from "../context/userContext";
 import { FaRegAddressBook, FaPhone, FaUser } from "react-icons/fa";
-import Chat from '../components/layout/chat';
 import AppChat from '../components/layout/appchat';
 
 const MyOrder = () => {
@@ -88,9 +87,9 @@ const MyOrder = () => {
       <div>
         <div><History data={"Trang chủ / "} last_item={`Đơn hàng của tôi`} /></div>
         <MetaData title={"Đơn hàng của bạn"}></MetaData>
-        <div className="col-md-6 m-auto">
-          <div className="h3 mb-2 m-2">Giỏ hàng của tôi</div>
-          <div className="table-product">
+        <div className="col-md-8 m-auto">
+        <div className='h2 mb-4 text-center h2 p-2 fw-bold my-4' style={{ fontFamily: "'Roboto', sans-serif" }}>ĐƠN HÀNG CỦA TÔI</div>
+          <div className="table-product" style={{ boxShadow: "rgba(100, 100, 111, 0.2) 0px 7px 29px 0px" }}>
             <Table dataSource={dataSource} columns={columns} />
           </div>
         </div>

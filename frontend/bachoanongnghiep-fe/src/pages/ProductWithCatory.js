@@ -9,7 +9,7 @@ import History from '../components/layout/history';
 import { GrFormNextLink } from "react-icons/gr";
 import { useEffect, useState } from 'react';
 import getAllColecion from '../services/collectionsServices';
-import { getProductWithCatory } from '../services/productSevices';
+import { getProductWithCategoryPageginate, getProductWithCatory } from '../services/productSevices';
 import MetaData from '../services/setHead';
 import ReactPaginate from 'react-paginate';
 import * as React from 'react';
@@ -26,7 +26,7 @@ const ProductWithCatoryPage = () => {
     const { category_id } = useParams();
     const [product, setProduct] = useState([]);
     const [listColection, setListCollection] = useState([]);
-    const [pageCount, setPageCount] = useState(5);
+    const [pageCount, setPageCount] = useState(3);
     const [nameCategory, setNameCategory] = useState('')
     const [loading, setLoading] = useState(false)
     const [az, setAz] = useState(false)
@@ -35,15 +35,31 @@ const ProductWithCatoryPage = () => {
     const [desc, setDesc] = useState(false)
     const [valuePrice, setValuePrice] = useState(1);
     const [valueColection, setValueCollection] = useState('');
-    const handlePageClick = () => {
+    const [totalPages, setTotalPages] = useState(0);
+    const handlePageClick = async (e) => {
+        const currentPage = e.target.textContent;
+        let res = await getProductWithCategoryPageginate(currentPage, 12, category_id)
+        setProduct(res.data.docs);
+
+
+
     }
 
+    const fetchPage=async()=>{
+
+        let res = await getProductWithCategoryPageginate(1, 12, category_id)
+        setProduct(res.data.docs);
+        setTotalPages(res.data.totalPages);
+
+
+    }
     useEffect(() => {
         setLoading(true)
         let isMount = true
         if (isMount) {
             fetchDataColection();
-            fetchProductColection();
+            fetchPage()
+
 
             switch (category_id) {
                 case '658d71c7bdf16aee6ce16344':
@@ -254,11 +270,11 @@ const ProductWithCatoryPage = () => {
             <MetaData title={nameCategory} />
             <Header />
             {loading ? <Loader /> :
-                <div className="main">
+                <div className="main" >
                     <div><History data={"Trang chủ / Danh Mục /"} last_item={nameCategory} /></div>
                     <div className="h3  mb-3 px-5 my-3" style={{ fontFamily: "'Roboto', sans-serif" }}>Mô tả</div>
                     <div className="mb-3 px-5" style={{ fontFamily: "'Roboto', sans-serif" }}>{nameCategory}</div>
-                    <div className="container d-flex">
+                    <div className="container d-flex p-5" style={{ boxShadow: "rgba(100, 100, 111, 0.2) 0px 7px 29px 0px" }}>
                         <div className="colections-container-left px-3 mx-3 col-md-2">
                             <div className="colections-container-left-top">
                                 <div className='fw-bold mb-2'>MỨC GIÁ</div>
@@ -316,20 +332,22 @@ const ProductWithCatoryPage = () => {
                                 </div>
 
                             </div>
-                            <div className='pageginate'>
-                                <Stack spacing={2}>
-                                    <Pagination count={pageCount} color="success"
-                                        onPageChange={handlePageClick}
+                           {product.length>0 &&(
+                             <div className='pageginate'>
+                             <Stack spacing={2}>
+                                 <Pagination count={totalPages} color="success"
+                                     onPageChange={handlePageClick}
 
-                                    />
-                                </Stack>
-                            </div>
+                                 />
+                             </Stack>
+                         </div>
+                           )}
                         </div>
 
                     </div >
                 </div >
             }
-            <AppChat/>
+            <AppChat />
             <Footer />
         </>
     );

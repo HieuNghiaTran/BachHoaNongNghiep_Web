@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
 
 const Sidebar = () => {
@@ -8,75 +9,88 @@ const Sidebar = () => {
     const sidebar = document.querySelector('.sidebar')
     const [btnSidebar, setBtnSidebar] = useState(null);
     useEffect(() => {
-       
+
         const btn = document.querySelector('.toogle_nav_wrapper');
-        setBtnSidebar(btn); 
+        setBtnSidebar(btn);
     }, []);
 
-      const handleMouseEnter = () => {
+    const handleMouseEnter = () => {
         if (window.pageYOffset > 300) {
-  
-          sidebar.classList.add('isShowSidebar');
-         
-  
+
+          if(sidebar){
+
+
+            sidebar.classList.add('isShowSidebar');
+
+          }
+
         }
-  
-  
-      }
-  
-      const handleMouseLeave = () => {
+
+
+    }
+
+    const handleMouseLeave = () => {
+       if(sidebar){
+
         sidebar.classList.remove('isShowSidebar');
-      };
-  
+       }
+    };
+
 
 
     return (
 
         <>
-            <div className="sidebar mx-2" onMouseLeave={handleMouseLeave} onMouseEnter={()=>{btnSidebar.removeEventListener('mouseleave', handleMouseLeave)}}  >
-                <ul className="" style={{width:"20rem"}}>
+            <div className="sidebar mx-2" onMouseLeave={handleMouseLeave} onMouseEnter={() => { if(sidebar){btnSidebar.removeEventListener('mouseleave', handleMouseLeave)} }}  >
+                <ul className="" style={{ width: "20rem", boxShadow: "rgba(100, 100, 111, 0.2) 0px 7px 29px 0px", borderRadius:"7px" }} >
                     <li>
-                        <a href="#">
+                        <Link to={"/trang-chu"}>
                             <img src=" https://theme.hstatic.net/200000722083/1001109742/14/menu_icon_1.png?v=22" width="27px" height="27px"></img>
                             <span>Dọn Kho _ Giá Sốc</span>
-                        </a>
+                        </Link>
 
                     </li>
-                    <li><a href="#">
-                        <img src="//theme.hstatic.net/200000722083/1001109742/14/menu_icon_4.png?v=22" width="22px" height="22px"></img>
-                        <span>Thuốc bảo vệ thực vật</span>
+                    <li>
 
-                    </a>
+                        <Link to={"/collections/658d71c7bdf16aee6ce16344"}>
+                            <img src="//theme.hstatic.net/200000722083/1001109742/14/menu_icon_4.png?v=22" width="22px" height="22px"></img>
+                            <span>Thuốc bảo vệ thực vật</span>
+
+                        </Link>
                         <i className="fa-solid fa-chevron-right"></i>
+
                     </li>
-                    <li><a href="#">
+                    <li> <Link to={"/collections/658d7164bdf16aee6ce1633c"}>
                         <img src="//theme.hstatic.net/200000722083/1001109742/14/menu_icon_3.png?v=22" width="22px" height="22px"></img>
                         <span>Phân bón</span>
-                    </a>
+                    </Link>
                         <i className="fa-solid fa-chevron-right"></i>
                     </li>
-                    <li><a href="#"><i className="fa-solid fa-bowl-rice"></i><span>Gạo</span></a>
+                    <li><Link to="/collections/658d71c7bdf16aee6ce16344">
+                        <i className="fa-solid fa-bowl-rice"></i><span>Gạo</span>
+
+                    </Link>
                         <i className="fa-solid fa-chevron-right"></i></li>
                     <li>
-                        <a href="#">
+                        <Link to={"/collections/658d7170bdf16aee6ce1633e"}>
                             <i className="fa-solid fa-seedling"></i>
                             <span>Hạt giống</span>
-                        </a>
+                        </Link>
                         <i className="fa-solid fa-chevron-right"></i>
                     </li>
-                    <li><a href="#">
+                    <li><Link to={"/collections/658d7192bdf16aee6ce16342"}>
 
                         <i className="fa-solid fa-wrench"></i>
 
                         <span>Linh kiện Drone</span>
-                    </a>
+                    </Link>
                         <i className="fa-solid fa-chevron-right"></i>
                     </li>
                     <li>
-                        <a href="#">
+                        <Link>
                             <span>Giá lúa hôm nay</span>
 
-                        </a>
+                        </Link>
 
                     </li>
                 </ul>

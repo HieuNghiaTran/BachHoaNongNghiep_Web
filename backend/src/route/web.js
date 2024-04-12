@@ -8,6 +8,8 @@ const OrderController = require('../controllers/orderController');
 const Detail_order = require('../controllers/detail_orderController');
 const PaymentCotroller = require('../controllers/paymentController');
 const PermissionController = require('../controllers/permissionController');
+const Delivery = require('../models/delivery');
+const DeliveryController = require('../controllers/deliveryController');
 const router= express.Router();
 
 
@@ -70,6 +72,16 @@ router.get("/permission",PermissionController.getAll)
 
 router.post('/create_payment_url', PaymentCotroller.createPaymentUrl)
 router.get('/payment/get_result', PaymentCotroller.vnpayReturn)
+
+
+
+router.post("/delivery", DeliveryController.createShipDelivery)
+
+
+router.post("/updateOrder", OrderController.UpdateStatusOrder)
+
+
+
 
 
 module.exports = router

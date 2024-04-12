@@ -30,7 +30,7 @@ const Products = ({ product, col }) => {
     }
 
     return (
-        <div className={`product-item col-sm-12 col-md-6 col-lg-${col} my-2 mx-1`}>
+        <div className={`product-item col-sm-12 col-md-5 col-lg-${col} my-2 mx-1`}>
             <div className=" card card p-3 rounded">
                 <Link to={`/product/${product._id}`}><img className="card-img-top m-auto" src={product.images[0].url} alt='' /></Link>
                 <div className="card-body d-flex flex-column">

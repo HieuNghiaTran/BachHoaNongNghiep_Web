@@ -10,7 +10,6 @@ import { submitDetail, submitOrder } from "../services/orderServies"
 import { Radio, Space } from 'antd';
 import { getResultPaymentVNpay, paymentVNPay } from "../services/paymentServices";
 import { getUser } from "../services/userServices";
-import Chat from "../components/layout/chat";
 import AppChat from "../components/layout/appchat";
 
 
@@ -103,6 +102,7 @@ const SubmitOrderPage = () => {
                     status: "Đã đặt hàng",
                     feeship: feeship,
                     create_time: currentDateTime,
+                    payment_status:"Cod"
                 }
                 let data2 = new FormData();
                 data2 = {
@@ -123,7 +123,7 @@ const SubmitOrderPage = () => {
             } else {
 
                     if (!user && !jwt) {
-                        alert("Bạn cần đăng nhập để thực hiện tính năng này !!!")
+                        alert("Bạn cần đăng nhập để thực hiện tính năng này !")
                     }else{
 
                     let data = new FormData()
@@ -135,9 +135,10 @@ const SubmitOrderPage = () => {
                         address: address,
                         phone: phone,
                         total: total,
-                        status: "Thanh toán Online/Chưa Thành Công",
+                        status: "Đã đặt hàng",
                         feeship: feeship,
                         create_time: currentDateTime,
+                        payment_status:"VNPAY"
                     }
 
                     let data2 = new FormData();

@@ -49,9 +49,12 @@ return (
 <>
 <Header />
 <div><History data={"Trang chủ / "} last_item={`Tìm kiếm`}/></div>
+
 <MetaData title={`Kết quản tìm kiếm "${localStorage.getItem('search-value')}"`} />
 
-<div className="col-md-10 m-auto">
+
+
+<div className="col-md-10 m-auto p-5" style={{ boxShadow: "rgba(100, 100, 111, 0.2) 0px 7px 29px 0px" }}>
 
    
     
@@ -59,7 +62,7 @@ return (
 
     {products.length>0?
     <>
-     <div className="h4 my-2 fw-bold">Có {products.length} kết quả tìm kiếm phù hợp</div>
+     <div className="h4 my-2 fw-bold mb-2">Có {products.length} kết quả tìm kiếm phù hợp</div>
     
     <div className="result-page d-flex row">
     {products && products.length > 0 && products.map((product) => (

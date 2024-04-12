@@ -26,7 +26,6 @@ const ProductManagerPage = () => {
     const [product, setProduct] = useState([])
     const [isShowModal, setIsShowModal] = useState(false)
     const [totalPages, setTotalPages] = useState(0);
-    const [currentPage, setCurrentPage] = useState(0);
     const { perPage, setPerPage } = useState(5)
     const [value, setValue] = useState('')
     const {  jwt, user } = useContext(AuthContext);
@@ -74,8 +73,6 @@ const ProductManagerPage = () => {
         }
     }
 
-
-
     return (
         <>
             <div className="grid-bg ba-grid anim">
@@ -86,7 +83,7 @@ const ProductManagerPage = () => {
                         </div>
                         <div className=" col-12 col-md-10 text-center">
                             <div className="d-flex justify-content-between">
-                                <h1 className="">Quản lý sản phẩm</h1>
+                                <h1 className="fw-bold">Quản lý sản phẩm</h1>
                                 <div className="m-auto" style={{ flexBasis: "40%" }}><Search
                                     placeholder="Nhập tên sản phẩm"
                                     allowClear

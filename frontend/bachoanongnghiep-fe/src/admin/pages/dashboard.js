@@ -30,11 +30,9 @@ const DashBoard = () => {
     const [orders, setOrders] = useState([])
     const [listCategory, setListCategoty] = useState([])
     const [loading, setLoading] = useState(false);
-    const [dataStockCategory, setdataStockCategory] = useState([])
-    const [dataSoldQuantityCategory, setdataSoldQuantityCategory] = useState([])
 
 
-    
+
 
     let outOfStock = 0;
     products.forEach(product => {
@@ -103,12 +101,12 @@ const DashBoard = () => {
         ],
     };
     useEffect(() => {
-        
+
         let isMounted = true;
 
         const fetchData = async () => {
 
-            
+
             setLoading(true);
             try {
                 let category = await getAllCategory();
@@ -131,12 +129,10 @@ const DashBoard = () => {
                 if (isMounted) {
                     setOrders(orderData.data);
                 }
-                handleCalculateSoldStock()
-                console.log(dataStockCategory)
-                console.log(dataSoldQuantityCategory)
 
 
                 setLoading(false);
+
             } catch (error) {
 
                 console.error("Error fetching data:", error);
@@ -147,8 +143,10 @@ const DashBoard = () => {
         fetchData();
 
 
+
         return () => {
             isMounted = false;
+
         };
     }, []);
 
@@ -156,49 +154,52 @@ const DashBoard = () => {
 
 
 
-    const handleCalculateSoldStock = () => {
-        let gao = 0;
-        let phanbon = 0;
-        let lk = 0;
-        let hatgiong = 0;
-        let tbvtt = 0;
 
-        let soldgao = 0;
-        let soldphanbon = 0;
-        let soldlk = 0;
-        let soldhatgiong = 0;
-        let soldtbvtt = 0;
+    let gao = 0;
+    let phanbon = 0;
+    let lk = 0;
+    let hatgiong = 0;
+    let tbvtt = 0;
 
-        products.forEach(product => {
-            switch (product.id_category) {
-                case "658d7164bdf16aee6ce1633c":
-                    gao += product.stock;
-                    soldgao += product.soldQuantity;
-                    break;
-                case "658d7170bdf16aee6ce1633e":
-                    phanbon += product.stock;
-                    soldphanbon += product.soldQuantity;
-                    break;
-                case "658d7182bdf16aee6ce16340":
-                    lk += product.stock;
-                    soldlk += product.soldQuantity;
-                    break;
-                case "658d7192bdf16aee6ce16342":
-                    hatgiong += product.stock;
-                    soldhatgiong += product.soldQuantity;
-                    break;
-                case "658d71c7bdf16aee6ce16344":
-                    tbvtt += product.stock;
-                    soldtbvtt += product.soldQuantity;
-                    break;
-                default:
-                    break;
-            }
-        });
+    let soldgao = 0;
+    let soldphanbon = 0;
+    let soldlk = 0;
+    let soldhatgiong = 0;
+    let soldtbvtt = 0;
+    let dataStockCategory = []
+    let dataSoldQuantityCategory = []
 
-        setdataStockCategory([gao, phanbon, lk, hatgiong, tbvtt]);
-        setdataSoldQuantityCategory([soldgao, soldphanbon, soldlk, soldhatgiong, soldtbvtt]);
-    };
+    products.forEach(product => {
+
+        switch (product.id_category) {
+            case "658d7164bdf16aee6ce1633c":
+                gao += product.stock;
+                soldgao += product.soldQuantity;
+                break;
+            case "658d7170bdf16aee6ce1633e":
+                phanbon += product.stock;
+                soldphanbon += product.soldQuantity;
+                break;
+            case "658d7182bdf16aee6ce16340":
+                lk += product.stock;
+                soldlk += product.soldQuantity;
+                break;
+            case "658d7192bdf16aee6ce16342":
+                hatgiong += product.stock;
+                soldhatgiong += product.soldQuantity;
+                break;
+            case "658d71c7bdf16aee6ce16344":
+                tbvtt += product.stock;
+                soldtbvtt += product.soldQuantity;
+                break;
+            default:
+                break;
+        }
+    });
+
+    dataStockCategory=([gao, phanbon, lk, hatgiong, tbvtt]);
+    dataSoldQuantityCategory=([soldgao, soldphanbon, soldlk, soldhatgiong, soldtbvtt]);
+
     const data = {
         labels: listCategory,
         datasets: [{
@@ -223,10 +224,6 @@ const DashBoard = () => {
     };
 
 
-   
-
-
-  
 
     return (
 

@@ -64,7 +64,7 @@ function Login(props) {
 
     return (
         <div className="auth-wrapper d-flex no-block justify-content-center align-items-center position-relative" style={{ background: 'linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(108,166,72,1) 1%, rgba(15,206,230,1) 71%, rgba(0,196,227,1) 95%, rgba(0,212,255,1) 100%)' }}>
-            <div className="auth-box row border-right">
+            <div className="auth-box row border-right"  style={{ boxShadow: "rgba(100, 100, 111, 0.2) 0px 7px 29px 0px" }}>
                 <div className="col-lg-7 col-md-5 modal-bg-img " style={{ background: "#fff" }}>
 
                     <div className='m-auto'> <img src={require('../../components/images/logo.png')} className='m-auto w-100'></img></div>
@@ -73,10 +73,8 @@ function Login(props) {
                 </div>
                 <div className="col-lg-5 col-md-7 bg-white">
                     <div className="p-3">
-                        <div className="text-center">
-                            <img src={require("../images/icon.png")} alt="wrapkit" />
-                        </div>
-                        <h2 className="mt-3 text-center">Sign In</h2>
+                        
+                        <h2 className="mt-3 text-center fw-bold">Đăng nhập</h2>
 
                         {
                             <p className="form-text text-danger">{validationMsg.api}</p>
@@ -85,20 +83,20 @@ function Login(props) {
                             <div className="row">
                                 <div className="col-lg-12">
                                     <div className="form-group">
-                                        <label className="text-dark" htmlFor="uname">Email</label>
+                                        <label className="text-dark" htmlFor="uname mb-3">Email</label>
                                         <input className="form-control" name="email" type="text" placeholder="Enter your email" value={email} onChange={(e) => setEmail(e.target.value)} />
                                         <p className="form-text text-danger">{validationMsg.email}</p>
                                     </div>
                                 </div>
                                 <div className="col-lg-12">
                                     <div className="form-group">
-                                        <label className="text-dark" htmlFor="pwd">Password</label>
+                                        <label className="text-dark" htmlFor="pwd mb-3">Password</label>
                                         <input className="form-control" name="password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Enter your password" />
                                         <p className="form-text text-danger">{validationMsg.password}</p>
                                     </div>
                                 </div>
                                 <div className="col-lg-12 text-center">
-                                    <button type="submit" className="btn btn-block btn-dark">Sign In</button>
+                                    <button type="submit" className="btn btn-block btn-success">Sign In</button>
                                 </div>
                             </div>
                         </form>

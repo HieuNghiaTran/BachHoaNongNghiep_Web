@@ -6,7 +6,7 @@ import ModalEditProduct from "./ModalsEditProduct";
 import ModalDelete from "./ModalsDelete";
 const TableProduct = (props) => {
   const { product } = props
-  const [temp,setTemp]=useState({})
+  const [temp, setTemp] = useState({})
   const [isShowModalEdit, setIsShowModalEdit] = useState(false)
   const [isShowModalDelete, setIsShowModalDelete] = useState(false)
 
@@ -19,7 +19,7 @@ const TableProduct = (props) => {
 
 
 
-    <Table striped bordered hover>
+    <Table  style={{ tableLayout:"auto",width: '100%' }} striped bordered hover>
       <thead>
         <tr>
           <th className="text-center">Mã sản phẩm</th>
@@ -34,15 +34,17 @@ const TableProduct = (props) => {
         {product && product.length > 0 && product.map((item, index) => (
           <tr key={index}>
             <td className="text-center">{item.product_id}</td>
-            <td>{<img src={item.images[0].url} className="" style={{ width: '6rem' }}></img>}</td>
+            <td>{item.images.length > 0 && <img src={item.images[0].url} style={{ width: '6rem' }}></img>}</td>
             <td>{item.name_product}</td>
             <td style={{ color: "red", fontWeight: "bolder" }}>{item.price_product}đ</td>
             <td>{item.stock}</td>
+           
             <td>
-              <button type="button" class="btn btn-success mx-2" onClick={()=>{
-                
+              <button type="button" class="btn btn-success mx-2" onClick={() => {
+
                 setTemp(item)
-                setIsShowModalEdit(true)}}
+                setIsShowModalEdit(true)
+              }}
               >
                 <span className="mx-1"><TfiWrite /></span>
 
@@ -51,12 +53,13 @@ const TableProduct = (props) => {
 
 
               <button type="button" class="btn btn-danger"
-              onClick={()=>{
+                onClick={() => {
 
-                setTemp(item)
-                setIsShowModalDelete(true)}}
-              
-              
+                  setTemp(item)
+                  setIsShowModalDelete(true)
+                }}
+
+
               ><span><MdDelete /></span>Xoá</button></td>
 
           </tr>
@@ -64,19 +67,19 @@ const TableProduct = (props) => {
       </tbody>
     </Table>
 
-  {temp&&   <ModalEditProduct
-                isModalVisible={isShowModalEdit}
-                handleCloseModal={CloseModal}
-                product={temp}
+    {temp && <ModalEditProduct
+      isModalVisible={isShowModalEdit}
+      handleCloseModal={CloseModal}
+      product={temp}
 
-            />}
+    />}
 
-      <ModalDelete
-       isModalVisible={isShowModalDelete}
-       handleCloseModal={CloseModal}
-       product={temp}
-      
-      />
+    <ModalDelete
+      isModalVisible={isShowModalDelete}
+      handleCloseModal={CloseModal}
+      product={temp}
+
+    />
   </>)
 
 

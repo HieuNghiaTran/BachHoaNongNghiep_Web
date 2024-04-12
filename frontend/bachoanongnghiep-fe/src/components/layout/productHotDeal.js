@@ -59,7 +59,7 @@ const ProductsHot = ({ product, col }) => {
                 </div>
                 <div>
                     <div className="my-2">{product.soldQuantity} sản phẩm được bán</div>
-                    <ProgressBar completed={product.soldQuantity/product.stock} bgColor="#dc3545" height="10px" isLabelVisible={false} />
+                    <ProgressBar completed={Math.floor(Math.random() * 100) + 1} bgColor="#dc3545" height="10px" isLabelVisible={false} />
 
                 </div>
             </div>

@@ -36,10 +36,12 @@ const Location = () => {
             <div><History data={"Trang chủ / "} last_item={`Hệ thông cửa hàng`}/></div>
 
 
-            <div className="text-center h2 p-2">DANH SÁCH CỬA HÀNG</div>
+        
+
+            <div className='h2 mb-4 text-center h2 p-2 fw-bold my-4' style={{ fontFamily: "'Roboto', sans-serif" }}>CỬA HÀNG CỦA CHÚNG TÔI</div>
             <div className="col-11 m-auto">
                 <div className="row">
-                    <div className="left col-md-3 p-4">
+                <div className="left col-md-3 p-4" style={{ boxShadow: "rgba(100, 100, 111, 0.2) 0px 7px 29px 0px" }}>
                         <div className="h3">Tìm cửa hàng</div>
                         <div className="">
                             <label className="mb-2">Chọn tỉnh thành</label>
@@ -58,30 +60,12 @@ const Location = () => {
                                     (optionA?.label ?? '').toLowerCase().localeCompare((optionB?.label ?? '').toLowerCase())
                                 }
                                 options={[
+                                
                                     {
                                         value: '1',
-                                        label: 'Not Identified',
+                                        label: 'An giang',
                                     },
-                                    {
-                                        value: '2',
-                                        label: 'Closed',
-                                    },
-                                    {
-                                        value: '3',
-                                        label: 'Communicated',
-                                    },
-                                    {
-                                        value: '4',
-                                        label: 'Identified',
-                                    },
-                                    {
-                                        value: '5',
-                                        label: 'Resolved',
-                                    },
-                                    {
-                                        value: '6',
-                                        label: 'Cancelled',
-                                    },
+                                    
                                 ]}
                             />
 
@@ -101,28 +85,19 @@ const Location = () => {
                                 options={[
                                     {
                                         value: '1',
-                                        label: 'Not Identified',
+                                        label: 'Cửa hàng BHNN Số 1',
                                     },
+
+
                                     {
                                         value: '2',
-                                        label: 'Closed',
+                                        label: 'Cửa hàng BHNN Số 2',
                                     },
                                     {
                                         value: '3',
-                                        label: 'Communicated',
+                                        label: 'Cửa hàng BHNN Số 2',
                                     },
-                                    {
-                                        value: '4',
-                                        label: 'Identified',
-                                    },
-                                    {
-                                        value: '5',
-                                        label: 'Resolved',
-                                    },
-                                    {
-                                        value: '6',
-                                        label: 'Cancelled',
-                                    },
+                                    
                                 ]}
                             />
 
@@ -152,13 +127,13 @@ const Location = () => {
 
 
                     </div>
-                    <div className="right col-md-9">
+                    <div className="right col-md-9" style={{ boxShadow: "rgba(100, 100, 111, 0.2) 0px 7px 29px 0px" }}>
             <GoogleMapReact
               bootstrapURLKeys={{ key: "AIzaSyD1234567890-abcdefghijklmnopqrstuvwxyz" }}
               defaultCenter={defaultProps.center}
               defaultZoom={defaultProps.zoom}
             >
-              <AnyReactComponent lat={59.955413} lng={30.337844} text="My Marker" />
+              <AnyReactComponent lat={59.955413} lng={30.337844} text="Cửa hàng BHNN Số 1" />
             </GoogleMapReact>
           </div>
 

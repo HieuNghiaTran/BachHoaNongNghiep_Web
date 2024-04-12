@@ -38,6 +38,13 @@ return axios.get(`http://localhost:8001/myorder?username=${username}`)
 }
 
 
-export { getMyOrder,submitDetail,getOrderWithPhoneNumber, submitOrder, getaAllOrder, getDetailOrder, deleteOrder }
+const updateStatusOrder=(data)=>{
+return axios.post("http://localhost:8001/updateOrder",data)
+
+
+}
+
+
+export { getMyOrder,submitDetail,getOrderWithPhoneNumber, submitOrder, getaAllOrder, getDetailOrder, deleteOrder, updateStatusOrder }
 
 

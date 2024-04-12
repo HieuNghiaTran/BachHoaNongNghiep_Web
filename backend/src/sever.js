@@ -65,7 +65,7 @@ io.on('connection', (socket) => {
 socket.on("sendDataClient", function(data) {
 
   io.emit("sendDataServer", { data });
-})
+})  
 
 socket.emit('response_room', conversation ) 
 

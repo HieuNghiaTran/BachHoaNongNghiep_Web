@@ -91,24 +91,31 @@ const HomePage = () => {
   return (
 
     <div className='wrapper position-relative'>
-       
+
       <MetaData title={"Trang chủ"}></MetaData>
       <Header />
-      
+
       <main className="">
-        <div className='top-main d-flex position-relative px-3'>
+        <div className='top-main d-flex position-relative px-3 mb-4' style={{ height: "100%" }}>
           <Sidebar />
           <Sliders />
-          <div className="col-md-3 mx-3 mb-3" style={{ height: "100%" }}>
-            <div className="row"> <Link to={"/trang-chu"} ><img className="mb-1 mt-1 w-100" src="https://theme.hstatic.net/1000269461/1000985512/14/bottom_banner_1_large.jpg?v=1678"></img></Link></div>
-            <div className="row"> <Link to={"/trang-chu"}><img className="w-100" src="https://theme.hstatic.net/1000269461/1000985512/14/bottom_banner_3_large.jpg?v=1678"></img></Link></div>
-
+          <div className="col-md-3  mx-2 d-flex flex-column" style={{height:"50%"}}>
+            <div className="row flex-grow-1" style={{height:"50%"}} >
+              <Link to={"/trang-chu"} className="d-block w-100 h-100">
+                <img className="mb-1 mt-1 w-100" src="https://theme.hstatic.net/1000269461/1000985512/14/bottom_banner_1_large.jpg?v=1678" alt="Banner 1" />
+              </Link>
+            </div>
+            <div className="row flex-grow-1"style={{height:"50%"}}>
+              <Link to={"/trang-chu"} className="d-block w-100 h-100">
+                <img className="w-100" src="https://theme.hstatic.net/1000269461/1000985512/14/bottom_banner_3_large.jpg?v=1678" alt="Banner 3" />
+              </Link>
+            </div>
           </div>
         </div>
         <ListCatory />
 
-     
-        <div><HotDeal/></div>
+
+        <div><HotDeal /></div>
         <h4 className="sub-title">THUỐC BẢO VỆ THỰC VẬT</h4>
 
         <div className="tbvtv_are d-flex flex-wrap p-0">
@@ -195,14 +202,14 @@ const HomePage = () => {
         </div>
         <ScrollToTop />
         <AppChat />
-      
+
       </main>
 
 
       <Footer />
 
 
-      
+
     </div>
   );
 };

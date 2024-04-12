@@ -6,7 +6,7 @@ import { getDetailOrder } from "../services/orderServies";
 
 
 const ModalDetailOrder = (props) => {
-    const { isModalVisible, handleCloseModal, id_order, ship } = props
+    const { isModalVisible, handleCloseModal, id_order, ship, note } = props
     const [detailOrder, setDetailOrder] = useState([]);
 
 
@@ -73,7 +73,7 @@ const ModalDetailOrder = (props) => {
 
 
             <Modal
-                title="Thông tin sản phẩm đơn hàng"
+                
                 visible={isModalVisible}
                 onClose={handleCloseModal}
                 onOk={handleCloseModal}
@@ -81,15 +81,15 @@ const ModalDetailOrder = (props) => {
                 width={900}
             >
                 <div>
+                <div className="text-center  mt-2 mb-3" >
+                                    <h4 className="fw-bold">Thông tin đơn hàng</h4>
+                                </div>
                     <Table dataSource={dataSource} columns={columns} />
-
+                    <div className="fw-bold">Ghi Chú: <span className="mx-2">{note}</span></div>
 
                     <div style={{ fontWeight: "bold" }} className="text-center">Phí giao hàng: <span style={{ color: "red", fontSize: "1.2rem" }} className="mx-2">{ship} đ</span>    </div>
 
                     <div style={{ fontWeight: "bold" }} className="text-center">Tổng cộng đơn hàng: <span style={{ color: "red", fontSize: "1.2rem" }} className="mx-2">{detailOrder.reduce((acc, item) => (acc + item.price_product * item.count), 0) + ship} đ</span>    </div>
-
-
-
 
 
                 </div>

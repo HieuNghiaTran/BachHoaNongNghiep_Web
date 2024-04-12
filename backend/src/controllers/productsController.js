@@ -196,6 +196,7 @@ const productController = {
                 { page, limit: perPage, sort: { _id: -1 } }
             );
             res.json(result);
+            console.log(result)
           
         } catch (err) {
             res.status(500).json(err);

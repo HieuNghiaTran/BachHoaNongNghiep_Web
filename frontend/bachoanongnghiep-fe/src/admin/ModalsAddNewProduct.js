@@ -7,6 +7,9 @@ import getAllColecion from "../services/collectionsServices";
 import { addNewProduct } from "../services/productSevices";
 import { toast } from 'react-toastify';
 import Loader from "../components/layout/Loader";
+import ReactQuill from 'react-quill'
+import 'react-quill/dist/quill.snow.css';
+
 
 const getBase64 = (file) =>
     new Promise((resolve, reject) => {
@@ -20,9 +23,9 @@ const ModalAddNewProduct = (props) => {
     const { isModalVisible, handleCloseModal, product, fetch } = props
     const [listcatogary, setListCategory] = useState([])
     const [imagesPreview, setImagesPreview] = useState([])
-    const [describe, setDescirbe] = useState()
+    const [describe, setDescirbe] = useState('')
     const [id_product, setIdProduct] = useState();
-    const [name, setName] = useState()
+    const [name, setName] = useState('')
     const [stock, setStock] = useState()
     const [price, setPrice] = useState()
     const [date, setDate] = useState();
@@ -34,9 +37,6 @@ const ModalAddNewProduct = (props) => {
     const [previewOpen, setPreviewOpen] = useState(false);
     const [previewImage, setPreviewImage] = useState('');
     const [previewTitle, setPreviewTitle] = useState('');
-
-
-
     const [fileList, setFileList] = useState([]);
 
 
@@ -44,16 +44,13 @@ const ModalAddNewProduct = (props) => {
         let temp = await getAllCategory();
         setListCategory(temp.data);
 
-    
-    }
 
+    }
     const handleCancel = () => setPreviewOpen(false);
 
-
-
     useEffect(() => {
-       
-            fetchData()
+
+        fetchData()
 
     }, [])
 
@@ -89,7 +86,6 @@ const ModalAddNewProduct = (props) => {
 
     const handleSubmit = async () => {
         setLoading(true)
-        console.log(fileList)
         fileList.forEach(element => {
             img.push(element.thumbUrl)
         });
@@ -107,13 +103,10 @@ const ModalAddNewProduct = (props) => {
             soldQuantity: 0
         }
         let res = await addNewProduct(data);
-
-        console.log(fileList)
-
         setLoading(false)
         handleCloseModal()
         toast.success("Add Product Success");
-
+   
 
     }
 
@@ -245,13 +238,19 @@ const ModalAddNewProduct = (props) => {
                                         <div className="form-group col-md-12 mb-2">
                                             <label for="entry">Mô Tả: </label>
 
-                                            <textarea
-                                                type="text" className="form-control w-100" id="price" placeholder="Describe"
-                                                value={describe}
-                                                onChange={(e) => { setDescirbe(e.target.value) }}></textarea>
+                                            <div>
+                                                <ReactQuill
+                                                    theme="snow"
+                                                    modules={{ toolbar: true }}
+                                                    formats={['bold', 'italic', 'underline', 'link']}
+                                                    value={describe}
+                                                    onChange={setDescirbe}
+                                                    style={{ height: '300px' }}
+                                                />
+                                            </div>
                                         </div>
-                                        <div className="form-group col-md-10 mb-2">
-                                            <label for="image">Ảnh Sản Phẩm: </label>
+                                        <div className="form-group col-md-10 mb-2 my-5">
+                                            <label for="image" className='mb-2'>Ảnh Sản Phẩm: </label>
                                             <Upload
                                                 action="https://run.mocky.io/v3/435e224c-44fb-4773-9faf-380c5e6a2188"
                                                 listType="picture-card"

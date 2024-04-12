@@ -136,7 +136,7 @@ const ChatPage = () => {
                                                 onChange={handleValueChange}
                                             />
                                         </form>
-                                        <button type="submit">Gửi</button>
+                                        <button type="btn">Gửi</button>
                                     </div>
 
 
