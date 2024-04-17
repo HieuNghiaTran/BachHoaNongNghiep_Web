@@ -54,13 +54,14 @@ const ModalEditProduct = (props) => {
     }, [])
 
     useEffect(() => {
-        if (product && product.images) {
+        
             setFileList(product.images.map(item => ({
                 uid: item.public_id,
                 status: 'done',
                 url: item.url
             })));
-        }
+
+
     }, [product]);
 
     useEffect(() => {
@@ -122,7 +123,7 @@ const ModalEditProduct = (props) => {
             if (element.thumbUrl) { img.push(element.thumbUrl) }
         });
 
-        
+
         let data = new FormData()
         data = {
             id_category: selected1,
@@ -159,6 +160,8 @@ const ModalEditProduct = (props) => {
 
                 }}
 
+                width={900}
+
             >
                 <div>
 
@@ -176,14 +179,13 @@ const ModalEditProduct = (props) => {
                                 <h4 style={{ fontWeight: "bold" }}>Thông tin sản phẩm</h4>
                             </div>
 
-
                             <div className="action mb-4">
                                 <div className="frms container" id="form-id">
                                     <div className="form-row">
                                         <div className="form-group col-md-12 mb-2">
                                             <label for="code">Mã Sản Phẩm: </label>
                                             <input type="text" className="form-control" id="code" placeholder="Code"
-
+                                                required
                                                 value={id_product}
                                                 onChange={(e) => { setIdProduct(e.target.value) }}
 
@@ -205,7 +207,7 @@ const ModalEditProduct = (props) => {
 
                                             >
                                                 <option defaultValue>Select a category</option>
-                                                {listcatogary.map((item, index) => (
+                                                {listcatogary && listcatogary.map((item, index) => (
                                                     <option key={index} value={item._id}>{item.category}</option>
                                                 ))}
                                             </select>

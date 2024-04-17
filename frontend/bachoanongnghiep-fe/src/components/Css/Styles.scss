@@ -264,8 +264,9 @@
             -webkit-transform: perspective(1px) translateZ(0);
             transform: perspective(1px) translateZ(0);
         }
-        
-        li:hover::after { /* Use ::before instead of .li:before */
+
+        li:hover::after {
+            /* Use ::before instead of .li:before */
             content: "";
             position: absolute;
             z-index: -1;
@@ -277,11 +278,11 @@
             -webkit-transition-property: right;
             transition-property: right;
             -webkit-transition-duration: 0.3s;
-            transition-duration: 0.3s; 
+            transition-duration: 0.3s;
             -webkit-transition-timing-function: ease-out;
             transition-timing-function: ease-out;
         }
-        
+
 
         li {
             display: inline-block;
@@ -445,7 +446,7 @@ footer {
 
 
 .baner {
-  
+
     flex-basis: "40%";
     margin: 10px auto;
     //padding: 30px;
@@ -545,7 +546,7 @@ footer {
     }
 }
 
-.result::before{
+.result::before {
     content: '';
     width: 0;
     height: 0;
@@ -641,7 +642,7 @@ footer {
 }
 
 
-.list-cart-from-icon::before{
+.list-cart-from-icon::before {
     content: '';
     width: 0;
     height: 0;
@@ -928,7 +929,6 @@ th {
 .bg-darks {
     opacity: 0.2;
     z-index: 9999;
-    //background-color: gray;
 }
 
 .isShowSidebar {
@@ -947,8 +947,8 @@ th {
 
 
 
-.slick-slider button{
-background-color: transparent;
+.slick-slider button {
+    background-color: transparent;
 
 
 }
@@ -956,8 +956,26 @@ background-color: transparent;
 
 
 
-.product-item:hover{
-
-
+.product-item:hover {
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
     transform: scale(1.02);
+}
+
+
+.img-catory:hover {
+    transform: translateY(-10px);
+    box-shadow: rgba(14, 63, 131, 0.2) 0px 7px 29px 0px;
+
+}
+
+.img-catory {
+        
+    object-fit: cover;
+
+
+}
+
+table {
+    width: 100%; /* Bảng sẽ chiếm toàn bộ kích thước của container */
+    border-collapse: collapse; /* Gộp các đường viền của bảng */
 }

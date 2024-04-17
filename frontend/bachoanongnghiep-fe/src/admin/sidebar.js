@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { MdDashboard } from "react-icons/md";
 import { AuthContext } from './context/authContext';
 import { MdOutlineMarkUnreadChatAlt } from "react-icons/md";
+import { LuPackageOpen } from "react-icons/lu";
 
 const Sidebar = () => {
     const [admin, setAdmin] = useState('')
@@ -49,14 +50,14 @@ const handleLogout=()=>{
 
 
     return (
-        <div className="sidebar-wrapper bg-dark">
+        <div className="sidebar-wrapper h-100">
 
             <div class="bg-light text-center ">
                 <div className=''>
 
                     <img src={require("../components/images/logo.png")} alt="..."
                         class="img-thumbnail shadow-sm" />
-                    <h5 class="mt-2">Xin chào, {admin}</h5>
+                    <p class="mt-2">Xin chào, <span style={{color:"#be2edd" ,fontWeight:"bold"}}>{admin}</span></p>
                     <p class="btn btn-danger font-weight-light btn-sm" onClick={handleLogout} >Đăng xuất</p></div>
             </div>
             <nav id="sidebar">
@@ -65,7 +66,7 @@ const handleLogout=()=>{
                         <Link to="/admin/dashboard"><MdDashboard /><span className='mx-2'> Tổng quan</span></Link>
                     </li>
                     <li>
-                        <Link to="/admin/products">  <i class="fa fa-th-large mr-1 text-primary fa-fw"></i> Quản lý sản phẩm</Link>
+                        <Link to="/admin/products"> <LuPackageOpen style={{marginRight:"0.5rem"}} /> Quản lý sản phẩm</Link>
                     </li>
 
                     <li>

@@ -61,6 +61,7 @@ const productController = {
 
             let imagesLinks = [];
 
+           if(images){
             for (let i = 0; i < images.length; i++) {
                 const result = await cloudinary.v2.uploader.upload(images[i], {
                     folder: 'products'
@@ -75,6 +76,9 @@ const productController = {
                     url: result.secure_url
                 })
             }
+
+
+           }
 
 
             req.body.images = imagesLinks

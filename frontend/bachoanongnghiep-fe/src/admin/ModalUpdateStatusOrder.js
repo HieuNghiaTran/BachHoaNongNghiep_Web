@@ -19,9 +19,9 @@ const ModalUpdateStatusOrder = (props) => {
         }
 
         let res = await updateStatusOrder(data)
-        console.log(res.data)
         alert("Thành Công")
         handleCloseModal()
+        window.location.reload()
 
     }
 
@@ -45,11 +45,8 @@ const ModalUpdateStatusOrder = (props) => {
                 <div className="fw-bold mt-3">Trạng thái: <span className="m-2">
 
                     {status === "Đã đặt hàng" && (<><span className="" style={{ color: "red" }}>Đã đặt hàng</span></>)}
-                    {status === "Đang vận chuyển" && (<><span style={{ color: "yellow" }}>Đang vận chuyển</span></>)}
+                    {status === "Đang giao hàng" && (<><span style={{ color: "#f39c12" }}>Đang vận chuyển</span></>)}
                     {status === "Đã giao hàng" && (<><span style={{ color: "green" }}>Đã giao hàng</span></>)}
-
-
-
 
                 </span>
                     <BiSolidEditAlt className="mx-1" style={{ fontSize: "1.3rem" }} onClick={() => { setIsShowEdit(!isShowEdit) }} />

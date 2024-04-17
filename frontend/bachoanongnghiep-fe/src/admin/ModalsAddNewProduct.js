@@ -126,6 +126,7 @@ const ModalAddNewProduct = (props) => {
                     onClose={handleCloseModal}
                     onOk={handleSubmit}
                     onCancel={handleCloseModal}
+                    width={900}
 
                 >
                     <div>

@@ -11,7 +11,7 @@ import { FaRegAddressBook, FaPhone, FaUser } from "react-icons/fa";
 import AppChat from '../components/layout/appchat';
 
 const MyOrder = () => {
-  const { user} = useContext(UserContext);
+  const { user } = useContext(UserContext);
   const [listOrder, setListOrder] = useState([]);
 
   useEffect(() => {
@@ -31,8 +31,18 @@ const MyOrder = () => {
     key: index.toString(),
     code: item._id,
     date: format(new Date(item.create_time), 'dd/MM/yyyy HH:mm:ss'),
-    total: <span className="text-center" style={{color:"red", fontWeight:"bold"}}>{item.total}đ</span>,
-    payment: <span className="btn btn-success ma-auto">{item.status}</span>,
+    total: <span className="text-center" style={{ color: "red", fontWeight: "bold" }}>{item.total}đ</span>,
+    payment: item.payment_status === "VNPAY" ? (
+      <>
+        <span><img className="mx-2" width={"32rem"} src={require("../components/images/VNPAY.png")} alt="Thanh toán khi nhận hàng"></img></span>
+        <button className="btn btn-light">Đã thanh toán</button>
+      </>
+    ) : (
+      <>
+        <span><img className="mx-2" width={"32rem"} src={require("../components/images/thanhtoankhinhanhang.png")} alt="Thanh toán khi nhận hàng"></img></span>
+        <button className="btn btn-light">Thanh toán khi nhận hàng</button>
+      </>
+    ),
     shipping: (
       <div>
         <span><FaUser className="mx-2" />Họ và tên: </span>
@@ -88,13 +98,13 @@ const MyOrder = () => {
         <div><History data={"Trang chủ / "} last_item={`Đơn hàng của tôi`} /></div>
         <MetaData title={"Đơn hàng của bạn"}></MetaData>
         <div className="col-md-8 m-auto">
-        <div className='h2 mb-4 text-center h2 p-2 fw-bold my-4' style={{ fontFamily: "'Roboto', sans-serif" }}>ĐƠN HÀNG CỦA TÔI</div>
+          <div className='h2 mb-4 text-center h2 p-2 fw-bold my-4' style={{ fontFamily: "'Roboto', sans-serif" }}>ĐƠN HÀNG CỦA TÔI</div>
           <div className="table-product" style={{ boxShadow: "rgba(100, 100, 111, 0.2) 0px 7px 29px 0px" }}>
             <Table dataSource={dataSource} columns={columns} />
           </div>
         </div>
       </div>
-      <AppChat/>
+      <AppChat />
       <div className="m-auto"><Footer /></div>
     </>
   );

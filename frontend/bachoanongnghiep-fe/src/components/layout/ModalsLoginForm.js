@@ -47,7 +47,7 @@ const ModalsLoginForm = (props) => {
 
         const params = { username, pass };
         const query = "?" + querystring.stringify(params);
-       
+
 
         try {
             let res = await getDetailUser(query);
@@ -66,24 +66,22 @@ const ModalsLoginForm = (props) => {
                     login(res.jwt, res.user)
                     const action = addSession(res._id)
                     dispatch(action)
-                    //const action_count_change = changeCount(count_change)
-                    //dispatch(action_count_change)
                     handleClose()
-                    alert("Đăng nhập thành công! Xin chào,"+" "+username)
+                    alert("Đăng nhập thành công! Xin chào," + " " + username)
 
                 }
             }
 
 
 
-            
+
 
 
         } catch (err) {
-      
+
         }
 
-       
+
         setUsername('');
         setPass('')
     }
@@ -184,7 +182,7 @@ const ModalsLoginForm = (props) => {
                                         rules={[
                                             {
                                                 required: true,
-                                                message: 'Vui long',
+                                                message: 'Vui lòng nhập tên đăng nhập',
                                             },
                                         ]}
                                     >
@@ -219,8 +217,6 @@ const ModalsLoginForm = (props) => {
                                         <Checkbox>Ghi nhớ thông tin</Checkbox>
 
 
-
-
                                     </Form.Item>
                                     {statusMessages ? (<div className="bold text-center mb-4" style={{ color: "red", fontWeight: "bold" }}><span className="m-2"><FcCancel style={{ color: "red", fontWeight: "bold" }} /></span>{errorMessages}</div>) : <></>}
 
@@ -233,7 +229,7 @@ const ModalsLoginForm = (props) => {
                                     >
 
 
-                                        <Button type="primary" htmlType="submit">
+                                        <Button type="primary" htmlType="submit" style={{ width: "40%" }}>
                                             Đăng nhập
                                         </Button>
                                     </Form.Item>
@@ -265,7 +261,7 @@ const ModalsLoginForm = (props) => {
                                     rules={[
                                         {
                                             required: true,
-                                            message: 'Vui long',
+                                            message: 'Vui lòng nhập tên đăng nhập',
                                         },
                                     ]}
                                 >
@@ -279,7 +275,7 @@ const ModalsLoginForm = (props) => {
                                     rules={[
                                         {
                                             required: true,
-                                            message: 'Email là cần thiết',
+                                            message: 'Vui lòng nhập họ tên',
                                         },
                                     ]}
                                 >
@@ -292,7 +288,7 @@ const ModalsLoginForm = (props) => {
                                     rules={[
                                         {
                                             required: true,
-                                            message: 'Email là cần thiết',
+                                            message: 'SĐT là cần thiết',
                                         },
                                     ]}
                                 >
@@ -332,9 +328,11 @@ const ModalsLoginForm = (props) => {
                                 <Form.Item
                                     name="remember"
                                     valuePropName="checked"
+                                    rules={[{ required: true, message: 'Vui lòng chọn' }]}
                                     wrapperCol={{
                                         offset: 8,
                                         span: 16,
+                                
                                     }}
                                 >
                                     <Checkbox>Tôi đã đọc kỹ thông tin</Checkbox>
