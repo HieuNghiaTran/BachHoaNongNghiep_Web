@@ -17,12 +17,12 @@ const Sidebar = () => {
     const handleMouseEnter = () => {
         if (window.pageYOffset > 300) {
 
-          if(sidebar){
+            if (sidebar) {
 
 
-            sidebar.classList.add('isShowSidebar');
+                sidebar.classList.add('isShowSidebar');
 
-          }
+            }
 
         }
 
@@ -30,10 +30,10 @@ const Sidebar = () => {
     }
 
     const handleMouseLeave = () => {
-       if(sidebar){
+        if (sidebar) {
 
-        sidebar.classList.remove('isShowSidebar');
-       }
+            sidebar.classList.remove('isShowSidebar');
+        }
     };
 
 
@@ -41,8 +41,8 @@ const Sidebar = () => {
     return (
 
         <>
-            <div className="sidebar mx-2" onMouseLeave={handleMouseLeave} onMouseEnter={() => { if(sidebar){btnSidebar.removeEventListener('mouseleave', handleMouseLeave)} }}  >
-                <ul className="" style={{ width: "20rem", boxShadow: "rgba(100, 100, 111, 0.2) 0px 7px 29px 0px", borderRadius:"7px" }} >
+            <div className="sidebar mx-2" onMouseLeave={handleMouseLeave} onMouseEnter={() => { if (sidebar) { btnSidebar.removeEventListener('mouseleave', handleMouseLeave) } }}  >
+                <ul className="" style={{ width: "20rem", boxShadow: "rgba(100, 100, 111, 0.2) 0px 7px 29px 0px", borderRadius: "7px" }} >
                     <li>
                         <Link to={"/trang-chu"}>
                             <img src=" https://theme.hstatic.net/200000722083/1001109742/14/menu_icon_1.png?v=22" width="27px" height="27px"></img>
@@ -87,11 +87,21 @@ const Sidebar = () => {
                         <i className="fa-solid fa-chevron-right"></i>
                     </li>
                     <li>
+                  
                         <Link>
+                        <i class="fa-solid fa-hand-holding-dollar"></i>
                             <span>Giá lúa hôm nay</span>
 
                         </Link>
 
+                    </li>
+                    <li><Link to={"/collections/658d7192bdf16aee6ce16342"}>
+
+                    <i class="fa-solid fa-plus"></i>
+
+                        <span className="mx-2">Blog nông nghiệp</span>
+                    </Link>
+                    
                     </li>
                 </ul>
 

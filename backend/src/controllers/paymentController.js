@@ -129,9 +129,9 @@ const PaymentCotroller = {
                             if (rspCode == "00") {
                                 let order = await Order.findById(orderId);
                                 if (order) {
-                                    order.status = "Đã Thanh Toán";
+                                    order.payment_status = "VNPAY";
                                     await order.save(); 
-                                    console.log("thành công"+ order)
+                                    res.redirect("http://localhost:3000/order/success");
                             
                                 } else {
                                     // Xử lý khi không tìm thấy đơn hàng

@@ -23,7 +23,8 @@ const OrderController = {
                 address: req.body.address,
                 status: req.body.status,
                 feeship: req.body.feeship,
-                create_time: req.body.create_time
+                create_time: req.body.create_time,
+                payment_status:req.body.payment_status
 
             }
 

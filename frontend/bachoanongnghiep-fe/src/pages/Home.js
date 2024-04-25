@@ -107,7 +107,7 @@ const HomePage = () => {
             </div>
             <div className="row flex-grow-1"style={{height:"50%"}}>
               <Link to={"/trang-chu"} className="d-block w-100 h-100">
-                <img className="w-100" src="https://theme.hstatic.net/1000269461/1000985512/14/bottom_banner_3_large.jpg?v=1678" alt="Banner 3" />
+                <img className="w-100"  src="https://theme.hstatic.net/1000269461/1000985512/14/bottom_banner_3_large.jpg?v=1678" alt="Banner 3" />
               </Link>
             </div>
           </div>
@@ -119,7 +119,7 @@ const HomePage = () => {
         <h4 className="sub-title">THUỐC BẢO VỆ THỰC VẬT</h4>
 
         <div className="tbvtv_are d-flex flex-wrap p-0">
-          <div><Link><img src="//theme.hstatic.net/200000692099/1001033556/14/section_hot.jpg?v=30"></img></Link></div>
+          <div><Link><img className="img-category mx-2" src="//theme.hstatic.net/200000692099/1001033556/14/section_hot.jpg?v=30"></img></Link></div>
           {products1 && products1.length > 0 && products1.map((product) => (
             <Products key={product._id} product={product} col={2} />
 
@@ -129,12 +129,12 @@ const HomePage = () => {
 
 
         <div className=" d-flex justify-content-center align-item-center"><Link to="/collections/658d71c7bdf16aee6ce16344"><button className="btn btn-outline-success">Xem tất cả</button></Link></div>
-        <div className="text-center p-4" ><Link><img className="w-100" src={"https://theme.hstatic.net/200000722083/1001109742/14/section_hot_banner.png?v=22"}></img></Link></div>
+        <div className="text-center p-4" ><Link><img className="w-100 img-category mx-2" src={"https://theme.hstatic.net/200000722083/1001109742/14/section_hot_banner.png?v=22"}></img></Link></div>
 
 
         <h4 className="sub-title">GẠO</h4>
         <div className="tbvtv_are d-flex flex-wrap">
-          <div><Link><img src="//theme.hstatic.net/200000692099/1001033556/14/section_hot.jpg?v=30"></img></Link></div>
+          <div><Link><img className="img-category img-category mx-2" src="//theme.hstatic.net/200000692099/1001033556/14/section_hot.jpg?v=30"></img></Link></div>
           {products2 && products2.length > 0 && products2.map((product) => (
             <Products key={product._id} product={product} col={2} />
 
@@ -145,7 +145,7 @@ const HomePage = () => {
         <div className=" d-flex justify-content-center align-item-center"><Link to={"/collections/658d7164bdf16aee6ce1633c"}><button className="btn btn-outline-success">Xem tất cả</button></Link></div>
         <h4 className="sub-title">PHÂN BÓN</h4>
         <div className="tbvtv_are d-flex flex-wrap">
-          <div><Link><img src="https://theme.hstatic.net/200000692099/1001033556/14/banner_coll_1.jpg?v=30"></img></Link></div>
+          <div><Link><img className="img-category mx-2" src="https://theme.hstatic.net/200000692099/1001033556/14/banner_coll_1.jpg?v=30"></img></Link></div>
           {products3 && products3.length > 0 && products3.map((product) => (
             <Products key={product._id} product={product} col={2} />
 
@@ -156,7 +156,7 @@ const HomePage = () => {
         <div className=" d-flex justify-content-center align-item-center"><Link to={"/collections/658d7170bdf16aee6ce1633e"}><button className="btn btn-outline-success">Xem tất cả</button></Link></div>
         <h4 className="sub-title">HẠT GIỐNG</h4>
         <div className="tbvtv_are d-flex flex-wrap">
-          <div><Link><img src="https://theme.hstatic.net/200000692099/1001033556/14/banner_coll_3.jpg?v=30"></img></Link></div>
+          <div><Link><img className="img-category mx-2" src="https://theme.hstatic.net/200000692099/1001033556/14/banner_coll_3.jpg?v=30"></img></Link></div>
           {products4 && products4.length > 0 && products4.map((product) => (
             <Products key={product._id} product={product} col={2} />
 
@@ -167,7 +167,7 @@ const HomePage = () => {
         <div className=" d-flex justify-content-center align-item-center"><Link to={"/collections/658d7192bdf16aee6ce16342"}><button className="btn btn-outline-success">Xem tất cả</button></Link></div>
         <h4 className="sub-title">LINK KIỆN DRONE</h4>
         <div className="tbvtv_are d-flex flex-wrap">
-          <div><Link><img src="//theme.hstatic.net/200000692099/1001033556/14/section_hot.jpg?v=30"></img></Link></div>
+          <div><Link><img src="//theme.hstatic.net/200000692099/1001033556/14/section_hot.jpg?v=30" className="img-category mx-2"></img></Link></div>
           {products5 && products5.length > 0 && products5.map((product) => (
             <Products key={product._id} product={product} col={2} />
 

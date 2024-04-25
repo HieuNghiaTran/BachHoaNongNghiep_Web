@@ -17,8 +17,7 @@ const TableProduct = (props) => {
 
   return (<>
 
-
-
+{product &&
     <Table  style={{ tableLayout:"auto",width: '100%' }} striped bordered hover>
       <thead>
         <tr>
@@ -66,7 +65,7 @@ const TableProduct = (props) => {
         ))}
       </tbody>
     </Table>
-
+  }
     {temp && <ModalEditProduct
       isModalVisible={isShowModalEdit}
       handleCloseModal={CloseModal}

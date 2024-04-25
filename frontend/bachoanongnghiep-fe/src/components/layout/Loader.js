@@ -1,5 +1,5 @@
 import React from 'react'
-
+import { Alert, Flex, Spin } from 'antd';
 const Loader = () => {
     return (
         <div className="containerr">

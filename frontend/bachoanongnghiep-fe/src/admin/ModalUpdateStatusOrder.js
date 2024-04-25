@@ -8,7 +8,7 @@ import { updateStatusOrder } from "../services/orderServies";
 const ModalUpdateStatusOrder = (props) => {
     const { isModalVisible, handleCloseModal, id, status } = props
     const [isShowEdit, setIsShowEdit] = useState(false)
-    const [value, setValue] = useState()
+    const [value, setValue] = useState('')
 
 
     const handleSubmit = async () => {
@@ -45,7 +45,7 @@ const ModalUpdateStatusOrder = (props) => {
                 <div className="fw-bold mt-3">Trạng thái: <span className="m-2">
 
                     {status === "Đã đặt hàng" && (<><span className="" style={{ color: "red" }}>Đã đặt hàng</span></>)}
-                    {status === "Đang giao hàng" && (<><span style={{ color: "#f39c12" }}>Đang vận chuyển</span></>)}
+                    {status === "Đang vận chuyển" && (<><span style={{ color: "#f39c12" }}>Đang vận chuyển</span></>)}
                     {status === "Đã giao hàng" && (<><span style={{ color: "green" }}>Đã giao hàng</span></>)}
 
                 </span>
@@ -58,7 +58,7 @@ const ModalUpdateStatusOrder = (props) => {
                     <div className="mt-2">
                         <Form.Select aria-label="Default select example" value={value} onChange={(e) => { setValue(e.target.value) }} >
                             <option value="Đã đặt hàng">Đã đặt hàng</option>
-                            <option value="Đang giao hàng">Đang giao hàng</option>
+                            <option value="Đang vận chuyển">Đang vận chuyển</option>
                             <option value="Đã giao hàng">Đã giao hàng</option>
                         </Form.Select>
 

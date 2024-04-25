@@ -26,23 +26,23 @@ const ProductManagerPage = () => {
     const [product, setProduct] = useState([])
     const [isShowModal, setIsShowModal] = useState(false)
     const [totalPages, setTotalPages] = useState(0);
-    const { perPage, setPerPage } = useState(5)
+    const [perPage, setPerPage] = useState(5);
     const [value, setValue] = useState('')
-    const {  jwt, user } = useContext(AuthContext);
+    const { jwt, user } = useContext(AuthContext);
 
     const onSearch = async () => {
-       if(value!==''){
-        let res = await getProductWithSearch(value)
-        setProduct(res.data)
+        if (value !== '') {
+            let res = await getProductWithSearch(value)
+            setProduct(res.data)
 
-       }
-       else{
-    
-        fetchData(1, perPage);
+        }
+        else {
+
+            fetchData(1, perPage);
 
 
-       }
-       
+        }
+
 
 
     }
@@ -65,9 +65,12 @@ const ProductManagerPage = () => {
 
     const fetchData = async (page, perPage) => {
         try {
-            const res = await getProductWithPage(page, perPage);
+            let res = await getProductWithPage(page, perPage);
             setProduct(res.data.docs);
             setTotalPages(res.data.totalPages);
+
+
+
         } catch (error) {
             console.error(error);
         }
@@ -90,8 +93,10 @@ const ProductManagerPage = () => {
                                     enterButton="Search"
                                     size="large"
                                     value={value}
-                                    onChange={(e) => { setValue(e.target.value) 
-                                        onSearch() }}
+                                    onChange={(e) => {
+                                        setValue(e.target.value)
+                                        onSearch()
+                                    }}
                                     width={400}
                                     onSearch={onSearch}
                                 />
@@ -118,10 +123,9 @@ const ProductManagerPage = () => {
                                 <MetaData title={'Product Manager'} />
 
                                 <div className="row pr-4">
-                                    <TableProduct
-                                        product={product}
-
-                                    />
+                                    {product && product.length > 0 && (
+                                        <TableProduct product={product} />
+                                    )}
                                 </div>
                             </Fragment>
                             <div className='row'>

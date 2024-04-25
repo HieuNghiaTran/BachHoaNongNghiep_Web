@@ -138,7 +138,7 @@ const SubmitOrderPage = () => {
                         status: "Đã đặt hàng",
                         feeship: feeship,
                         create_time: currentDateTime,
-                        payment_status:"VNPAY"
+                        payment_status:"VNPAY-Chưa Thành Công"
                     }
 
                     let data2 = new FormData();

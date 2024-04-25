@@ -28,20 +28,14 @@ const ModalEditProduct = (props) => {
     const [selected1, setSelected1] = useState()
     const [selected2, setSelected2] = useState()
     const [img, setImg] = useState([])
-    const [listColection, setListColection] = useState([])
-
-
-
+    const [listColection, setListColection] = useState([]);
     const [previewOpen, setPreviewOpen] = useState(false);
     const [previewImage, setPreviewImage] = useState('');
     const [previewTitle, setPreviewTitle] = useState('');
     const [fileList, setFileList] = useState([]);
 
 
-
-
     const handleCancel = () => setPreviewOpen(false);
-
 
     const fetchData = async () => {
         let temp = await getAllCategory();
@@ -54,19 +48,21 @@ const ModalEditProduct = (props) => {
     }, [])
 
     useEffect(() => {
-        
-            setFileList(product.images.map(item => ({
-                uid: item.public_id,
-                status: 'done',
-                url: item.url
-            })));
+
+        product.images && setFileList(product.images.length>0 && product.images.map(item => ({
+            uid: item.public_id,
+            status: 'done',
+            url: item.url
+        })));
 
 
     }, [product]);
 
+
+
+
     useEffect(() => {
         if (isModalVisible) {
-            console.log(product.date)
             setName(product.name_product)
             setDescirbe(product.describe)
             setPrice(product.price_product)
@@ -163,6 +159,7 @@ const ModalEditProduct = (props) => {
                 width={900}
 
             >
+    
                 <div>
 
 
@@ -226,7 +223,7 @@ const ModalEditProduct = (props) => {
 
                                             >
                                                 <option defaultValue>Select a type</option>
-                                                {listColection.map((item, index) => (
+                                                {listColection&&listColection.map((item, index) => (
                                                     <option key={index} value={item._id}>{item.colection}</option>
                                                 ))}
                                             </select>
@@ -293,13 +290,12 @@ const ModalEditProduct = (props) => {
 
 
                                         <Upload
-
                                             listType="picture-card"
-                                            fileList={fileList}
+                                            fileList={fileList ? fileList : []} 
                                             onPreview={handlePreview}
                                             onChange={handleChange}
                                         >
-                                            {fileList.length >= 8 ? null : uploadButton}
+                                            {fileList && fileList.length >= 8 ? null : uploadButton} 
                                         </Upload>
                                         <Modal open={previewOpen} title={previewTitle} footer={null} onCancel={handleCancel}>
                                             <img
