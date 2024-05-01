@@ -106,6 +106,7 @@ const ModalAddNewProduct = (props) => {
         setLoading(false)
         handleCloseModal()
         toast.success("Add Product Success");
+        window.location.reload()
    
 
     }

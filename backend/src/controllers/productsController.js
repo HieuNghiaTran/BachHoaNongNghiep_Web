@@ -57,6 +57,8 @@ const productController = {
                 images.push(req.body.images)
             } else {
                 images = req.body.images
+    
+
             }
 
             let imagesLinks = [];
@@ -66,7 +68,7 @@ const productController = {
                 const result = await cloudinary.v2.uploader.upload(images[i], {
                     folder: 'products'
                 });
-                console.log(result)
+
                 if (result.error) {
                     res.status(500).send(result.error.message);
                     return;
@@ -235,8 +237,10 @@ const productController = {
             let images = []
             if (typeof req.body.images === 'string') {
                 images.push(req.body.images)
+            
             } else {
                 images = req.body.images
+            
             }
 
             if (images !== undefined) {

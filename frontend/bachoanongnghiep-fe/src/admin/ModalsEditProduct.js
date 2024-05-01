@@ -135,6 +135,7 @@ const ModalEditProduct = (props) => {
         let res = await updateProduct(product._id, data);
         handleCloseModal()
         toast.success("Edit Product Success")
+        window.location.reload()
     }
 
 

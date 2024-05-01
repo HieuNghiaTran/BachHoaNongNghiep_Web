@@ -35,7 +35,8 @@ const TableProduct = (props) => {
             <td className="text-center">{item.product_id}</td>
             <td>{item.images.length > 0 && <img src={item.images[0].url} style={{ width: '6rem' }}></img>}</td>
             <td>{item.name_product}</td>
-            <td style={{ color: "red", fontWeight: "bolder" }}>{item.price_product}đ</td>
+            <td style={{ color: "red", fontWeight: "bolder" }}><b>{parseInt(item.price_product).toLocaleString()} đ</b></td>
+
             <td>{item.stock}</td>
            
             <td>
