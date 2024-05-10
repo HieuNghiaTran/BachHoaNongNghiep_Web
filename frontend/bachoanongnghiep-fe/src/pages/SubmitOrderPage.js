@@ -92,7 +92,7 @@ const SubmitOrderPage = () => {
 
                 let data = new FormData()
                 data = {
-                    username: user.username,
+                    username: user,
                     name: name,
                     email: email,
                     note: note,
@@ -128,7 +128,7 @@ const SubmitOrderPage = () => {
 
                     let data = new FormData()
                     data = {
-                        username: user.username,
+                        username: user,
                         name: name,
                         email: email,
                         note: note,
@@ -190,12 +190,12 @@ const SubmitOrderPage = () => {
         {
             title: 'Giá',
             dataIndex: 'price_product',
-            key: 'age',
+            key: 'price',
         },
         {
             title: 'Số lượng',
             dataIndex: 'quantity',
-            key: 'age',
+            key: 'quantity',
         },
         {
             title: 'Thành tiền',
@@ -260,8 +260,8 @@ const SubmitOrderPage = () => {
                                         name="email"
                                         rules={[
                                             {
-                                                required: true,
-                                                message: 'Email là cần thiết',
+                                                type: "email",
+                                                message: 'Email không hợp lệ',
                                             },
                                         ]}
                                     >
@@ -277,8 +277,13 @@ const SubmitOrderPage = () => {
                                         name="phone"
                                         rules={[
                                             {
+
                                                 required: true,
-                                                message: 'Vui lòng nhập số điện thoại',
+                                                message: 'SĐT là cần thiết',
+                                            },
+                                            {
+                                                pattern: /^0\d{9,10}$/,
+                                                message: 'Số điện thoại không hợp lệ',
                                             },
                                         ]}
                                     >
@@ -366,25 +371,23 @@ const SubmitOrderPage = () => {
                     <div className="p-right col-md-6">
 
                         <Table dataSource={product} columns={columns} />
+                        {!jwt&&!user&&
                         <div className="d-flex justify-content-between my-4 mx-3 border-top border-bottom p-3">
                             <div className="" style={{ fontSize: "1.1rem" }}>Chương trình khách hàng thân thiết</div>
                             <button className="btn btn-success">Đăng nhập</button>
-
-
-
-                        </div>
+                        </div>}
 
                         <div className="my-4 mx-3  border-bottom p-3">
 
                             <div className="d-flex justify-content-between">
 
                                 <span>Tạm tính:</span>
-                                <span style={{ color: 'red', fontWeight: 'bold' }}>{product.reduce((acc, item) => (acc + item.price_product * item.quantity), 0)} đ</span>
+                                <span style={{ color: 'red', fontWeight: 'bold' }}>{product.reduce((acc, item) => (acc + item.price_product * item.quantity), 0).toLocaleString()} đ</span>
 
                             </div>
                             <div className="d-flex justify-content-between">
                                 <span>Phí vận chuyển:</span>
-                                <span style={{ color: "red", fontWeight: 'bold' }}>25000 đ</span>
+                                <span style={{ color: "red", fontWeight: 'bold' }}>25.000 đ</span>
 
 
                             </div>

@@ -9,7 +9,6 @@ const Sidebar = () => {
     const [admin, setAdmin] = useState('')
     const { user, logOut } = useContext(AuthContext)
     const [isHaveMes, setIsHaveMes]=useState(false)
-    const ENDPOINT = "http://localhost:8001";
     const socketRef = useRef();
     const [loading, setLoading] = useState(false)
     const [messages, setMessages] = useState([]);
@@ -50,7 +49,7 @@ const handleLogout=()=>{
 
 
     return (
-        <div className="sidebar-wrapper h-100">
+        <div className="sidebar-wrapper">
 
             <div class="bg-light text-center ">
                 <div className=''>

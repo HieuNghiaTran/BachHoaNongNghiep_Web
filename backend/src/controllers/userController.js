@@ -114,6 +114,10 @@ const userController = {
 
 
     },
+
+
+
+    
     getAUser: async (req, res) => {
         try {
             const username = req.query.username

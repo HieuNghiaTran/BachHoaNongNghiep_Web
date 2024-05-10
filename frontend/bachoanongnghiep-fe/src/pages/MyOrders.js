@@ -9,6 +9,7 @@ import { getMyOrder } from "../services/orderServies";
 import { UserContext } from "../context/userContext";
 import { FaRegAddressBook, FaPhone, FaUser } from "react-icons/fa";
 import AppChat from '../components/layout/appchat';
+import Sidebar from '../components/layout/sidebar';
 
 const MyOrder = () => {
   const { user } = useContext(UserContext);
@@ -17,7 +18,7 @@ const MyOrder = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await getMyOrder(user.username);
+        const res = await getMyOrder(user);
         setListOrder(res.data);
       } catch (error) {
         console.error("Error fetching orders:", error);
@@ -25,7 +26,11 @@ const MyOrder = () => {
     };
 
     fetchData();
-  }, [user.username]);
+  }, [user]);
+
+  
+
+
 
   const dataSource = listOrder.map((item, index) => ({
     key: index.toString(),
@@ -94,6 +99,7 @@ const MyOrder = () => {
   return (
     <>
       <div><Header /></div>
+      <div className="sidebar-container mx-3 d-none"><Sidebar/></div>
       <div>
         <div><History data={"Trang chủ / "} last_item={`Đơn hàng của tôi`} /></div>
         <MetaData title={"Đơn hàng của bạn"}></MetaData>

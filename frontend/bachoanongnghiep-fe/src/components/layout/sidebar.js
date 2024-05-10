@@ -4,8 +4,6 @@ import { Link } from "react-router-dom";
 
 const Sidebar = () => {
 
-
-    //const btnSidebar = document.querySelector('.toogle_nav_wrapper')
     const sidebar = document.querySelector('.sidebar')
     const [btnSidebar, setBtnSidebar] = useState(null);
     useEffect(() => {
@@ -60,25 +58,25 @@ const Sidebar = () => {
                         <i className="fa-solid fa-chevron-right"></i>
 
                     </li>
-                    <li> <Link to={"/collections/658d7164bdf16aee6ce1633c"}>
+                    <li> <Link to={"/collections/658d7170bdf16aee6ce1633e"}>
                         <img src="//theme.hstatic.net/200000722083/1001109742/14/menu_icon_3.png?v=22" width="22px" height="22px"></img>
                         <span>Phân bón</span>
                     </Link>
                         <i className="fa-solid fa-chevron-right"></i>
                     </li>
-                    <li><Link to="/collections/658d71c7bdf16aee6ce16344">
+                    <li><Link to="/collections/658d7164bdf16aee6ce1633c">
                         <i className="fa-solid fa-bowl-rice"></i><span>Gạo</span>
 
                     </Link>
                         <i className="fa-solid fa-chevron-right"></i></li>
                     <li>
-                        <Link to={"/collections/658d7170bdf16aee6ce1633e"}>
+                        <Link to={"/collections/658d7192bdf16aee6ce16342"}>
                             <i className="fa-solid fa-seedling"></i>
                             <span>Hạt giống</span>
                         </Link>
                         <i className="fa-solid fa-chevron-right"></i>
                     </li>
-                    <li><Link to={"/collections/658d7192bdf16aee6ce16342"}>
+                    <li><Link to={"/collections/658d7182bdf16aee6ce16340"}>
 
                         <i className="fa-solid fa-wrench"></i>
 
@@ -95,7 +93,7 @@ const Sidebar = () => {
                         </Link>
 
                     </li>
-                    <li><Link to={"/collections/658d7192bdf16aee6ce16342"}>
+                    <li><Link to={""}>
 
                     <i class="fa-solid fa-plus"></i>
 

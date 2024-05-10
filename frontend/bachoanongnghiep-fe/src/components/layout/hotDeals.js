@@ -63,7 +63,7 @@ const HotDeal = () => {
         <div className="mt-5 p-4" style={{ background: "#ffc107" }}>
             <div className="col-md-11 m-auto p-2" style={{ background: "#fff", borderRadius: "6px" }}>
                 <div className="d-flex">
-                    <span><h2 style={{ fontWeight: "bold" }}> Sản phẩm bán chạy</h2></span>
+                    <span><h2 style={{ fontWeight: "bold" }}> Sản phẩm mới ra mắt</h2></span>
                     <span className="countdown mt-auto mb-auto mx-3">
                         <span style={{ color: "#666666" }}>Kết thúc sau: </span>
                         <span className="m-auto"><CountDown /></span>

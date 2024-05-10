@@ -5,7 +5,6 @@ import TableProduct from "../tableProduct";
 import { getAllProduct, getProductWithPage, getProductWithSearch } from "../../services/productSevices";
 import { FaPlusCircle } from "react-icons/fa";
 import ModalAddNewProduct from "../ModalsAddNewProduct";
-import { AudioOutlined } from '@ant-design/icons';
 import { Input, Space } from 'antd';
 import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
@@ -13,14 +12,6 @@ import { AuthContext } from '../context/authContext';
 import { Navigate } from 'react-router-dom';
 const { Search } = Input;
 
-const suffix = (
-    <AudioOutlined
-        style={{
-            fontSize: 16,
-            color: '#1677ff',
-        }}
-    />
-);
 
 const ProductManagerPage = () => {
     const [product, setProduct] = useState([])
@@ -60,6 +51,11 @@ const ProductManagerPage = () => {
     }
     useEffect(() => {
 
+
+        if (!localStorage.getItem('jwt') && !localStorage.getItem('user')) {
+            alert("Bạn không có quyền truy cập!")
+            window.location.replace("/admin/login")
+        }
         fetchData(1, perPage);
     }, [perPage]);
 
@@ -75,6 +71,9 @@ const ProductManagerPage = () => {
             console.error(error);
         }
     }
+
+
+
 
     return (
         <>

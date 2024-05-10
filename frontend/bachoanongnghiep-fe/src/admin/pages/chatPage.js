@@ -4,7 +4,7 @@ import MetaData from "../../services/setHead";
 import Sidebar from "../sidebar";
 import { UserContext } from "../../context/userContext";
 import socketIOClient from "socket.io-client";
-
+import { IoSend } from "react-icons/io5";
 const ChatPage = () => {
     const ENDPOINT = "http://localhost:8001";
     const socketRef = useRef();
@@ -47,6 +47,8 @@ const ChatPage = () => {
 
 
     useEffect(() => {
+
+        alert("Tính năng đang phát triển")
         const scrollMessage = () => {
             let element = document.querySelector(".ad-chatuser-listmessage");
             if (element) {
@@ -93,7 +95,7 @@ const ChatPage = () => {
         <>
 
 
-            <MetaData title={"Quản lý đơn hàng"}></MetaData>
+            <MetaData title={"Chat"}></MetaData>
 
             {loading ? (
                 <Loader />
@@ -135,8 +137,9 @@ const ChatPage = () => {
                                                 value={value}
                                                 onChange={handleValueChange}
                                             />
+                                            <button type="submit"><IoSend /></button>
                                         </form>
-                                        <button type="btn">Gửi</button>
+                                        
                                     </div>
 
 

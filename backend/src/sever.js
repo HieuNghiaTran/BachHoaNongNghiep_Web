@@ -55,7 +55,7 @@ http.listen(port, () => {
 });
 
 
-let conversation=[]
+
 io.on('connection', (socket) => {
   console.log('Client connected'+ " "+ socket.id);
 
@@ -71,6 +71,6 @@ socket.on("sendDataClient", function(data) {
   io.emit("sendDataServer", { data });
 })  
 
-socket.emit('response_room', conversation ) 
+
 
 });

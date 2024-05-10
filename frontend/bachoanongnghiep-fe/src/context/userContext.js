@@ -16,9 +16,9 @@ const UserProvider = ({ children }) => {
   const login = (jwt, user) => {
 
     localStorage.setItem("jwt", JSON.stringify(jwt))
-    localStorage.setItem("user_cus", JSON.stringify(user))
+    localStorage.setItem("user_cus", JSON.stringify(user.username))
     setJWT(jwt);
-    setUser(user);
+    setUser(user.username);
 
 
   }

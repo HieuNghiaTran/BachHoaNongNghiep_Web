@@ -112,7 +112,7 @@ const TableOrders = ({ order }) => {
         const docDefinition = {
             content: [
                 {
-                    text: "Hóa đơn",
+                    text: "Hóa đơn bán hàng",
                     style: {
                         fontSize: 22,
                         bold: true,
@@ -186,7 +186,16 @@ const TableOrders = ({ order }) => {
                     },
                 },
 
+                {
+                    text: "Phí giao hàng:" + " " + "25.000đ",
+                    style: {
+                        fontSize: 12,
+                        margin: [0, 40, 0, 30]
+                    },
+                },
 
+
+                
                 {
                     text: " " + "Tổng cộng:" + " " + bill + " đ",
                     style: {
@@ -207,7 +216,7 @@ const TableOrders = ({ order }) => {
                 <div>
                     <Table style={{ tableLayout: "auto", width: '100%' }} striped bordered hover>
                         <thead>
-                            <tr>
+                            <tr className="text-center">
                                 <th>Mã đơn hàng</th>
                                 <th>Thông tin khách hàng</th>
                                 <th>Giá trị đơn</th>
@@ -226,7 +235,7 @@ const TableOrders = ({ order }) => {
                                         <div><span><FaRegAddressBook className="mx-2" />Địa chỉ:</span><span className="mx-2" style={{ color: "red" }}>{item.address}</span></div>
                                         <div><span><TfiEmail className="mx-2" />Email:</span><span className="mx-2" style={{ color: "red" }}>{item.mail}</span></div>
                                     </td>
-                                    <td style={{ color: "red", fontWeight: "bolder" }} className="text-center m-auto">{item.total} đ</td>
+                                    <td style={{ color: "red", fontWeight: "bolder" }} className="text-center m-auto">{parseInt(item.total).toLocaleString()} đ</td>
                                     <td >{format(new Date(item.create_time), 'dd/MM/yyyy HH:mm:ss')}</td>
                                     <td>
                                         {item.payment_status === "VNPAY" ? (

@@ -101,7 +101,10 @@ const DashBoard = () => {
         ],
     };
     useEffect(() => {
-
+        if (!localStorage.getItem('jwt') && !localStorage.getItem('user')) {
+            alert("Bạn không có quyền truy cập!")
+            window.location.replace("/admin/login")
+        }
         let isMounted = true;
 
         const fetchData = async () => {
@@ -133,6 +136,9 @@ const DashBoard = () => {
 
                 setLoading(false);
 
+
+                console.log(dataStockCategory)
+
             } catch (error) {
 
                 console.error("Error fetching data:", error);
@@ -143,8 +149,8 @@ const DashBoard = () => {
         fetchData();
 
 
-
         return () => {
+
             isMounted = false;
 
         };
@@ -173,23 +179,23 @@ const DashBoard = () => {
 
         switch (product.id_category) {
             case "658d7164bdf16aee6ce1633c":
-                gao += product.stock;
+                if(product.stock) gao += product.stock;
                 soldgao += product.soldQuantity;
                 break;
             case "658d7170bdf16aee6ce1633e":
-                phanbon += product.stock;
+                if(product.stock)  phanbon += product.stock;
                 soldphanbon += product.soldQuantity;
                 break;
             case "658d7182bdf16aee6ce16340":
-                lk += product.stock;
+                if(product.stock)  lk += product.stock;
                 soldlk += product.soldQuantity;
                 break;
             case "658d7192bdf16aee6ce16342":
-                hatgiong += product.stock;
+                if(product.stock)  hatgiong += product.stock;
                 soldhatgiong += product.soldQuantity;
                 break;
             case "658d71c7bdf16aee6ce16344":
-                tbvtt += product.stock;
+                if(product.stock) tbvtt += product.stock;
                 soldtbvtt += product.soldQuantity;
                 break;
             default:
@@ -197,8 +203,8 @@ const DashBoard = () => {
         }
     });
 
-    dataStockCategory=([gao, phanbon, lk, hatgiong, tbvtt]);
-    dataSoldQuantityCategory=([soldgao, soldphanbon, soldlk, soldhatgiong, soldtbvtt]);
+    dataStockCategory = ([gao, phanbon, lk, hatgiong, tbvtt]);
+    dataSoldQuantityCategory = ([soldgao, soldphanbon, soldlk, soldhatgiong, soldtbvtt]);
 
     const data = {
         labels: listCategory,

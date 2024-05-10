@@ -5,11 +5,9 @@ const Carts = require('../models/cart')
 const cartController = {
     addCart: async (req, res) => {
         try {
-                const newUser = new Carts(req.body);
-                const savedUser = await newUser.save();
-                res.status(201).json(newUser);
-            
-
+                const cart = await Carts.create(req.body);
+                res.status(201).json(cart);
+        
         } catch (err) {
             console.log(err)
             res.status(500).json(err)

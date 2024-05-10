@@ -30,9 +30,9 @@ const Header = () => {
   const [pageScoll, setPageScoll] = useState()
   const [isShowHeader, setIsShowHeader] = useState(true);
   const [isShowModalsLogin, setIsShowModalLogin] = useState(false);
-  const [sidebar, setSidebar] = useState()
-  const [btnSidebar, setBtnSidebar] = useState()
-
+  const sidebar = document.querySelector('.sidebar')
+  const btnSidebar = document.querySelector('.toogle_nav_wrapper')
+  const sidebar_container = document.querySelector('.sidebar-container')
   const btnsidebarRef = useRef(null);
 
 
@@ -44,6 +44,7 @@ const Header = () => {
 
 
   const handleMouseEnter = () => {
+
     if (window.pageYOffset > 300) {
 
 
@@ -54,15 +55,47 @@ const Header = () => {
 
 
     }
+    if (sidebar_container) {
+
+      sidebar_container.classList.remove('d-none');
+      sidebar_container.classList.add('isShowSidebar');
+
+    }
+
+
 
 
   }
 
+
   const handleMouseLeave = () => {
 
+    if (sidebar_container) {
+
+      sidebar_container.classList.remove('isShowSidebar');
+      sidebar_container.classList.add('d-none');
+
+    
+
     if (sidebar) {
-      sidebar.classList.remove('isShowSidebar');
+
+      sidebar.addEventListener("mouseenter", () => {
+        btnSidebar.addEventListener('mouseleave', () => {  
+          sidebar_container.classList.remove('d-none');
+          sidebar_container.classList.add('isShowSidebar');      
+
+        })
+      })
+
+      sidebar.addEventListener("mouseleave", () => {
+        
+      sidebar_container.classList.remove('isShowSidebar');
+      sidebar_container.classList.add('d-none');
+      })
+
     }
+
+  }
   };
 
 
@@ -70,13 +103,8 @@ const Header = () => {
 
 
   useEffect(() => {
-    setBtnSidebar(btnsidebarRef.current);
-  }, []);
 
 
-  useEffect(() => {
-     //setBtnSidebar(document.querySelector('.toogle_nav_wrapper'))
-     setSidebar(document.querySelector('.sidebar'))
 
     window.addEventListener('scroll', handleScroll);
 
@@ -110,7 +138,7 @@ const Header = () => {
   }
   const handleSignOut = () => {
     logOut();
-    alert("dang xuat thanh cong")
+    alert("Dang xuat thanh cong")
   }
 
   return (
@@ -153,7 +181,7 @@ const Header = () => {
                 <div className="acount_name d-flex" onClick={handleShow}>
                   <span className="account-icon"><FaRegUserCircle /></span>
                   {jwt && user ?
-                    <span className="Account mx-2">{user.username}</span> :
+                    <span className="Account mx-2">{user}</span> :
                     <span className="Account mx-2">
                       <div style={{ fontSize: '0.8rem', display: "inline-block" }}>Đăng nhập</div>
                       <div style={{ fontSize: '0.5rem', display: "inline-block" }}>Đăng ký</div>
@@ -167,7 +195,7 @@ const Header = () => {
                     className="nav-dropdown-no-arrow"
                     style={{ zIndex: '999', right: "3.5rem", top: "0.5rem" }}
                   >
-                    <NavDropdown.Item href="#action/3.1">Thông tin tài khoản</NavDropdown.Item>
+
                     <NavDropdown.Item> <Link to={"/my-order"}>Đơn mua</Link></NavDropdown.Item>
                     <NavDropdown.Divider />
                     <NavDropdown.Item href="#action/3.4" onClick={handleSignOut}>
@@ -188,7 +216,7 @@ const Header = () => {
 
       </Navbar><div className="under_nav">
           <div className="toogle_nav_wrapper p-0 mx-4">
-            <button className="toogle_menu btn-outline-success" onMouseEnter={handleMouseEnter} ref={btnsidebarRef} style={{ width: "20rem" }} >
+            <button className="toogle_menu btn-outline-success" onMouseEnter={handleMouseEnter} ref={btnsidebarRef} onMouseLeave={handleMouseLeave} style={{ width: "20rem" }} >
               <i className="fa-solid fa-bars"></i>
               <span>Danh mục sản phẩm</span>
             </button>

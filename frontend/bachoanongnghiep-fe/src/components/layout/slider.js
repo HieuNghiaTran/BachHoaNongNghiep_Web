@@ -8,8 +8,7 @@ const Sliders = () => {
 
   return (
     <>
-
-      <div className="baner m-0 position-relative" style={{borderRadius:"15px"}}>
+      <div className="baner m-0" style={{borderRadius:"6px"}}>
         <div className="slider_area">
           <Carousel data-bs-theme="light">
             <Carousel.Item>

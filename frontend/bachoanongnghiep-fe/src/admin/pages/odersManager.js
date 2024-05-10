@@ -9,14 +9,15 @@ import TableOrders from "../tableOrder";
 import { getOrderWithPhoneNumber, getaAllOrder } from "../../services/orderServies";
 import { AuthContext } from '../context/authContext';
 import Loader from "../../components/layout/Loader";
-
+import Pagination from '@mui/material/Pagination';
+import Stack from '@mui/material/Stack';
 const { Search } = Input;
 const OrderManager = () => {
     const { addLocal, jwt, user } = useContext(AuthContext);
     const [loading, setLoading] = useState(false)
     const [value, setValue] = useState('')
     const [listOrders, setListOrders] = useState([]);
-
+    const [totalPages, setTotalPages] = useState(5);
 
     const onSearch = async () => {
         setLoading(true)
@@ -29,6 +30,12 @@ const OrderManager = () => {
 
     }
     useEffect(() => {
+        if (!localStorage.getItem('jwt') && !localStorage.getItem('user')) {
+            alert("Bạn không có quyền truy cập!")
+            window.location.replace("/admin/login")
+        }
+
+
 
         fetchData();
 
@@ -47,11 +54,15 @@ const OrderManager = () => {
 
 
 
+    const handlePageClick = async (e) => {
+        const currentPage = e.target.textContent;
+        //fetchData(currentPage, perPage);
+    }
 
 
 
     return (<>
-        <MetaData title={"Quản lý đơn hàng"}></MetaData>
+        <MetaData title={"Order Manager"}></MetaData>
 
         {loading ? (
             <Loader />
@@ -96,7 +107,17 @@ const OrderManager = () => {
                 </div>
             </div>
         )}
-        <div className='pageginate'></div>
+        <div className='pageginate'>
+            {/* <Stack spacing={2}>
+                <Pagination count={totalPages} color="success"
+
+                    onChange={handlePageClick}
+                    pageCount={totalPages}
+
+
+                />
+            </Stack> */}
+        </div>
 
 
 

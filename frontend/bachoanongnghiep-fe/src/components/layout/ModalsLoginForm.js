@@ -1,9 +1,9 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { useState } from "react";
 import Modal from 'react-bootstrap/Modal';
 import querystring from 'query-string';
 import { useDispatch, useSelector } from 'react-redux';
-import { addNewUser, getDetailUser } from '../../services/userServices';
+import { addNewUser, getDetailUser, getUser } from '../../services/userServices';
 import { toast } from 'react-toastify';
 import changeCount from '../actions/actionCount'
 import { addSession, deleteSession } from '../actions/actionSection'
@@ -18,21 +18,15 @@ const ModalsLoginForm = (props) => {
     const { login } = useContext(UserContext);
     const [isShowModalsSign, setIsShowModalSign] = useState(false);
     const [username, setUsername] = useState('');
-    const [pass, setPass] = useState('');
-    const [error_username, set_error_username] = useState(false)
-    const [error_password, set_error_password] = useState(false)
-    const [redirect, set_redirect] = useState(false)
+    const [pass, setPass] = useState('')
     const [errorMessages, setErroMessege] = useState('')
+    const [errorMessagesTab2, setErroMessegeTab2] = useState('')
     const [statusMessages, setStatusMessages] = useState(false)
-
     const [boldTitle, setBoldTitle] = useState(false)
-
-
     const [fullname, setFullname] = useState('')
     const [Email, setEmail] = useState('')
     const [phone, setPhone] = useState('')
-
-    const md_1 = document.getElementsByClassName('.mdal-1');
+    const [alreadyAccount, setAlreadyAccount] = useState(false)
 
     const onFinishFailed = (errorInfo) => {
         console.log('Failed:', errorInfo);
@@ -54,28 +48,21 @@ const ModalsLoginForm = (props) => {
             console.log(res)
             if (res.msg === "Không Tìm Thấy Users") {
                 setStatusMessages(true)
-                setErroMessege("Tài  khoản hoặc mật khẩu chưa chính xác")
+                setErroMessege("Tài khoản hoặc mật khẩu chưa chính xác")
 
             } else {
                 if (res.msg === "Sai Mat Khau") {
                     setStatusMessages(true)
-                    setErroMessege("Tài  khoản hoặc mật khẩu chưa chính xác")
+                    setErroMessege("Tài khoản hoặc mật khẩu chưa chính xác")
 
                 } else {
 
-                    login(res.jwt, res.user)
-                    const action = addSession(res._id)
-                    dispatch(action)
+                    login(res.jwt, res.user.username)
                     handleClose()
                     alert("Đăng nhập thành công! Xin chào," + " " + username)
 
                 }
             }
-
-
-
-
-
 
         } catch (err) {
 
@@ -90,10 +77,44 @@ const ModalsLoginForm = (props) => {
         setIsShowModalSign(false)
     }
 
+ useEffect(()=>{
+    if(!alreadyAccount){
 
-    /////
+        setStatusMessages(false)
+    }
+
+
+ },[alreadyAccount])
+
+
+
+
+
+
+    const handleCheckAccount = async () => {
+        if (username) {
+
+            let res = await getUser(username);
+            if (res.data) {
+                setAlreadyAccount(true)
+                alert("Tài Khoản Đã Tồn Tại! Vui lòng chọn Username khác")
+
+            } else {
+                setAlreadyAccount(false)
+
+            }
+
+
+        }
+
+
+    }
+
+
 
     const handlAddNewUser = async () => {
+
+
 
         let data = new FormData()
         data = {
@@ -111,13 +132,22 @@ const ModalsLoginForm = (props) => {
             if (res.data.msg === "Bạn đã thêm thành công") {
                 toast.success("Add User Success!!");
                 handleClose();
+
+                setEmail('')
+                setPass();
+                setFullname('')
+                setPhone('')
+                setUsername('')
+                setStatusMessages(false)
+
+
             }
             else {
+                
                 setStatusMessages(true)
-                setErroMessege("Username hoặc Email tồn tại")
+                setErroMessegeTab2("Username hoặc Email tồn tại")
 
-
-
+    
             }
         } catch (err) {
 
@@ -127,12 +157,7 @@ const ModalsLoginForm = (props) => {
         }
 
 
-        setEmail('')
-        setPass();
-        setFullname('')
-        setPhone('')
-        setUsername('')
-        setStatusMessages(false)
+        
     }
 
 
@@ -218,7 +243,7 @@ const ModalsLoginForm = (props) => {
 
 
                                     </Form.Item>
-                                    {statusMessages ? (<div className="bold text-center mb-4" style={{ color: "red", fontWeight: "bold" }}><span className="m-2"><FcCancel style={{ color: "red", fontWeight: "bold" }} /></span>{errorMessages}</div>) : <></>}
+                                    {statusMessages && errorMessages!=='' ? (<div className="bold text-center mb-4" style={{ color: "red", fontWeight: "bold" }}><span className="m-2"><FcCancel style={{ color: "red", fontWeight: "bold" }} /></span>{errorMessages}</div>) : <></>}
 
 
                                     <Form.Item
@@ -261,13 +286,28 @@ const ModalsLoginForm = (props) => {
                                     rules={[
                                         {
                                             required: true,
-                                            message: 'Vui lòng nhập tên đăng nhập',
+                                            message: "Vui lòng nhập tên đăng nhập",
                                         },
+                                        {
+                                            pattern: /^[a-z0-9_-]{3,16}$/,
+                                            message: 'Tên đăng nhập không hợp lệ',
+                                        },
+
+
+
+
                                     ]}
                                 >
-                                    <Input value={username}
-                                        onChange={(e) => setUsername(e.target.value)} />
+                                    <Input
+                                        value={username}
+                                        onChange={(e) => setUsername(e.target.value)}
+                                        onBlur={() => {
+                                            handleCheckAccount();
+                                        }}
+                                    />
                                 </Form.Item>
+
+
 
                                 <Form.Item
                                     label="Họ và tên"
@@ -287,8 +327,13 @@ const ModalsLoginForm = (props) => {
                                     name="phone"
                                     rules={[
                                         {
+
                                             required: true,
                                             message: 'SĐT là cần thiết',
+                                        },
+                                        {
+                                            pattern: /^0\d{9,10}$/,
+                                            message: 'Số điện thoại không hợp lệ',
                                         },
                                     ]}
                                 >
@@ -302,13 +347,12 @@ const ModalsLoginForm = (props) => {
                                     name="email"
                                     rules={[
                                         {
-                                            required: false,
-                                            message: '',
+                                            type: 'email',
+                                            message: 'Email không hợp lệ',
                                         },
                                     ]}
                                 >
-                                    <Input value={Email}
-                                        onChange={(e) => setEmail(e.target.value)} />
+                                    <Input value={Email} onChange={(e) => setEmail(e.target.value)} />
                                 </Form.Item>
                                 <Form.Item
                                     label="Mật Khẩu"
@@ -332,12 +376,16 @@ const ModalsLoginForm = (props) => {
                                     wrapperCol={{
                                         offset: 8,
                                         span: 16,
-                                
+
                                     }}
                                 >
                                     <Checkbox>Tôi đã đọc kỹ thông tin</Checkbox>
                                 </Form.Item>
-                                {statusMessages ? (<div className="bold text-center mb-4" style={{ color: "red", fontWeight: "bold" }}><span className="m-2"><FcCancel style={{ color: "red", fontWeight: "bold" }} /></span>{errorMessages}</div>) : <></>}
+            
+
+
+                                {statusMessages ? (<div className="bold text-center mb-4" style={{ color: "red", fontWeight: "bold" }}><span className="m-2"><FcCancel style={{ color: "red", fontWeight: "bold" }} /></span>{errorMessagesTab2}</div>) : <></>}
+
 
                                 <Form.Item
                                     wrapperCol={{
@@ -345,6 +393,9 @@ const ModalsLoginForm = (props) => {
                                         span: 16,
                                     }}
                                 >
+
+                                  
+
                                     <Button type="primary" htmlType="submit">
                                         Đăng ký tài khoản
                                     </Button>
@@ -359,7 +410,7 @@ const ModalsLoginForm = (props) => {
                 </div>
 
             </Modal.Body>
-        </Modal>
+        </Modal >
 
         </>
 

@@ -465,9 +465,7 @@ font-family: inherit;
 .sidebar-wrapper {
   width: 100%;
   align-items: stretch;
-  min-height: 100vh;
   font-weight: normal;
-  height: 100%;
   left: 0;
   top: 0;
   z-index: 10;
@@ -535,31 +533,14 @@ ul ul a {
   background: #232f3e;
 }
 
-ul.CTAs {
-  padding: 20px;
-}
 
-ul.CTAs a {
-  text-align: center;
-  font-size: 0.9em !important;
-  display: block;
-  border-radius: 5px;
-  margin-bottom: 5px;
-}
 
-/* Products List Admin */
-#products_table .btn {
-  padding: 0.2rem 0.5rem;
-  margin-left: 0.4rem;
-}
 
-/* Dashboard */
 
 .card-font-size {
   font-size: 1.5rem;
 }
 
-/* Reviews */
 
 .rating {
   margin-top: 1rem;

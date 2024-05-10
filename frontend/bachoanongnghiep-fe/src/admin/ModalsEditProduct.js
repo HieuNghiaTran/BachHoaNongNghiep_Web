@@ -27,7 +27,6 @@ const ModalEditProduct = (props) => {
     const [date, setDate] = useState();
     const [selected1, setSelected1] = useState()
     const [selected2, setSelected2] = useState()
-    const [img, setImg] = useState([])
     const [listColection, setListColection] = useState([]);
     const [previewOpen, setPreviewOpen] = useState(false);
     const [previewImage, setPreviewImage] = useState('');
@@ -49,7 +48,7 @@ const ModalEditProduct = (props) => {
 
     useEffect(() => {
 
-        product.images && setFileList(product.images.length>0 && product.images.map(item => ({
+        product.images && setFileList(product.images.length > 0 && product.images.map(item => ({
             uid: item.public_id,
             status: 'done',
             url: item.url
@@ -67,7 +66,7 @@ const ModalEditProduct = (props) => {
             setDescirbe(product.describe)
             setPrice(product.price_product)
             setIdProduct(product.product_id)
-            setDate(product.date)
+            setDate(product.date.substr(0, 10))
             setStock(product.stock)
             setSelected1(product.id_category)
             setSelected2(product.id_collection)
@@ -76,9 +75,23 @@ const ModalEditProduct = (props) => {
 
 
         }
+        getCollectionDefaut(selected1)
+
     }, [product]);
 
 
+    useEffect(() => {
+        if (selected1) {
+            getCollectionDefaut(selected1);
+        }
+    }, [selected1]);
+
+    const getCollectionDefaut = async (selected1) => {
+
+        let res = await getAllColecion(selected1)
+        setListColection(res.data)
+
+    }
 
     const handlePreview = async (file) => {
         if (!file.url && !file.preview) {
@@ -110,15 +123,31 @@ const ModalEditProduct = (props) => {
     );
 
 
+    const generateThumbUrl = async (imageUrl) => {
+       
+        const response = await fetch(imageUrl);
+        const blob = await response.blob();
 
-    const handleSubmit = async () => {
-
-        fileList.forEach(element => {
-
-
-            if (element.thumbUrl) { img.push(element.thumbUrl) }
+        const reader = new FileReader();
+        reader.readAsDataURL(blob);
+        return new Promise((resolve, reject) => {
+            reader.onloadend = () => {
+                resolve(reader.result);
+            };
+            reader.onerror = reject;
         });
 
+    };
+   
+
+    const handleSubmit = async () => {
+        const updatedImages = await Promise.all(fileList.map(async (element) => {
+            if (element.thumbUrl) {
+                return element.thumbUrl;
+            } else {
+                return await generateThumbUrl(element.url);
+            }
+        }));
 
         let data = new FormData()
         data = {
@@ -127,7 +156,7 @@ const ModalEditProduct = (props) => {
             product_id: id_product,
             name_product: name,
             price_product: price,
-            images: img,
+            images: updatedImages,
             stock: stock,
             date: date,
             describe: describe
@@ -137,6 +166,7 @@ const ModalEditProduct = (props) => {
         toast.success("Edit Product Success")
         window.location.reload()
     }
+    
 
 
 
@@ -160,7 +190,7 @@ const ModalEditProduct = (props) => {
                 width={900}
 
             >
-    
+
                 <div>
 
 
@@ -195,6 +225,7 @@ const ModalEditProduct = (props) => {
                                             <select className="form-control" id="category"
 
                                                 value={selected1}
+
                                                 onChange={async (e) => {
                                                     setSelected1(e.target.value)
                                                     let temp = await getAllColecion(selected1)
@@ -224,7 +255,7 @@ const ModalEditProduct = (props) => {
 
                                             >
                                                 <option defaultValue>Select a type</option>
-                                                {listColection&&listColection.map((item, index) => (
+                                                {listColection && listColection.map((item, index) => (
                                                     <option key={index} value={item._id}>{item.colection}</option>
                                                 ))}
                                             </select>
@@ -292,11 +323,11 @@ const ModalEditProduct = (props) => {
 
                                         <Upload
                                             listType="picture-card"
-                                            fileList={fileList ? fileList : []} 
+                                            fileList={fileList ? fileList : []}
                                             onPreview={handlePreview}
                                             onChange={handleChange}
                                         >
-                                            {fileList && fileList.length >= 8 ? null : uploadButton} 
+                                            {fileList && fileList.length >= 8 ? null : uploadButton}
                                         </Upload>
                                         <Modal open={previewOpen} title={previewTitle} footer={null} onCancel={handleCancel}>
                                             <img

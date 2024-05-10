@@ -44,11 +44,11 @@ const ListCatory = () => {
 
 
     return (
-        <div className="contain_catory_parent px-5">
-           <div className="contain_catory py-2">
+        <div className="contain_catory_parent px-4">
+           <div className="contain_catory">
            <div className="title_catory d-flex">
                 <div className="icon-title"></div>
-                <span className="h4 mx-2 p-1">DANH MỤC NỔI BẬT</span>
+                <span className="h4 mx-2 my-auto py-1">DANH MỤC NỔI BẬT</span>
             </div>
             <Slider {...settings}>
                 <div className="text-center slider-container">

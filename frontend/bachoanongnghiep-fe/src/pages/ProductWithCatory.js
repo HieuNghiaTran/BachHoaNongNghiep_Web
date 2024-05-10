@@ -21,6 +21,7 @@ import { Input, Radio, Space } from 'antd'
 import Loader from "../components/layout/Loader";
 import Chat from "../components/layout/chat";
 import AppChat from "../components/layout/appchat";
+import Sidebar from "../components/layout/sidebar";
 
 const ProductWithCatoryPage = () => {
     const { category_id } = useParams();
@@ -269,6 +270,7 @@ const ProductWithCatoryPage = () => {
         <>
             <MetaData title={nameCategory} />
             <Header />
+            <div className="sidebar-container mx-3 d-none"><Sidebar/></div>
             {loading ? <Loader /> :
                 <div className="main" >
                     <div><History data={"Trang chủ / Danh Mục /"} last_item={nameCategory} /></div>

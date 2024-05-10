@@ -35,16 +35,16 @@ const HomePage = () => {
 
   const fetchData = async () => {
     try {
-      let res1 = await getProductWithCategoryPageginate(1, 6, "658d71c7bdf16aee6ce16344");
+      let res1 = await getProductWithCategoryPageginate(1, 8, "658d71c7bdf16aee6ce16344");
       setProducts1(res1.data.docs);
 
-      let res2 = await getProductWithCategoryPageginate(1, 5, "658d7164bdf16aee6ce1633c");
+      let res2 = await getProductWithCategoryPageginate(1, 8, "658d7164bdf16aee6ce1633c");
       setProducts2(res2.data.docs);
-      let res3 = await getProductWithCategoryPageginate(1, 5, "658d7170bdf16aee6ce1633e");
+      let res3 = await getProductWithCategoryPageginate(1, 8, "658d7170bdf16aee6ce1633e");
       setProducts3(res3.data.docs);
-      let res4 = await getProductWithCategoryPageginate(1, 5, "658d7192bdf16aee6ce16342");
+      let res4 = await getProductWithCategoryPageginate(1, 9, "658d7192bdf16aee6ce16342");
       setProducts4(res4.data.docs);
-      let res5 = await getProductWithCategoryPageginate(1, 5, "658d7182bdf16aee6ce16340");
+      let res5 = await getProductWithCategoryPageginate(1, 9, "658d7182bdf16aee6ce16340");
       setProducts5(res5.data.docs);
 
 
@@ -96,25 +96,23 @@ const HomePage = () => {
       <Header />
 
       <main className="">
-        <div className='top-main d-flex position-relative px-3 mb-4' style={{ height: "100%" }}>
+        <div className='top-main d-flex px-3 mb-3' style={{ height: "80%" }}>
           <Sidebar />
           <Sliders />
-          <div className="col-md-3  mx-2 d-flex flex-column" style={{height:"50%"}}>
+          <div className="col-md-3 mx-1 my-0 p-0 d-flex flex-column" style={{height:"80%"}}>
             <div className="row flex-grow-1" style={{height:"50%"}} >
-              <Link to={"/trang-chu"} className="d-block w-100 h-100">
-                <img className="mb-1 mt-1 w-100" src="https://theme.hstatic.net/1000269461/1000985512/14/bottom_banner_1_large.jpg?v=1678" alt="Banner 1" />
+              <Link to={"/trang-chu"} className="w-100 h-100">
+                <img className="mb-1 w-100" src="https://theme.hstatic.net/1000269461/1000985512/14/bottom_banner_1_large.jpg?v=1678" alt="Banner 1" />
               </Link>
             </div>
             <div className="row flex-grow-1"style={{height:"50%"}}>
-              <Link to={"/trang-chu"} className="d-block w-100 h-100">
+              <Link to={"/trang-chu"} className="w-100 h-100">
                 <img className="w-100"  src="https://theme.hstatic.net/1000269461/1000985512/14/bottom_banner_3_large.jpg?v=1678" alt="Banner 3" />
               </Link>
             </div>
           </div>
         </div>
         <ListCatory />
-
-
         <div><HotDeal /></div>
         <h4 className="sub-title">THUỐC BẢO VỆ THỰC VẬT</h4>
 

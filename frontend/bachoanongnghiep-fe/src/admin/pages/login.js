@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react';
 import { Navigate } from 'react-router-dom';
-import { Redirect, useNavigate } from 'react-router-dom'; // Change import statement
+import { Redirect, useNavigate } from 'react-router-dom'; 
 import isEmpty from 'validator/lib/isEmpty'
 import { useForm } from "react-hook-form";
 import '../css/App.css'
@@ -48,6 +48,7 @@ function Login(props) {
             if (response.data.user.id_permission.permission === "admin") {
                 
                 addLocal(response.data.jwt, response.data.user)
+                
             } else {
                 setValidationMsg({ api: "Bạn không có quyền truy cập" })
             }

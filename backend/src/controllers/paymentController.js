@@ -131,7 +131,7 @@ const PaymentCotroller = {
                                 if (order) {
                                     order.payment_status = "VNPAY";
                                     await order.save(); 
-                                    res.redirect("http://localhost:3000/order/success");
+                                    return res.redirect("http://localhost:3000/order/success");
                             
                                 } else {
                                     // Xử lý khi không tìm thấy đơn hàng
@@ -168,8 +168,6 @@ const PaymentCotroller = {
 
         } catch (err) {
             res.status(500).json(err)
-            console.log(err)
-
         }
     },
 
