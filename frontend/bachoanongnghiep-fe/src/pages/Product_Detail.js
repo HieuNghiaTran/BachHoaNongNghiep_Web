@@ -40,6 +40,7 @@ const DetailProduct = (props) => {
 
     }, [id])
     useEffect(() => {
+        alert(document.body.scrollHeight)
 
         socketRef.current = socketIOClient.connect("http://localhost:8001")
 

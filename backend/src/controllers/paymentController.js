@@ -143,6 +143,9 @@ const PaymentCotroller = {
                                 res.status(200).json({ RspCode: '00', Message: 'Success' })
                             }
                             else {
+                                await Order.deleteOne({ _id: orderId });
+                                return res.redirect("http://localhost:3000/order/fail");
+
                                 //that bai
                                 //paymentStatus = '2'
                                 // Ở đây cập nhật trạng thái giao dịch thanh toán thất bại vào CSDL của bạn

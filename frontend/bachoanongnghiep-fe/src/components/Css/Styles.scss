@@ -362,14 +362,14 @@ footer {
         padding: 0;
         margin: auto;
         border: 0.25px solid rgb(233, 229, 229);
-
+        transition: transform 0.3s ease;
         li:hover {
             background-color: #f3f4f6;
             transform: scale(1.02);
         }
 
         li {
-
+            transition: transform 0.3s ease;
             padding: 10px;
             text-align: center;
             font-size: 1.05rem;
@@ -940,7 +940,7 @@ th {
 
 
 
-.product-item:hover {
+.card:hover {
     box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
     transform: scale(1.02);
 }

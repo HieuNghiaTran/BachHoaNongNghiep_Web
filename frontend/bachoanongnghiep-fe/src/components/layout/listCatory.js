@@ -53,24 +53,24 @@ const ListCatory = () => {
             <Slider {...settings}>
                 <div className="text-center slider-container">
                     <div className="circle"><img src={require("../images/Anvil.jpeg")} width="100px" height="100px" className="text-center img-catory mx-auto d-block rounded-circle" /></div>
-                    <Link to="/category/thuoc-bao-ve-thuc-vat" className="mt-3 d-flex justify-content-center align-item-center text-decoration-none fw-bold" >THUỐC BẢO VỆ THỰC VẬT</Link>
+                    <Link to="/collections/658d71c7bdf16aee6ce16344" className="mt-3 d-flex justify-content-center align-item-center text-decoration-none fw-bold" >THUỐC BẢO VỆ THỰC VẬT</Link>
                 </div>
 
                 <div className="text-center slider-container">
                 <div className="circle"><img src={require("../images/phan-bon-da-trung-vi-luong-1.png")} width="100px" height="100px" className="img-catory mx-auto d-block rounded-circle" /></div>
-                    <Link to="/category/phan-bon" className="mt-3 d-flex justify-content-center align-item-center text-decoration-none fw-bold">PHÂN BÓN</Link>
+                    <Link to="/collections/658d7170bdf16aee6ce1633e" className="mt-3 d-flex justify-content-center align-item-center text-decoration-none fw-bold">PHÂN BÓN</Link>
                 </div>
                 <div className="text-center slider-container">
                 <div className="circle"><img src={require("../images/gao-anh-1629435457603409639437.jpg")} width="100px" height="100px" className="img-catory mx-auto d-block rounded-circle" /></div>
-                    <Link to="/category/phan-bon" className="mt-3 d-flex justify-content-center align-item-center text-decoration-none fw-bold">GẠO</Link>
+                    <Link to="/collections/658d7164bdf16aee6ce1633c" className="mt-3 d-flex justify-content-center align-item-center text-decoration-none fw-bold">GẠO</Link>
                 </div>
                 <div className="text-center slider-container">
                 <div className="circle"><img src={"https://vuonbabylon.vn/wp-content/uploads/2020/12/Hat-giong-rau-muong-la-lon-rado.jpg"} width="100px" height="100px" className="img-catory mx-auto d-block rounded-circle" /></div>
-                    <Link to="/category/phan-bon" className="mt-3 d-flex justify-content-center align-item-center text-decoration-none fw-bold">HẠT GIỐNG</Link>
+                    <Link to="/collections/658d7192bdf16aee6ce16342" className="mt-3 d-flex justify-content-center align-item-center text-decoration-none fw-bold">HẠT GIỐNG</Link>
                 </div>
                 <div className="text-center slider-container">
                 <div className="circle"><img src={require("../images/AGRAS-T40-2.webp")} width="100px" height="100px" className="mx-auto d-block rounded-circle" /></div>
-                    <Link to="/category/phan-bon" className="mt-3 d-flex justify-content-center align-item-center text-decoration-none fw-bold">LINH KIỆN DRONE</Link>
+                    <Link to="/collections/658d7182bdf16aee6ce16340" className="mt-3 d-flex justify-content-center align-item-center text-decoration-none fw-bold">LINH KIỆN DRONE</Link>
                 </div>
                 <div className="text-center slider-container">
                 <div className="circle"> <img src={require("../images/The-Story-of-Todays-Successful-Young-Farmers-.jpg")} width="100px" height="100px" className="img-catory mx-auto d-block rounded-circle" /></div>

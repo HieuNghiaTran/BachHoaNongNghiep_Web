@@ -143,7 +143,7 @@ const Header = () => {
 
   return (
     <>
-      <div className={pageScoll > 300 ? " visible position-fixed w-100" : "sa"} style={{ zIndex: "100" }}  > <Navbar expand="md" className="bg-body-tertiary" >
+      <div className={pageScoll > 280 && document.body.scrollHeight > 1500 ? " visible position-fixed w-100" : "sa"} style={{ zIndex: "100" }}  > <Navbar expand="md" className="bg-body-tertiary" >
         <div className="top_nav">
           <div className="left_loc col-md-3">
             <a href="#" className="logo">

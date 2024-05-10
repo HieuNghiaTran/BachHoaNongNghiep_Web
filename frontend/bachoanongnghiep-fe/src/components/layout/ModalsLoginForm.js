@@ -36,55 +36,58 @@ const ModalsLoginForm = (props) => {
 
     }
 
-    const dispatch = useDispatch()
     const handleLogin = async () => {
 
         const params = { username, pass };
         const query = "?" + querystring.stringify(params);
-
+       
 
         try {
             let res = await getDetailUser(query);
             console.log(res)
             if (res.msg === "Không Tìm Thấy Users") {
+                console.log("ko tim tahy")
                 setStatusMessages(true)
-                setErroMessege("Tài khoản hoặc mật khẩu chưa chính xác")
+                setErroMessege("Khong tim thay User")
 
             } else {
-                if (res.msg === "Sai Mat Khau") {
+                if (res.msg === "Sai mật khẩu") {
+                    console.log("sai mk")
                     setStatusMessages(true)
                     setErroMessege("Tài khoản hoặc mật khẩu chưa chính xác")
 
-                } else {
-
-                    login(res.jwt, res.user.username)
+                } else if(res.msg ==="Đăng nhập thành công") {
+                    setStatusMessages(false)
+                    login(res.jwt, res.user)
                     handleClose()
+                    setUsername('');
+                    setPass('')  
                     alert("Đăng nhập thành công! Xin chào," + " " + username)
 
                 }
             }
-
+           
         } catch (err) {
-
+            setStatusMessages(true)
+            setErroMessege("catch")
         }
 
 
-        setUsername('');
-        setPass('')
+       
     }
     const Close = () => {
 
         setIsShowModalSign(false)
     }
 
- useEffect(()=>{
-    if(!alreadyAccount){
+    useEffect(() => {
+        if (!alreadyAccount) {
 
-        setStatusMessages(false)
-    }
+            setStatusMessages(false)
+        }
 
 
- },[alreadyAccount])
+    }, [alreadyAccount])
 
 
 
@@ -143,11 +146,11 @@ const ModalsLoginForm = (props) => {
 
             }
             else {
-                
+
                 setStatusMessages(true)
                 setErroMessegeTab2("Username hoặc Email tồn tại")
 
-    
+
             }
         } catch (err) {
 
@@ -157,7 +160,7 @@ const ModalsLoginForm = (props) => {
         }
 
 
-        
+
     }
 
 
@@ -243,7 +246,7 @@ const ModalsLoginForm = (props) => {
 
 
                                     </Form.Item>
-                                    {statusMessages && errorMessages!=='' ? (<div className="bold text-center mb-4" style={{ color: "red", fontWeight: "bold" }}><span className="m-2"><FcCancel style={{ color: "red", fontWeight: "bold" }} /></span>{errorMessages}</div>) : <></>}
+                                    {statusMessages ? (<div className="bold text-center mb-4" style={{ color: "red", fontWeight: "bold" }}><span className="m-2"><FcCancel style={{ color: "red", fontWeight: "bold" }} /></span>{errorMessages}</div>) : <></>}
 
 
                                     <Form.Item
@@ -381,7 +384,7 @@ const ModalsLoginForm = (props) => {
                                 >
                                     <Checkbox>Tôi đã đọc kỹ thông tin</Checkbox>
                                 </Form.Item>
-            
+
 
 
                                 {statusMessages ? (<div className="bold text-center mb-4" style={{ color: "red", fontWeight: "bold" }}><span className="m-2"><FcCancel style={{ color: "red", fontWeight: "bold" }} /></span>{errorMessagesTab2}</div>) : <></>}
@@ -394,7 +397,7 @@ const ModalsLoginForm = (props) => {
                                     }}
                                 >
 
-                                  
+
 
                                     <Button type="primary" htmlType="submit">
                                         Đăng ký tài khoản

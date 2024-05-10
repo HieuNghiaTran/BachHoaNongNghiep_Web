@@ -8,7 +8,9 @@ export const ROUTER = {
         ProductWithCatory: "/collections/:category_id",
         SubmitOrder: "/checkouts/:id",
         Location: "/page/location",
-        SuccessOrder:"/order/success"
+        SuccessOrder:"/order/success",
+        FailOrder:"/order/fail"
+
     },
 
     ADMIN: {

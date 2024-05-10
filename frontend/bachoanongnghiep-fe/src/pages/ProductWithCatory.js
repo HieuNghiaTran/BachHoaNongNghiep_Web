@@ -324,9 +324,9 @@ const ProductWithCatoryPage = () => {
 
                             </div>
 
-                            <div className="result-page col-6 col-md-12">
+                            <div className="col-6 col-md-12">
 
-                                <div className='container row'>
+                                <div className='row'>
                                     {product.length > 0 && product.map((item) => (
                                         <Products key={item._id} product={item} col={3} />
                                     ))}

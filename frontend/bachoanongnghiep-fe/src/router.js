@@ -14,6 +14,7 @@ import MyOrder from "./pages/MyOrders";
 import Login from "./admin/pages/login";
 import SuccessOrder from "./pages/succesOrder";
 import ChatPage from "./admin/pages/chatPage";
+import FailOrder from "./pages/FailOrderPage";
 const renderUserRouter = () => {
   const userrouter = [
     {
@@ -62,6 +63,11 @@ const renderUserRouter = () => {
     {
       path: ROUTER.USER.SuccessOrder,
       component: <SuccessOrder/>,
+    },
+
+    {
+      path: ROUTER.USER.FailOrder,
+      component: <FailOrder/>,
     },
 
   ];

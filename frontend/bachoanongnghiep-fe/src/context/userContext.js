@@ -9,13 +9,13 @@ const UserProvider = ({ children }) => {
 
 
   useEffect(() => {
-    localStorage.getItem('jwt') && setJWT(JSON.parse(localStorage.getItem('jwt')));
+    localStorage.getItem('jwt_cus') && setJWT(JSON.parse(localStorage.getItem('jwt_cus')));
     localStorage.getItem('user_cus') && setUser(JSON.parse(localStorage.getItem('user_cus')));
   }, [])
 
   const login = (jwt, user) => {
 
-    localStorage.setItem("jwt", JSON.stringify(jwt))
+    localStorage.setItem("jwt_cus", JSON.stringify(jwt))
     localStorage.setItem("user_cus", JSON.stringify(user.username))
     setJWT(jwt);
     setUser(user.username);
@@ -24,7 +24,7 @@ const UserProvider = ({ children }) => {
   }
 
   const logOut = () => {
-    localStorage.removeItem("jwt")
+    localStorage.removeItem("jwt_cus")
     localStorage.removeItem("user_cus")
     setJWT();
     setUser();

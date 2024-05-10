@@ -87,9 +87,9 @@ const ModalDetailOrder = (props) => {
                     <Table dataSource={dataSource} columns={columns} />
                     <div className="fw-bold">Ghi Chú: <span className="mx-2">{note}</span></div>
 
-                    <div style={{ fontWeight: "bold" }} className="text-center">Phí giao hàng: <span style={{ color: "red", fontSize: "1.2rem" }} className="mx-2">{ship} đ</span>    </div>
+                    <div style={{ fontWeight: "bold" }} className="text-center">Phí giao hàng: <span style={{ color: "red", fontSize: "1.2rem" }} className="mx-2">{parseInt(ship).toLocaleString()} đ</span>    </div>
 
-                    <div style={{ fontWeight: "bold" }} className="text-center">Tổng cộng đơn hàng: <span style={{ color: "red", fontSize: "1.2rem" }} className="mx-2">{detailOrder.reduce((acc, item) => (acc + item.price_product * item.count), 0) + ship} đ</span>    </div>
+                    <div style={{ fontWeight: "bold" }} className="text-center">Tổng cộng đơn hàng: <span style={{ color: "red", fontSize: "1.2rem" }} className="mx-2">{parseInt(detailOrder.reduce((acc, item) => (acc + item.price_product * item.count), 0) + ship).toLocaleString()} đ</span>    </div>
 
 
                 </div>
